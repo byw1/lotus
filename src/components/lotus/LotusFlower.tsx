@@ -129,15 +129,21 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
     const material = new THREE.MeshPhysicalMaterial({
       vertexColors: true,
       side: THREE.DoubleSide,
-      roughness: 0.42,
+      roughness: 0.38,
       metalness: 0,
-      clearcoat: 0.3,
-      clearcoatRoughness: 0.45,
+      /*
+       * Lotus is the archetypal superhydrophobic waxy surface — the "lotus
+       * effect" is named after it. A tight, low-roughness clearcoat is what
+       * catches the rim light as a wet highlight. Iridescence is deliberately
+       * absent: it is a thin-film model made for beetle shells and oil slicks,
+       * and on a pink petal it desaturates the midtones and leaves a cyan
+       * fringe at grazing angles that reads as plastic.
+       */
+      clearcoat: 0.55,
+      clearcoatRoughness: 0.22,
       sheen: 1,
-      sheenRoughness: 0.55,
+      sheenRoughness: 0.6,
       sheenColor: new THREE.Color("#ffc9d8"),
-      iridescence: 0.12,
-      iridescenceIOR: 1.2,
       ior: 1.42,
       /*
        * Transmission is what sells a petal: light passing through the far side
@@ -145,8 +151,18 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
        * render per frame, so weaker hardware falls back to sheen alone, which
        * still reads as soft and waxy — just not backlit.
        */
-      transmission: quality === "high" ? 0.42 : 0,
-      thickness: 0.55,
+      transmission: quality === "high" ? 0.45 : 0,
+      /*
+       * Attenuation is Beer-Lambert: exp(-thickness / attenuationDistance).
+       * A ratio near 0.4 transmits about two thirds of the light with a faint
+       * tint, which is what a petal does. Ratios above ~1.5 give stained glass.
+       * attenuationColor is what light *becomes* after passing through, so it
+       * is more saturated than the surface, not less.
+       *
+       * Requires three >= r184: transmission + DoubleSide + antialias:false
+       * caused a framebuffer feedback loop in r182-r183 (three.js #33060).
+       */
+      thickness: 0.5,
       /*
        * Nothing in this scene casts a shadow, so a petal turned away from every
        * light renders as a black hole punched in the flower. A very dim rose
@@ -155,8 +171,8 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
        */
       emissive: new THREE.Color("#3d1524"),
       emissiveIntensity: 1,
-      attenuationColor: new THREE.Color("#e58aa6"),
-      attenuationDistance: 1.1,
+      attenuationColor: new THREE.Color("#e0708f"),
+      attenuationDistance: 1.2,
     });
     return material;
   }, [quality]);
@@ -189,8 +205,8 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
       new THREE.MeshStandardMaterial({
         vertexColors: true,
         roughness: 0.45,
-        emissive: new THREE.Color("#e8b857"),
-        emissiveIntensity: 0.45,
+        emissive: new THREE.Color("#e8a83a"),
+        emissiveIntensity: 0.8,
       }),
     [],
   );

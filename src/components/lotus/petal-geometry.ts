@@ -73,8 +73,8 @@ function smoothstep(edge0: number, edge1: number, x: number): number {
 
 /** Lotus petals are deepest rose where they meet the receptacle. */
 const COLOR_BASE = new THREE.Color("#e0708f");
-const COLOR_MID = new THREE.Color("#fbeef0");
-const COLOR_TIP = new THREE.Color("#f2a3bc");
+const COLOR_MID = new THREE.Color("#fbdfe6");
+const COLOR_TIP = new THREE.Color("#ef8fae");
 
 export function buildPetalGeometry(params: PetalParams): THREE.BufferGeometry {
   const {
@@ -296,7 +296,7 @@ export function buildStamenGeometry(height = 0.26): THREE.BufferGeometry {
   const position = geometry.getAttribute("position");
   const colors = new Float32Array(position.count * 3);
   const filament = new THREE.Color("#f6ead2");
-  const anther = new THREE.Color("#f0c04a");
+  const anther = new THREE.Color("#f2b52e");
   const color = new THREE.Color();
 
   for (let i = 0; i < position.count; i++) {

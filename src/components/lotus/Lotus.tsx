@@ -46,13 +46,15 @@ function canRunScene(): boolean {
 
   try {
     const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl2");
+    // WebGL1 is still worth accepting: three r185 falls back to it on older
+    // Android, and those devices render this scene perfectly well.
+    const gl = canvas.getContext("webgl2") ?? canvas.getContext("webgl");
     if (!gl) {
       capabilityCache = false;
       return false;
     }
     // Release it immediately; browsers cap the number of live contexts.
-    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    (gl.getExtension("WEBGL_lose_context") as WEBGL_lose_context | null)?.loseContext();
     capabilityCache = true;
     return true;
   } catch {
@@ -117,6 +119,7 @@ export function Lotus({ className, defer = true }: LotusProps) {
   );
 
   const [ready, setReady] = useState(false);
+  const [contextLost, setContextLost] = useState(false);
 
   useEffect(() => {
     if (!capable) return;
@@ -141,7 +144,7 @@ export function Lotus({ className, defer = true }: LotusProps) {
     return () => window.clearTimeout(handle);
   }, [capable, defer]);
 
-  const showScene = capable && ready;
+  const showScene = capable && ready && !contextLost;
 
   return (
     <div className={cn("relative", className)}>
@@ -157,7 +160,11 @@ export function Lotus({ className, defer = true }: LotusProps) {
 
       {showScene && (
         <SceneBoundary fallback={null}>
-          <LotusScene reducedMotion={reducedMotion} className="!absolute inset-0" />
+          <LotusScene
+            reducedMotion={reducedMotion}
+            className="!absolute inset-0"
+            onContextLost={() => setContextLost(true)}
+          />
         </SceneBoundary>
       )}
     </div>
