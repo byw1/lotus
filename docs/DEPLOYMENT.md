@@ -137,6 +137,12 @@ rather than remembered by whoever clicked through the dashboard.
    generated `*.up.railway.app` domain on its own.
 5. Run the smoke test below.
 
+The festival's own deployment is `lotus-festival / web` in the `@bywilliaml`
+Railway workspace, serving <https://web-production-205af.up.railway.app> with
+the preview gate up. `RESEND_API_KEY` is not set on it yet, so form submissions
+are written to the deploy log rather than emailed — see the long-lead item in
+the launch checklist.
+
 Four things are Railway-specific and worth understanding rather than copying:
 
 - **`CLIENT_IP_HEADER=x-real-ip`, set in the config file.** Railway's edge
@@ -150,8 +156,16 @@ Four things are Railway-specific and worth understanding rather than copying:
   live, so `next build` fails. It is not needed: `next start` sets
   `NODE_ENV=production` itself when it is unset, which is what makes the session
   cookie `Secure` and the preview gate fail closed.
-- **Never set `PORT`.** Railway injects it and `next start` reads it. Setting it
-  is how the healthcheck starts timing out.
+- **Two ports have to agree**, and this is the one that will bite you. Railway
+  injects `PORT=8080` and `next start` obeys it; the Railway domain has a target
+  port of its own. Generate the domain **without pinning a target port** and
+  Railway routes to whatever the app is listening on — nothing to set. Pin the
+  target port to anything else and the app stays on 8080 while the edge knocks
+  on the other one: the deploy reports SUCCESS, the logs look perfect, and every
+  request comes back `502 Application failed to respond`. If you do pin it, set
+  `PORT` to the same number, and declare it in `.railway/railway.ts` — IaC reads
+  an undeclared variable as one to delete, so leaving it out means the next
+  `railway config apply` takes the site down.
 - **`NEXT_PUBLIC_SITE_URL` is baked in at build time**, like every
   `NEXT_PUBLIC_` value. Changing it needs a redeploy, not a restart. It is set
   to `https://${{RAILWAY_PUBLIC_DOMAIN}}` so a fresh deploy is self-consistent
