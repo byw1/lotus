@@ -51,6 +51,15 @@ test.describe("hydration and markup", () => {
             found.push(`<li> inside <${parent.toLowerCase()}>`);
           }
         }
+        // A <dl> may only contain <dt>, <dd>, <div> and script-supporting
+        // elements. A stray <span> separator is invalid and the parser moves it.
+        for (const list of document.querySelectorAll("dl")) {
+          for (const child of list.children) {
+            if (!["DT", "DD", "DIV", "SCRIPT", "TEMPLATE"].includes(child.tagName)) {
+              found.push(`<${child.tagName.toLowerCase()}> as a direct child of <dl>`);
+            }
+          }
+        }
         return [...new Set(found)];
       });
       expect(problems, `${path} has invalid nesting`).toEqual([]);

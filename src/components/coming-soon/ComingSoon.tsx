@@ -136,12 +136,12 @@ export function ComingSoon() {
                   <time dateTime="2027-07">{site.dates.display}</time> · {site.dates.detail}
                 </dd>
               </div>
-              <span aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
+              <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
               <div>
                 <dt className="sr-only">Where</dt>
                 <dd>{site.venue.name}, Los Angeles</dd>
               </div>
-              <span aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
+              <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
               <div>
                 <dt className="sr-only">Admission</dt>
                 <dd>Free admission</dd>

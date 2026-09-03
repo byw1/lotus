@@ -36,6 +36,7 @@
     "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pngjs": "^6.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.4",
@@ -43,12 +44,13 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "playwright": "^1.62.1",
+    "pngjs": "^7.0.0",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
     "typescript": "^5"
   },
-  "description": "Official website of the Los Angeles Lotus Festival \u2014 46th Annual, Echo Park Lake.",
+  "description": "Official website of the Los Angeles Lotus Festival — 46th Annual, Echo Park Lake.",
   "license": "MIT"
 }

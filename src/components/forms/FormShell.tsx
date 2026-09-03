@@ -2,9 +2,8 @@
 
 import { CheckCircle2 } from "lucide-react";
 import { useActionState, useEffect, useRef, type ReactNode } from "react";
-import { useFormStatus } from "react-dom";
 
-import { Button } from "@/components/ui/Button";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 import type { FormState } from "@/lib/form-state";
 import { initialFormState } from "@/lib/form-state";
 import { HONEYPOT_FIELD, TIMESTAMP_FIELD } from "@/lib/spam";
@@ -70,26 +69,6 @@ function AntiSpamFields() {
   );
 }
 
-function SubmitButton({ label, pendingLabel }: { label: string; pendingLabel: string }) {
-  const { pending } = useFormStatus();
-
-  return (
-    <Button type="submit" size="lg" disabled={pending} aria-disabled={pending}>
-      {pending ? (
-        <>
-          <span
-            aria-hidden="true"
-            className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
-          />
-          {pendingLabel}
-        </>
-      ) : (
-        label
-      )}
-    </Button>
-  );
-}
-
 export type FormShellProps = {
   action: (state: FormState, formData: FormData) => Promise<FormState>;
   submitLabel?: string;
@@ -146,6 +125,15 @@ export function FormShell({
     <form action={formAction} noValidate className={cn("relative flex flex-col gap-7", className)}>
       <AntiSpamFields />
 
+      {/*
+        Known limitation, no-JavaScript path only: React owns this form's
+        action URL, so a rejected submission is a full page load that lands at
+        the top of the document with this message below the fold. There is no
+        way to append a fragment to a Server Action's target. The message is
+        still announced — role="alert" fires on parse — and it is the first
+        thing inside the form, so scrolling to the fields reaches it. With
+        JavaScript, focus moves here directly.
+      */}
       {state.status === "error" && state.message ? (
         <div
           ref={resultRef}
@@ -160,7 +148,7 @@ export function FormShell({
       {children(state)}
 
       <div className="border-line flex flex-col gap-4 border-t pt-7 sm:flex-row sm:items-center sm:justify-between">
-        <SubmitButton label={submitLabel} pendingLabel={pendingLabel} />
+        <SubmitButton label={submitLabel} pendingLabel={pendingLabel} size="lg" />
         {footnote ? (
           <p className="text-fg-muted max-w-[46ch] text-[13px] leading-relaxed">{footnote}</p>
         ) : null}

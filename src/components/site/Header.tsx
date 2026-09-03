@@ -3,7 +3,7 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { primaryNav, site } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -27,12 +27,23 @@ export function Header() {
    */
   const [openedOn, setOpenedOn] = useState<string | null>(null);
   const open = openedOn === pathname;
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
+
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpenedOn(null);
+      if (event.key !== "Escape") return;
+      setOpenedOn(null);
+      /*
+       * Put focus back on the button that opened the menu. Escape usually
+       * fires while focus is on a link *inside* the menu, and closing it
+       * unmounts that link — which drops focus to <body> and restarts anyone
+       * navigating by keyboard at the top of the document.
+       */
+      toggleRef.current?.focus();
     };
+
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
@@ -74,6 +85,7 @@ export function Header() {
           </Link>
 
           <button
+            ref={toggleRef}
             type="button"
             onClick={() => setOpenedOn(open ? null : pathname)}
             aria-expanded={open}

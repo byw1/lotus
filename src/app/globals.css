@@ -46,14 +46,16 @@
   --blush-deep: #d1698a;
   /*
    * Two vermilions, because one cannot do both jobs.
-   * `--vermilion` is for vermilion TEXT on the page ground (4.64:1 here).
+   * `--vermilion` is for vermilion TEXT — 5.52:1 on the page ground, and still
+ * 5.06:1 on the 10% tint the Badge component paints behind it, which is the
+ * tightest place it lands.
    * `--vermilion-solid` is the button surface, dark enough that white sits on
    * it at 5.12:1 — the brighter one only reaches 4.25:1, which fails AA for
    * the 14px label on a primary button.
    * Neither is #DE2910: that is the PRC flag red, and this is a cultural
    * festival, not a state one.
    */
-  --vermilion: #e0402b;
+  --vermilion: #ea5540;
   --vermilion-solid: #cc3520;
   --vermilion-deep: #b32b1a;
   --jade: #4e9d8b;
@@ -81,13 +83,14 @@
   --line: rgb(26 20 24 / 12%);
   --line-strong: rgb(26 20 24 / 22%);
 
-  --gold: #8a6416;
+  /* Dark enough to stay legible on the 10% tint the Badge paints behind it. */
+  --gold: #7d5a13;
   --gold-soft: #a97f2c;
   --gold-deep: #6b4d10;
   --blush: #b04a6c;
   --blush-deep: #8c3252;
-  --vermilion: #c2321f;
-  --vermilion-solid: #b32b1a;
+  --vermilion: #b32b1a;
+  --vermilion-solid: #a82818;
   --vermilion-deep: #96220f;
   --jade: #2f6b5e;
   --jade-deep: #214d43;

@@ -148,7 +148,7 @@ export const history = [
   {
     year: "1972",
     title: "The Day of the Lotus",
-    body: "The first festival is held at Echo Park Lake as a single-day event, organized by the City of Los Angeles Department of Recreation and Parks with the Council of Oriental Organizations. It is timed to the blooming of the lotus, and created to recognize the contributions of Asian Americans to Los Angeles. Ellen Quan and Helen Young, both volunteers from the Asian community, chair it through 1977.",
+    body: "The first festival is held at Echo Park Lake as a single-day event, organized by the City of Los Angeles Department of Recreation and Parks with the Council of Oriental Organizations. It is timed to the blooming of the lotus, and created to recognize the contributions of Asian Americans to Los Angeles. Ellen Quan and Helen Young chair it through 1977.",
   },
   {
     year: "1975",

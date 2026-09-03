@@ -98,7 +98,22 @@ export function HomeHero() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.7} y={12} className="mt-14 lg:mt-20">
+        {/*
+          Below `lg` the flower sits in the bottom-right corner and the scrim
+          has decayed to about 0.4 by the time it reaches this list, so these
+          rows were being drawn straight onto lit petals — measured at 1.6:1
+          for the labels on a 390px viewport. No scrim opacity fixes that
+          without greying the flower out altogether, and a text-shadow does not
+          count toward contrast. So the list gets the page's own opaque ground
+          underneath it, the same answer the coming-soon page reached for its
+          footer. Above `lg` the left-to-right scrim already clears 4.7:1 and
+          the band is dropped.
+        */}
+        <Reveal
+          delay={0.7}
+          y={12}
+          className="bg-bg relative mt-14 rounded-2xl px-4 py-4 lg:mt-20 lg:bg-transparent lg:px-0 lg:py-0"
+        >
           <dl className="text-fg-muted flex flex-col gap-3 text-[13.5px] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-3">
             <div className="flex items-baseline gap-2">
               <dt className="text-fg-subtle">When</dt>
@@ -106,7 +121,12 @@ export function HomeHero() {
                 <time dateTime="2027-07">{site.dates.display}</time> · {site.dates.detail}
               </dd>
             </div>
-            <span aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
+            {/*
+              A <dl> may only contain <dt>, <dd>, <div> and script-supporting
+              elements. A bare <span> here is invalid, and the browser's parser
+              quietly relocates it.
+            */}
+            <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
             <div className="flex items-baseline gap-2">
               <dt className="text-fg-subtle">Where</dt>
               <dd className="text-fg/90">
@@ -120,7 +140,7 @@ export function HomeHero() {
                 </Link>
               </dd>
             </div>
-            <span aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
+            <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
             <div className="flex items-baseline gap-2">
               <dt className="text-fg-subtle">Admission</dt>
               <dd className="text-fg/90">Free, no ticket</dd>

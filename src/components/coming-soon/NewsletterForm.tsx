@@ -3,11 +3,11 @@
 import { ArrowRight, Check } from "lucide-react";
 import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
-import { useFormStatus } from "react-dom";
 
 import { subscribeAction } from "@/app/actions";
 import { initialFormState } from "@/lib/form-state";
 import { HONEYPOT_FIELD, TIMESTAMP_FIELD } from "@/lib/spam";
+import { SubmitButton } from "@/components/ui/SubmitButton";
 import { cn } from "@/lib/utils";
 
 /**
@@ -22,38 +22,6 @@ import { cn } from "@/lib/utils";
  * against it. Focus lives on the container via `:focus-within`, so the whole
  * control lights up as one object instead of a rectangle appearing inside it.
  */
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button
-      type="submit"
-      disabled={pending}
-      className={cn(
-        "bg-vermilion-solid hover:bg-vermilion-deep inline-flex h-12 shrink-0 items-center gap-2 rounded-full px-6",
-        "text-sm font-medium text-white transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        "active:translate-y-px disabled:pointer-events-none disabled:opacity-80",
-        "shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]",
-      )}
-    >
-      {pending ? (
-        <>
-          <span
-            aria-hidden="true"
-            className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent"
-          />
-          <span>Joining</span>
-        </>
-      ) : (
-        <>
-          <span>Notify me</span>
-          <ArrowRight aria-hidden="true" className="size-4" />
-        </>
-      )}
-    </button>
-  );
-}
 
 export function NewsletterForm({ className }: { className?: string }) {
   const [state, formAction] = useActionState(subscribeAction, initialFormState);
@@ -115,7 +83,11 @@ export function NewsletterForm({ className }: { className?: string }) {
           // the placeholder text well under 4.5:1.
           "border-line-strong flex items-center gap-2 rounded-full border bg-[rgba(11,10,15,0.62)] p-1.5",
           "backdrop-blur-xl transition-[border-color,box-shadow] duration-200",
-          "focus-within:border-gold/50 focus-within:shadow-[0_0_0_4px_rgba(232,184,87,0.13)]",
+          // The capsule owns the focus indicator for the input inside it, so it has
+          // to be a real one: a solid 2px gold ring at 10.7:1 against the ink
+          // ground, not the 13%-opacity wash that was here before and measured
+          // 1.24:1. WCAG 2.2 asks for 3:1 on a focus indicator.
+          "focus-within:border-gold focus-within:shadow-[0_0_0_2px_var(--gold)]",
         )}
       >
         <label htmlFor="newsletter-email" className="sr-only">
@@ -137,7 +109,12 @@ export function NewsletterForm({ className }: { className?: string }) {
             "outline-none focus-visible:outline-none",
           )}
         />
-        <SubmitButton />
+        <SubmitButton
+          label="Notify me"
+          pendingLabel="Joining"
+          icon={<ArrowRight aria-hidden="true" className="size-4" />}
+          className="h-12 shrink-0 px-6"
+        />
       </div>
 
       {state.status === "error" ? (

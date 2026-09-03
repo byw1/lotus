@@ -205,7 +205,7 @@ export default function GetInvolvedPage() {
                         {route.label}
                       </Link>
                     </h3>
-                    {route.here ? <span className="eyebrow text-gold">Below</span> : null}
+                    {route.here ? <span className="eyebrow !text-gold">Below</span> : null}
                   </div>
                   <p className="text-fg-muted mt-3 text-[15px] leading-relaxed">{route.who}</p>
                 </Card>

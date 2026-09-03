@@ -30,8 +30,8 @@ const PICKS: readonly Pick[] = [
   { id: "dragon-boats", href: "/dragon-boats", cta: "Race, or enter a team" },
   { id: "main-stage", href: "/festival#main-stage", cta: "Both stages" },
   { id: "lights-of-dreams", href: "/festival#lights-of-dreams", cta: "On the lake" },
-  { id: "food-court", href: "/festival#food-court", cta: "Around the lake" },
-  { id: "boutiques", href: "/festival#boutiques", cta: "Around the lake" },
+  { id: "food-court", href: "/festival#food-court", cta: "The food court" },
+  { id: "boutiques", href: "/festival#boutiques", cta: "Boutiques and artisans" },
   { id: "childrens-area", href: "/festival#childrens-area", cta: "For families" },
 ];
 

@@ -121,7 +121,7 @@ function FestivalHero() {
                   <time dateTime="2027-07">{site.dates.display}</time> · {site.dates.detail}
                 </dd>
               </div>
-              <span aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
+              <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
               <div>
                 <dt className="sr-only">Hours</dt>
                 <dd>{site.dates.hours}</dd>
