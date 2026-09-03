@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "node --import tsx --test \"tests/**/*.test.ts\"",
@@ -55,6 +55,6 @@
     "tsx": "^4.23.13",
     "typescript": "^5"
   },
-  "description": "Official website of the Los Angeles Lotus Festival — 46th Annual, Echo Park Lake.",
+  "description": "Official website of the Los Angeles Lotus Festival \u2014 46th Annual, Echo Park Lake.",
   "license": "MIT"
 }

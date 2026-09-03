@@ -179,7 +179,7 @@ this README:
 | `npm run build` | Production build |
 | `npm start` | Serve the production build |
 | `npm run lint` | ESLint (`eslint-config-next`, core-web-vitals + TypeScript) |
-| `npm run typecheck` | `tsc --noEmit` |
+| `npm run typecheck` | `next typegen && tsc --noEmit`. The typegen is not optional: `LayoutProps` and the other typed-route helpers are generated into `.next/types`, so on a clean checkout a bare `tsc` fails. |
 | `npm run format` | Prettier, write |
 | `npm run format:check` | Prettier, check only — this is what CI runs |
 | `npm test` | `node:test` over `tests/**/*.test.ts` |

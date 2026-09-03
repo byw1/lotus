@@ -33,6 +33,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      # Runs `next typegen` first. `LayoutProps` and the other typed-route
+      # helpers are generated into .next/types by `next dev`, `next build` or
+      # `next typegen`, and tsconfig includes that directory — so on a clean
+      # checkout, where .next does not exist yet, a bare `tsc --noEmit` fails
+      # on two layouts. That made this step order-dependent on a build that
+      # runs after it. The script now generates them itself.
       - name: Typecheck
         run: npm run typecheck
 
