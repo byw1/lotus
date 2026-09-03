@@ -35,14 +35,33 @@ npm test           # node:test — geometry, session crypto, validation, spam
 npm run build
 ```
 
-CI runs all five, plus `npm audit` and a secret scan.
+CI runs all five, plus the end-to-end suite, `npm audit` and a secret scan.
 
-The tests are deliberately narrow. They cover the four things where a mistake
-is invisible in review and expensive in the world: the petal maths (a bad edit
+For the end-to-end tests you need a browser once:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Playwright builds the app and starts it on port 3100 itself, with a fixed
+preview password, so you do not need a `.env.local` for it. On a machine where
+downloading a browser is not allowed, point `CHROMIUM_PATH` at one you already
+have.
+
+The unit tests are deliberately narrow. They cover the four things where a
+mistake is invisible in review and expensive in the world: the petal maths (a bad edit
 gives you a cabbage), the preview session's crypto (a "simplification" gives
 you a forgeable cookie), the form schemas (a field-name mismatch silently
 loses a real vendor's application), and the spam heuristics (too strict and
 real people fail with no explanation).
+
+The end-to-end tests in `e2e/` cover what only a browser can see: that the
+preview gate actually gates and its cookie cannot be forged, that all seven
+application forms submit and arrive with their fields intact, that every page
+hydrates and nests its HTML validly, and that every page is clean under
+axe-core. They run against a production build, because hydration and static
+rendering behave differently in development.
 
 ## House rules
 
