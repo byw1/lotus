@@ -36,6 +36,11 @@ export function Reveal({
 
   return (
     <motion.div
+      // Paired with the <noscript> rule in the root layout: Motion renders its
+      // `initial` style into the server HTML, so without this hook every
+      // revealed section on the page would stay invisible when JavaScript
+      // does not run.
+      data-reveal=""
       className={cn(className)}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -94,6 +99,7 @@ export function LineReveal({
       {lines.map((line, index) => (
         <span key={index} className="block overflow-hidden pb-[0.08em]">
           <motion.span
+            data-reveal=""
             className={cn("block", lineClassName)}
             initial={{ y: "108%" }}
             animate={{ y: "0%" }}

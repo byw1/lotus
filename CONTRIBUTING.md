@@ -28,13 +28,21 @@ accounts and no API keys.
 ## Before you open a pull request
 
 ```bash
-npm run format   # prettier
-npm run lint     # eslint
+npm run format     # prettier
+npm run lint       # eslint
 npm run typecheck
+npm test           # node:test — geometry, session crypto, validation, spam
 npm run build
 ```
 
-CI runs all four, plus `npm audit` and a secret scan.
+CI runs all five, plus `npm audit` and a secret scan.
+
+The tests are deliberately narrow. They cover the four things where a mistake
+is invisible in review and expensive in the world: the petal maths (a bad edit
+gives you a cabbage), the preview session's crypto (a "simplification" gives
+you a forgeable cookie), the form schemas (a field-name mismatch silently
+loses a real vendor's application), and the spam heuristics (too strict and
+real people fail with no explanation).
 
 ## House rules
 

@@ -9,7 +9,9 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "node --import tsx --test \"tests/**/*.test.ts\"",
+    "test:watch": "node --import tsx --test --watch \"tests/**/*.test.ts\""
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",
@@ -33,14 +35,16 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.4",
+    "axe-core": "^4.13.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
     "playwright": "^1.62.1",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
+    "tsx": "^4.23.13",
     "typescript": "^5"
   },
-  "description": "Official website of the Los Angeles Lotus Festival — 46th Annual, Echo Park Lake.",
+  "description": "Official website of the Los Angeles Lotus Festival \u2014 46th Annual, Echo Park Lake.",
   "license": "MIT"
 }

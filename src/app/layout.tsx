@@ -85,6 +85,21 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${display.variable} ${sans.variable} h-full antialiased`}>
+      <head>
+        {/*
+          Motion writes its `initial` style into the server-rendered HTML, so
+          every scroll-revealed section arrives at opacity 0 and waits for
+          JavaScript to reveal it. If JavaScript never runs, most of this site
+          would be a blank page. This puts it all back.
+
+          It has to live in <head> rather than in a component, because by the
+          time a <noscript> in the body is parsed the elements above it have
+          already been painted invisible.
+        */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="grain bg-bg text-fg flex min-h-full flex-col">
         {/*
           The first thing in the tab order. Someone navigating by keyboard

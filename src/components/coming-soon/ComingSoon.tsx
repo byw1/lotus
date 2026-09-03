@@ -36,7 +36,7 @@ export function ComingSoon() {
         className="pointer-events-none absolute inset-0 -z-30"
         style={{
           background:
-            "radial-gradient(120% 76% at 50% 92%, rgba(224,112,143,0.26) 0%, rgba(232,184,87,0.11) 34%, rgba(11,10,15,0) 70%)",
+            "radial-gradient(130% 84% at 50% 94%, rgba(224,112,143,0.32) 0%, rgba(232,184,87,0.14) 32%, rgba(11,10,15,0) 72%)",
         }}
       />
 
