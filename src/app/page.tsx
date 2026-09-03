@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
 import { FestivalHome } from "@/components/home/FestivalHome";
+import { PreviewBar } from "@/components/site/PreviewBar";
 import { COOKIE_NAME, isPreviewMode, verifyToken } from "@/lib/preview/session";
 
 /**
@@ -25,5 +26,18 @@ export default async function HomePage() {
   const jar = await cookies();
   const unlocked = verifyToken(jar.get(COOKIE_NAME)?.value);
 
-  return unlocked ? <FestivalHome /> : <ComingSoon />;
+  if (!unlocked) return <ComingSoon />;
+
+  /*
+   * This route sits outside the (site) group, so it does not inherit that
+   * layout's preview bar. Someone looking at the real homepage through the
+   * gate needs the same standing reminder that nothing here is final as they
+   * get on every other page.
+   */
+  return (
+    <>
+      <PreviewBar />
+      <FestivalHome />
+    </>
+  );
 }

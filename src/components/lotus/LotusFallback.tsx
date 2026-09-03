@@ -19,13 +19,25 @@ const RINGS = [
   { count: 5, height: 60, width: 28, offset: 36, opacity: 1, fill: "url(#lf-core)" },
 ];
 
+/**
+ * Round a computed coordinate before it reaches the DOM.
+ *
+ * `Math.sin` and `Math.cos` are not required to be correctly rounded, and V8
+ * in Node does not always agree with V8 in the browser on the final bit. That
+ * is enough to make the server-rendered `cx="-7.11085210762546"` differ from
+ * the client's `-7.110852107625459` and fail hydration on every page that
+ * draws this lotus. Three decimals is far finer than a pixel here, and it
+ * makes the markup smaller as a bonus.
+ */
+const round = (n: number) => Math.round(n * 1000) / 1000;
+
 /** A single petal, tip pointing up, rooted at the origin. */
 function petalPath(width: number, height: number) {
   const w = width / 2;
   return [
     "M 0 0",
-    `C ${-w} ${-height * 0.3} ${-w * 0.62} ${-height * 0.86} 0 ${-height}`,
-    `C ${w * 0.62} ${-height * 0.86} ${w} ${-height * 0.3} 0 0`,
+    `C ${round(-w)} ${round(-height * 0.3)} ${round(-w * 0.62)} ${round(-height * 0.86)} 0 ${round(-height)}`,
+    `C ${round(w * 0.62)} ${round(-height * 0.86)} ${round(w)} ${round(-height * 0.3)} 0 0`,
     "Z",
   ].join(" ");
 }
@@ -80,7 +92,7 @@ export function LotusFallback({ className }: { className?: string }) {
                 stroke="#ffffff"
                 strokeOpacity="0.16"
                 strokeWidth="0.75"
-                transform={`rotate(${angle})`}
+                transform={`rotate(${round(angle)})`}
               />
             );
           })}
@@ -96,8 +108,8 @@ export function LotusFallback({ className }: { className?: string }) {
         return (
           <circle
             key={i}
-            cx={Math.cos(angle) * r}
-            cy={Math.sin(angle) * r}
+            cx={round(Math.cos(angle) * r)}
+            cy={round(Math.sin(angle) * r)}
             r="2.4"
             fill="#6f7a3a"
           />
@@ -110,10 +122,10 @@ export function LotusFallback({ className }: { className?: string }) {
         return (
           <line
             key={i}
-            x1={Math.cos(angle) * inner}
-            y1={Math.sin(angle) * inner}
-            x2={Math.cos(angle) * outer}
-            y2={Math.sin(angle) * outer}
+            x1={round(Math.cos(angle) * inner)}
+            y1={round(Math.sin(angle) * inner)}
+            x2={round(Math.cos(angle) * outer)}
+            y2={round(Math.sin(angle) * outer)}
             stroke="#f0c04a"
             strokeWidth="1.2"
             strokeLinecap="round"
