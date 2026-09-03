@@ -1,26 +1,364 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Los Angeles Lotus Festival — design tokens
+   --------------------------------------------------------------------------
+   The palette is drawn from two places at once: the lotus bed at Echo Park
+   Lake at dusk (ink water, blush petals, a gold heart), and the culture
+   honored in 2027 (vermilion, imperial gold, jade, porcelain).
+
+   Deliberately restrained. Gold is the primary accent and carries light;
+   blush is the secondary; vermilion is reserved for the 2027 designation and
+   primary calls to action; jade appears rarely. The background does most of
+   the work.
+
+   Two surface themes ship, switched per-section rather than by a user toggle:
+     (default)      "night"     — ink background, used for hero and immersive sections
+     .theme-paper   "porcelain" — warm paper, used for reading and for forms
+   Both meet WCAG 2.2 AA for body text and AAA for large display text.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #0b0a0f;
+  --bg-raised: #14121b;
+  --bg-sunken: #070609;
+  --surface: rgb(255 255 255 / 4%);
+  --surface-strong: rgb(255 255 255 / 7%);
+
+  /* Text */
+  --fg: #f7f3ee;
+  --fg-muted: #a9a3b1;
+  --fg-subtle: #6f6979;
+
+  /* Lines */
+  --line: rgb(255 255 255 / 9%);
+  --line-strong: rgb(255 255 255 / 16%);
+
+  /* Accents */
+  --gold: #e8b857;
+  --gold-soft: #f3dba6;
+  --gold-deep: #a97f2c;
+  --blush: #f0a8ba;
+  --blush-deep: #d1698a;
+  --vermilion: #e0402b;
+  --vermilion-deep: #b32b1a;
+  --jade: #4e9d8b;
+  --jade-deep: #2f6b5e;
+
+  /* Focus ring — deliberately loud. Never remove it. */
+  --focus: #f3dba6;
+}
+
+/* Porcelain sections: warm paper, ink type. Applied to a wrapper element. */
+.theme-paper {
+  color-scheme: light;
+
+  --bg: #f7f3ee;
+  --bg-raised: #fffdfa;
+  --bg-sunken: #ede6dd;
+  --surface: rgb(26 20 24 / 3%);
+  --surface-strong: rgb(26 20 24 / 6%);
+
+  --fg: #1a1418;
+  --fg-muted: #574d55;
+  --fg-subtle: #857a83;
+
+  --line: rgb(26 20 24 / 12%);
+  --line-strong: rgb(26 20 24 / 22%);
+
+  --gold: #8a6416;
+  --gold-soft: #a97f2c;
+  --gold-deep: #6b4d10;
+  --blush: #b04a6c;
+  --blush-deep: #8c3252;
+  --vermilion: #c2321f;
+  --vermilion-deep: #96220f;
+  --jade: #2f6b5e;
+  --jade-deep: #214d43;
+
+  --focus: #8c3252;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Surfaces */
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+
+  /* Text */
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  /* Lines */
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* Accents */
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-blush: var(--blush);
+  --color-blush-deep: var(--blush-deep);
+  --color-vermilion: var(--vermilion);
+  --color-vermilion-deep: var(--vermilion-deep);
+  --color-jade: var(--jade);
+  --color-jade-deep: var(--jade-deep);
+  --color-focus: var(--focus);
+
+  /* Type */
+  --font-display:
+    var(--font-instrument-serif), "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    "Times New Roman", serif;
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  /*
+   * Chinese glyphs use the reader's own system CJK face rather than a web
+   * font. A Simplified Chinese web font is 1-5 MB even subset, and this page
+   * is opened on cell networks in a park. If a designed CJK face is ever
+   * needed, subset it to the exact glyphs used and self-host it.
+   */
+  --font-cjk:
+    "PingFang SC", "Hiragino Sans GB", "Source Han Serif SC", "Noto Serif CJK SC",
+    "Noto Sans CJK SC", "Microsoft YaHei", var(--font-display);
+
+  /* Motion. Expo-out is the house curve: fast departure, long soft landing. */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-back: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* Radii */
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --radius-2xl: 2.25rem;
+
+  /* Reading measure */
+  --container-prose: 68ch;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    /* Keep anchored headings clear of the sticky header. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* One focus treatment, everywhere, and it is always visible. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Chinese and other CJK text opts in explicitly. */
+  :lang(zh),
+  .cjk {
+    font-family: var(--font-cjk);
+  }
+
+  ::selection {
+    background-color: var(--gold);
+    color: #0b0a0f;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Firefox honours this; other engines fall back to the default bar. */
+  * {
+    scrollbar-color: var(--line-strong) transparent;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  /*
+   * A very fine film grain over the whole page. This is what stops large
+   * dark gradients from banding on 8-bit displays, and it is most of the
+   * reason the page reads as printed rather than rendered.
+   */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Frosted panel used for cards, the nav bar and form surfaces. */
+  .glass {
+    background-color: var(--surface);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+  }
+
+  /* Gold hairline that fades at both ends — used as a section divider. */
+  .rule-fade {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--line-strong) 15%,
+      var(--line-strong) 85%,
+      transparent
+    );
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(105deg, var(--gold-soft) 0%, var(--gold) 45%, var(--blush) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Small caps label used above headings. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--fg-muted);
+  }
+
+  /* Visible only to screen readers, until focused. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ==========================================================================
+   Motion
+   --------------------------------------------------------------------------
+   Every animation on this site is decoration. Under `prefers-reduced-motion`
+   the page must still present exactly the same information, immediately.
+   Framer Motion components read the same preference via `useReducedMotion`;
+   this block is the backstop for CSS-driven motion and for the WebGL canvas
+   wrapper.
+   ========================================================================== */
+
+@keyframes lf-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lf-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes lf-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@layer utilities {
+  .animate-rise {
+    animation: lf-rise 0.9s var(--ease-expo) both;
+  }
+
+  .animate-breathe {
+    animation: lf-breathe 7s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Printed pages: ink on paper, no decoration. */
+@media print {
+  :root {
+    --bg: #fff;
+    --fg: #000;
+    --fg-muted: #333;
+  }
+
+  .grain::after,
+  [data-print-hide] {
+    display: none !important;
+  }
 }
