@@ -44,7 +44,7 @@ export default defineRailway(() => {
 
     env: {
       /*
-       * NODE_ENV is deliberately absent, and should stay absent.
+       * NODE_ENV is deliberately absent, and must stay absent.
        *
        * Set here it would also be set during the build, where `npm ci` reads
        * it and omits devDependencies — which is where TypeScript, Tailwind and
@@ -52,10 +52,27 @@ export default defineRailway(() => {
        * anyway: `next start` sets NODE_ENV=production itself when it is unset,
        * which is what makes the session cookie `Secure` and the preview gate
        * fail closed. See `next/dist/bin/next`.
-       *
-       * PORT is absent for the same reason in reverse: Railway injects it and
-       * `next start` reads it. Setting either is how this breaks.
        */
+
+      /*
+       * PORT, on the other hand, is here on purpose, and this is the one line
+       * that cost a 502.
+       *
+       * Two ports have to agree: the one the app listens on, and the target
+       * port of the Railway domain. Railway injects PORT=8080 by default and
+       * `next start` obeys it, so if you generate the domain and let Railway
+       * detect the port, they agree on 8080 and nothing needs setting. Pin the
+       * domain's target port to anything else and the app carries on listening
+       * on 8080 while the edge knocks on the other one — a deploy that reports
+       * SUCCESS and answers every request with "Application failed to
+       * respond".
+       *
+       * This service's domain is pinned to 3000, so PORT is pinned to 3000 to
+       * match. It also has to be declared here rather than only on Railway:
+       * IaC treats an undeclared variable as one to delete, so leaving it out
+       * would mean the next `railway config apply` quietly took the site down.
+       */
+      PORT: "3000",
 
       /*
        * Railway resolves `${{...}}` itself, at build and at run time, so the
