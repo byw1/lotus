@@ -52,7 +52,11 @@ describe("petal geometry", () => {
         // The spine is integrated at a fixed step rather than sampled from a
         // curve, which is what lets a petal bend without stretching. If this
         // drifts, the bloom animation will visibly grow the petals.
-        const measured = centreLineLength(geometry, SEGMENTS.lengthSegments, SEGMENTS.widthSegments);
+        const measured = centreLineLength(
+          geometry,
+          SEGMENTS.lengthSegments,
+          SEGMENTS.widthSegments,
+        );
         const error = Math.abs(measured - whorl.petal.length) / whorl.petal.length;
         assert.ok(error < 0.02, `arc length off by ${(error * 100).toFixed(2)}%`);
       });
@@ -111,7 +115,11 @@ describe("petal geometry", () => {
 
   it("opens outermost-first", () => {
     const orders = WHORLS.map((w) => w.bloomOrder);
-    assert.deepEqual(orders, [...orders].sort((a, b) => a - b), "whorls are not ordered outside-in");
+    assert.deepEqual(
+      orders,
+      [...orders].sort((a, b) => a - b),
+      "whorls are not ordered outside-in",
+    );
   });
 });
 

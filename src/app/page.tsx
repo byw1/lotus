@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 
 import { ComingSoon } from "@/components/coming-soon/ComingSoon";
+import { FestivalHome } from "@/components/home/FestivalHome";
 import { COOKIE_NAME, isPreviewMode, verifyToken } from "@/lib/preview/session";
 
 /**
@@ -18,15 +19,11 @@ import { COOKIE_NAME, isPreviewMode, verifyToken } from "@/lib/preview/session";
  */
 export default async function HomePage() {
   if (!isPreviewMode()) {
-    return <ComingSoon />;
+    return <FestivalHome />;
   }
 
   const jar = await cookies();
   const unlocked = verifyToken(jar.get(COOKIE_NAME)?.value);
 
-  // TODO: once the festival site pages land, render the real homepage here for
-  // unlocked visitors. Until then everyone sees the same page.
-  void unlocked;
-
-  return <ComingSoon />;
+  return unlocked ? <FestivalHome /> : <ComingSoon />;
 }

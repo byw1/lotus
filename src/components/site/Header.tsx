@@ -17,17 +17,21 @@ import { cn } from "@/lib/utils";
  */
 export function Header() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
 
-  // Close the menu on navigation, so it does not stay open behind the new page.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  /*
+   * The menu remembers which route it was opened on rather than just whether
+   * it is open. Navigating changes `pathname`, so the menu closes on its own —
+   * derived, not synchronised. Doing this with an effect that calls setState
+   * on every pathname change means an extra render of the whole header on
+   * every navigation, for a value that was already knowable.
+   */
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const open = openedOn === pathname;
 
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") setOpenedOn(null);
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
@@ -71,7 +75,7 @@ export function Header() {
 
           <button
             type="button"
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpenedOn(open ? null : pathname)}
             aria-expanded={open}
             aria-controls="mobile-nav"
             className="text-fg-muted hover:text-fg hover:bg-surface inline-flex size-10 items-center justify-center rounded-full transition-colors duration-200 md:hidden"

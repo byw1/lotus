@@ -92,12 +92,21 @@ describe("the honeypot field name", () => {
     assert.equal(result.data.website, "https://example.org");
   });
 
-  it("rejects a submission that filled the honeypot", () => {
+  it("parses a filled honeypot rather than rejecting it here", async () => {
+    // The schema deliberately lets it through: `lib/spam.ts` is the single
+    // place that judges it, and it answers with an ordinary success message so
+    // an automated submitter learns nothing about which field is the trap.
     const result = newsletterSchema.safeParse({
       email: "bot@example.org",
       homepage: "https://spam.example",
     });
-    assert.equal(result.success, false);
+    assert.ok(result.success);
+
+    const { checkSubmission } = await import("../src/lib/spam");
+    assert.deepEqual(await checkSubmission({ honeypot: result.data.homepage }), {
+      ok: false,
+      reason: "honeypot",
+    });
   });
 });
 

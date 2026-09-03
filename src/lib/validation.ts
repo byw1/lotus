@@ -56,7 +56,17 @@ const url = z
  * that a naive scraper fills it, and used by nothing on this site.
  */
 export const antiSpamFields = {
-  homepage: z.string().max(0, { message: "Rejected." }).optional(),
+  /*
+   * Accepted here, judged in `lib/spam.ts`.
+   *
+   * Rejecting a filled honeypot at the schema level would surface it as a
+   * visible "please check the highlighted fields" against a field nobody can
+   * see — baffling for the real person whose password manager decided to fill
+   * it, and a free hint to everyone else about which field is the trap. The
+   * spam check instead answers a filled honeypot with an ordinary success
+   * message, so an automated submitter learns nothing.
+   */
+  homepage: z.string().optional(),
   startedAt: z.coerce.number().optional(),
   turnstileToken: z.string().optional(),
 };

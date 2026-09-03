@@ -9,7 +9,10 @@ import { leavePreview } from "@/app/team/actions";
  */
 export function PreviewBar() {
   return (
-    <div className="bg-vermilion-solid text-white">
+    // A landmark, not a bare div: it sits above the header, outside every other
+    // landmark on the page, and content stranded outside all of them is
+    // unreachable when navigating by region.
+    <aside aria-label="Preview notice" className="bg-vermilion-solid text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-2.5 sm:px-8">
         <p className="text-[12.5px] leading-snug">
           <strong className="font-semibold">Preview.</strong> Nothing here is final, and dates and
@@ -24,6 +27,6 @@ export function PreviewBar() {
           </button>
         </form>
       </div>
-    </div>
+    </aside>
   );
 }
