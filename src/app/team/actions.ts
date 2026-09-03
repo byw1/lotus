@@ -10,6 +10,7 @@ import {
   isPreviewConfigured,
   issueToken,
   passwordMatches,
+  safeNextPath,
 } from "@/lib/preview/session";
 import { clientKey, limits, rateLimit } from "@/lib/rate-limit";
 
@@ -63,14 +64,8 @@ export async function enterPreview(_previous: FormState, formData: FormData): Pr
   const jar = await cookies();
   jar.set(COOKIE_NAME, token, cookieOptions);
 
-  /*
-   * Open-redirect guard. `next` arrives from the query string, so it is
-   * attacker-controlled: only same-origin absolute paths are allowed, and
-   * "//evil.example" is rejected because a protocol-relative URL leaves the
-   * site while looking like a path.
-   */
-  const safe = next.startsWith("/") && !next.startsWith("//") ? next : "/";
-  redirect(safe);
+  // `next` arrives from the query string. See safeNextPath for what it refuses.
+  redirect(safeNextPath(next));
 }
 
 export async function leavePreview(): Promise<void> {

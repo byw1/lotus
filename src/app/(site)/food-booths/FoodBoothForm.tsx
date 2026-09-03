@@ -74,7 +74,8 @@ export function FoodBoothForm() {
       footnote={
         <>
           No payment is taken here. Around thirty vendors make up the food court, so applying does
-          not guarantee a booth at the {site.editionOrdinal} festival. Either way, you hear back.
+          not guarantee a booth at the {site.editionOrdinal} festival. Successful applicants are
+          emailed in the spring.
         </>
       }
     >

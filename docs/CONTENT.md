@@ -123,7 +123,7 @@ These apply to anything anyone writes for this site, in any file.
 - **Do not mix cultures.** No cherry blossoms, torii gates or Korean motifs on
   content about China. Pan-Asian decoration is the exact thing this festival
   exists to move past.
-- **The word "Oriental"** appears on this site exactly once — naming the
+- **The word "Oriental"** appears on this site only where it names the
   historical Council of Oriental Organizations, with its date, because that was
   the founding partner's actual name in 1972. Nowhere else, ever.
 - **No brush-script Latin typefaces.** Faces like Wonton and Chop Suey were

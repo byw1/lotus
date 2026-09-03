@@ -39,7 +39,11 @@ const crew = [
   },
 ] as const;
 
-/** Every trophy given out. The order is the order on the festival's own sheet. */
+/**
+ * The trophy categories recorded on the festival's own race sheet. Written as
+ * the ones we know of rather than as a closed list — the sheet is from a past
+ * cycle and the categories have changed before.
+ */
 const trophies = [
   "Best Overall",
   "Community",
@@ -369,13 +373,13 @@ export default function DragonBoatsPage() {
               <p className="text-fg-muted">
                 When the boats first raced here is genuinely disputed, and by the festival&rsquo;s
                 own people. The City dates them to 1975 and the third Lotus Festival, where the
-                first hulls were two rowboats lashed together and fitted with dragon décor, and ten
-                co-ed teams raced the length of the lake. Recreation and Parks elsewhere credits a
-                Chinese opening ceremony in 1991 with making them permanent. The festival&rsquo;s
-                own site credits an advisory board chair in the mid-nineties with bringing them in.
-                All three accounts are held by people who were there, so the honest thing to say is
-                that the boats have been part of this for fifty years and that nobody agrees on the
-                first one.
+                first hulls, by one account, were two rowboats lashed together and fitted with
+                dragon décor, raced by ten co-ed teams raced the length of the lake. Recreation and
+                Parks elsewhere credits a Chinese opening ceremony in 1991 with making them
+                permanent. The festival&rsquo;s own site credits an advisory board chair in the
+                mid-nineties with bringing them in. All three accounts are held by people who were
+                there, so the honest thing to say is that the boats have been part of this for fifty
+                years and that nobody agrees on the first one.
               </p>
             </div>
           </Reveal>
@@ -388,7 +392,7 @@ export default function DragonBoatsPage() {
           <Reveal>
             <SectionHeading
               eyebrow="Trophies"
-              title="Nine trophies, and one of them is for coming last"
+              title="Trophies, and one of them is for coming last"
               lede="Winners are decided by category and by time. The categories are the giveaway: this is a race, and it is also a neighbourhood turning out for itself."
             />
           </Reveal>

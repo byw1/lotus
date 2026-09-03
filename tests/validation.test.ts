@@ -1,6 +1,8 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 
+import type { z } from "zod";
+
 import {
   antiSpamFields,
   contactSchema,
@@ -107,6 +109,32 @@ describe("the honeypot field name", () => {
       ok: false,
       reason: "honeypot",
     });
+  });
+});
+
+describe("the submit-timing field", () => {
+  it("reads an empty timestamp as absent, not as zero, on every form", () => {
+    // The hidden input ships empty and is stamped by an effect on mount. When
+    // JavaScript never runs it stays empty, and coercing that to 0 made every
+    // such submission look like a replay from 1970.
+    //
+    // Checked against each form's own field rather than through a whole
+    // payload, so this cannot pass by accident because some other field failed.
+    for (const [kind, schema] of Object.entries(formSchemas)) {
+      const field = (schema as unknown as { shape: Record<string, z.ZodTypeAny> }).shape.startedAt;
+      assert.ok(field, `${kind} has no startedAt field`);
+      for (const empty of ["", undefined, null]) {
+        const result = field.safeParse(empty);
+        assert.ok(result.success, `${kind} rejected an empty startedAt`);
+        assert.equal(result.data, undefined, `${kind} parsed ${JSON.stringify(empty)} to a number`);
+      }
+    }
+  });
+
+  it("keeps a real timestamp", () => {
+    const result = newsletterSchema.safeParse({ email: "a@b.org", startedAt: "1788425749078" });
+    assert.ok(result.success);
+    assert.equal(result.data.startedAt, 1788425749078);
   });
 });
 

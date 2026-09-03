@@ -51,8 +51,10 @@ not this gate.
 What the gate does do properly:
 
 - Compares the password in constant time, so it cannot be guessed by timing.
-- Issues a signed, `HttpOnly`, `SameSite=Lax`, `Secure` session cookie (HMAC-SHA256
-  via `jose`) that cannot be forged without `PREVIEW_SESSION_SECRET`.
+- Issues a signed, `HttpOnly`, `SameSite=Lax`, `Secure` session cookie —
+  HMAC-SHA256 via `node:crypto`, since Next.js 16 runs `proxy.ts` and Server
+  Actions on the Node runtime — that cannot be forged without
+  `PREVIEW_SESSION_SECRET`.
 - Rate limits attempts per IP.
 - Serves `noindex` on every gated page.
 

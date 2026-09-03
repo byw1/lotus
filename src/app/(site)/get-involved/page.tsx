@@ -29,7 +29,7 @@ const routes = [
     label: "Volunteer",
     href: "#volunteer",
     here: true,
-    who: "Anyone from 14 up with four hours to give. No experience, no equipment, nobody to know.",
+    who: "Anyone from 14 up with a shift to give. No experience, no equipment, nobody to know.",
   },
   {
     label: "Vendors & boutiques",

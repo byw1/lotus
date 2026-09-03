@@ -153,12 +153,12 @@ export const history = [
   {
     year: "1975",
     title: "The dragon boats",
-    body: "The City dates the arrival of dragon boat racing to the third Lotus Festival. The first boats are built from two rowboats lashed together and fitted with dragon décor, and ten co-ed teams race the length of the lake. The festival's own records tell this story more than one way — an early race in the seventies, a Chinese opening ceremony in 1991 that made it permanent, and a board chair who championed it in the mid-nineties. All three are held by people who were there.",
+    body: "The City dates the arrival of dragon boat racing to the third Lotus Festival. By one account the first boats were two rowboats lashed together and fitted with dragon décor, raced by ten co-ed teams down the length of the lake. The festival's own records tell this story more than one way — an early race in the seventies, a Chinese opening ceremony in 1991 that made it permanent, and a board chair who championed it in the mid-nineties. All three are held by people who were there.",
   },
   {
     year: "1978",
     title: "A pause",
-    body: "City budget cuts halt the festival for two years.",
+    body: "City budget cuts halt the festival, which does not return until 1980.",
   },
   {
     year: "1990",

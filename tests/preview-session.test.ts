@@ -17,6 +17,7 @@ import {
   issueToken,
   MAX_AGE_SECONDS,
   passwordMatches,
+  safeNextPath,
   verifyToken,
 } from "../src/lib/preview/session";
 
@@ -122,5 +123,39 @@ describe("isPreviewMode", () => {
     assert.equal(isPreviewMode(), false);
     process.env.PREVIEW_MODE = "no";
     assert.equal(isPreviewMode(), true);
+  });
+});
+
+describe("safeNextPath", () => {
+  it("keeps a same-origin path", () => {
+    assert.equal(safeNextPath("/vendors"), "/vendors");
+    assert.equal(safeNextPath("/festival?day=sunday"), "/festival?day=sunday");
+  });
+
+  it("refuses anything that leaves the site", () => {
+    for (const hostile of [
+      "//evil.example",
+      "https://evil.example",
+      "http://evil.example",
+      "javascript:alert(1)",
+      "evil.example",
+      "",
+      undefined,
+      null,
+    ]) {
+      assert.equal(safeNextPath(hostile), "/", `accepted ${String(hostile)}`);
+    }
+  });
+
+  it("refuses a backslash, which browsers read as a slash", () => {
+    // WHATWG URL parsing treats \\ as /, so "/\\evil.example" navigates to
+    // //evil.example while passing a naive startsWith("//") check.
+    assert.equal(safeNextPath("/\\evil.example"), "/");
+    assert.equal(safeNextPath("\\\\evil.example"), "/");
+    assert.equal(safeNextPath("/path\\with\\backslash"), "/");
+  });
+
+  it("takes the caller's fallback", () => {
+    assert.equal(safeNextPath("//evil.example", "/festival"), "/festival");
   });
 });

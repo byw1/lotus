@@ -96,8 +96,20 @@ export async function checkSubmission(
     return { ok: false, reason: "honeypot" };
   }
 
-  // 2. Timing.
-  if (typeof input.startedAt === "number" && Number.isFinite(input.startedAt)) {
+  /*
+   * 2. Timing — but only when there is a timestamp to judge.
+   *
+   * `> 0` is not defensive tidying: a form submitted before hydration, or with
+   * JavaScript switched off entirely, carries no timestamp at all. Treating a
+   * missing one as zero would date the submission to 1970 and throw it away as
+   * a replay. The schema now guards this too; both layers check, because
+   * getting it wrong loses a real applicant's work and says nothing.
+   */
+  if (
+    typeof input.startedAt === "number" &&
+    Number.isFinite(input.startedAt) &&
+    input.startedAt > 0
+  ) {
     const elapsed = now - input.startedAt;
     if (elapsed < MIN_FILL_MS) return { ok: false, reason: "too-fast" };
     if (elapsed > MAX_FILL_MS) return { ok: false, reason: "stale" };

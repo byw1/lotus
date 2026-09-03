@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 import { LotusFallback } from "@/components/lotus/LotusFallback";
 import { site } from "@/config/site";
-import { COOKIE_NAME, isPreviewMode, verifyToken } from "@/lib/preview/session";
+import { COOKIE_NAME, isPreviewMode, safeNextPath, verifyToken } from "@/lib/preview/session";
 
 import { GateForm } from "./GateForm";
 
@@ -31,9 +31,9 @@ export default async function TeamPage({
   const params = await searchParams;
   const requested = Array.isArray(params.next) ? params.next[0] : params.next;
 
-  // Only same-origin absolute paths. "//evil.example" looks like a path and is
-  // not one, so it is rejected here as well as in the action.
-  const next = requested?.startsWith("/") && !requested.startsWith("//") ? requested : "/";
+  // Checked here as well as in the action; the action is the one that counts,
+  // but this keeps the hidden field in the form honest too.
+  const next = safeNextPath(requested);
 
   const jar = await cookies();
   if (!isPreviewMode() || verifyToken(jar.get(COOKIE_NAME)?.value)) {

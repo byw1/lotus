@@ -118,10 +118,23 @@ Then:
 - **Terminate TLS in front of it.** The session cookie is `Secure` in production,
   so it will be set and never sent back over plain HTTP, and the gate will appear
   to do nothing.
-- **Make the reverse proxy set `X-Forwarded-For`** (`proxy_set_header
-  X-Forwarded-For $proxy_add_x_forwarded_for;` in nginx). Without it every
-  visitor shares the rate-limit key `unknown`, and one bot exhausts everyone's
-  budget.
+- **Make the reverse proxy _overwrite_ `X-Forwarded-For`.** In nginx that is:
+
+  ```nginx
+  proxy_set_header X-Forwarded-For $remote_addr;
+  ```
+
+  Use `$remote_addr`, **not** the more commonly copied
+  `$proxy_add_x_forwarded_for`. That variable *appends* to whatever the client
+  sent, so the leftmost entry — the one the rate limiter keys on — becomes
+  attacker-controlled, and anyone can spread their attempts across an unlimited
+  number of fake addresses. Overwrite it, unless there is another proxy in
+  front of this one that you actually trust, in which case strip and rebuild
+  the header there instead.
+
+  Without the header at all, every visitor shares the rate-limit key `unknown`
+  and one bot exhausts everyone's budget. Both failure modes are quiet, so it
+  is worth checking after you deploy.
 - Run it under a supervisor that restarts it (systemd, or your platform's).
   Restarting clears the in-memory rate-limit buckets; that is acceptable.
 - A single long-lived process is the case the in-memory limiter is actually

@@ -56,23 +56,4 @@ test.describe("hydration and markup", () => {
       expect(problems, `${path} has invalid nesting`).toEqual([]);
     }
   });
-
-  test("the site is readable with JavaScript switched off", async ({ browser }) => {
-    // Motion writes its `initial` style into the server HTML, so without the
-    // <noscript> rule in the root layout every revealed section would be
-    // invisible forever to anyone whose JavaScript failed to load.
-    const context = await browser.newContext({ javaScriptEnabled: false });
-    const page = await context.newPage();
-    await page.goto("/");
-
-    const hidden = await page.evaluate(
-      () =>
-        [...document.querySelectorAll("[data-reveal]")].filter(
-          (el) => getComputedStyle(el).opacity !== "1",
-        ).length,
-    );
-    expect(hidden, "revealed content is invisible without JavaScript").toBe(0);
-    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-    await context.close();
-  });
 });

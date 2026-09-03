@@ -146,7 +146,7 @@ export default function SponsorsPage() {
                 ["Who comes", site.attendance],
                 ["Admission", "Free, and it always has been"],
                 ["Presented with", "The City of Los Angeles"],
-                ["Honoring", "A different culture every year since 1990"],
+                ["Honoring", "A different Asian or Pacific Islander culture every year"],
               ].map(([term, definition]) => (
                 <div key={term} className="flex flex-col gap-2">
                   <dt className="eyebrow">{term}</dt>

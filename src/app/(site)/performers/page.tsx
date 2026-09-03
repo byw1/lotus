@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: "Perform at the Festival",
   description:
     "Dancers, musicians, singers, martial artists and acrobats on two stages at the Los Angeles " +
-    "Lotus Festival. Slots of 5 to 30 minutes, both stages 40' × 30'. Performing is a volunteer " +
+    "Lotus Festival. Slots of 5 to 30 minutes on a 40' × 30' stage. Performing is a volunteer " +
     "commitment and performers are unpaid. How to apply.",
 };
 
@@ -139,7 +139,7 @@ export default function PerformersPage() {
           <Reveal delay={0.64} y={12}>
             <dl className="border-line mt-12 grid gap-x-8 gap-y-6 border-t pt-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                ["The stages", "Main Stage and Dragon Stage, both 40' × 30'"],
+                ["The stages", "Main Stage and Dragon Stage · 40' × 30' performing area"],
                 ["A slot", "5 to 30 minutes, set-up included"],
                 ["Who can apply", "Any act; Asian and Pacific Islander preferred"],
                 ["What it pays", "Nothing — performing here is volunteering"],

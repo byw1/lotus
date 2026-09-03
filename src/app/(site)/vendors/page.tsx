@@ -28,7 +28,7 @@ const areas = [
   {
     name: "Boutiques",
     tier: "Selling tier",
-    body: "Clothing, jewellery, homeware, prints, candles, ceramics — the stalls that run along the paths. Twenty-odd boutiques trade across the weekend, and most of them come back.",
+    body: "Clothing, jewellery, homeware, prints, candles, ceramics — the stalls that run along the paths. Twenty-odd boutiques trade across the weekend, alongside the makers of the Lotus Artisan Village.",
   },
   {
     name: "The Lotus Artisan Village",

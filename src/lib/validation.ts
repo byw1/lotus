@@ -26,8 +26,8 @@ const email = z
   .toLowerCase();
 
 /**
- * Deliberately permissive. Real phone numbers arrive as "(213) 485-1310",
- * "213.485.1310", "+1 213 485 1310" and worse, and rejecting a vendor's
+ * Deliberately permissive. Real phone numbers arrive as "(213) 555-0142",
+ * "213.555.0142", "+1 213 555 0142" and worse, and rejecting a vendor's
  * application over punctuation is a far bigger failure than storing an
  * untidy string.
  */
@@ -67,7 +67,19 @@ export const antiSpamFields = {
    * message, so an automated submitter learns nothing.
    */
   homepage: z.string().optional(),
-  startedAt: z.coerce.number().optional(),
+  /*
+   * Absent or empty means "we do not know", NOT zero.
+   *
+   * `z.coerce.number()` turns "" into 0, because `Number("")` is 0. That made
+   * every submission without a timestamp look like one sent in 1970, which the
+   * spam check read as a replayed page and silently discarded — while telling
+   * the visitor it had worked. The timestamp is empty exactly when JavaScript
+   * has not run, which is the one case the forms are built to survive.
+   */
+  startedAt: z.preprocess(
+    (value) => (value === "" || value === null || value === undefined ? undefined : value),
+    z.coerce.number().positive().optional(),
+  ),
   turnstileToken: z.string().optional(),
 };
 

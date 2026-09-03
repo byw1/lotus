@@ -50,7 +50,7 @@ export function ProgramPreview() {
             lede={
               <>
                 Performance from midday into the evening on both days, races on the water,
-                thirty-odd kitchens and a lantern launch after dark — for {site.attendance}.
+                thirty-odd kitchens and a lantern launch onto the water — for {site.attendance}.
               </>
             }
           />

@@ -359,9 +359,9 @@ export default function FoodBoothsPage() {
               </p>
               <p className="text-fg-muted">
                 This is a rule with a penalty attached, not a preference. It exists because the food
-                court sits on the bank of a lake that the City spent years rehabilitating, twenty
-                feet from a lotus bed that died back once already and had to be replanted. Source
-                your serving ware in the spring, not the week before.
+                court sits on the bank of a lake that the City spent years rehabilitating, beside a
+                lotus bed that died back once already and had to be replanted. Source your serving
+                ware in the spring, not the week before.
               </p>
             </div>
           </Reveal>
@@ -394,11 +394,13 @@ export default function FoodBoothsPage() {
 
             <Reveal delay={0.06}>
               <Card className="h-full">
-                <h3 className="text-[1.35rem] leading-snug">Every application is answered</h3>
+                <h3 className="text-[1.35rem] leading-snug">What happens next</h3>
                 <p className="text-fg-muted mt-3 text-[15px] leading-relaxed">
-                  Accepted or not, you hear back by email in the spring. A complete application with
-                  its permits attached is read faster than one the committee has to chase, and no
-                  application is approved until the paperwork is in.
+                  Successful applicants are emailed in the spring, and payment follows once a booth
+                  is offered. A complete application with its permits attached is read faster than
+                  one the committee has to chase, and nothing is approved until the paperwork is in.
+                  If you have not heard by early summer, write and ask — the festival is run by
+                  volunteers and things get missed.
                 </p>
               </Card>
             </Reveal>

@@ -145,11 +145,18 @@ export async function rateLimit(key: string, options: RateLimitOptions): Promise
 }
 
 /**
- * Best-effort client address, for use as a rate-limit key only.
+ * Best-effort client address, for use as a rate-limit key and nothing else.
  *
- * `x-forwarded-for` is trivially spoofed unless a trusted proxy sets it, so
- * this must never be used for anything that matters — no allowlisting, no
- * audit trail, no geolocation. On Vercel the leftmost entry is the real client.
+ * The leftmost `x-forwarded-for` entry is the real client ONLY when the edge
+ * proxy overwrites the header. Vercel does. A self-hosted nginx configured
+ * with the widely-copied `$proxy_add_x_forwarded_for` does not — it appends,
+ * so a client can prepend as many fabricated addresses as it likes and get a
+ * fresh rate-limit budget for each one. docs/DEPLOYMENT.md says to use
+ * `$remote_addr` for exactly this reason.
+ *
+ * Never use this for anything that matters: no allowlisting, no audit trail,
+ * no geolocation, no blocking. It decides how fast someone may submit a form,
+ * and the cost of getting it wrong is bounded by that.
  */
 export function clientKey(headers: Headers): string {
   const forwarded = headers.get("x-forwarded-for");

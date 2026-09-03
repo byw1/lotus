@@ -206,7 +206,7 @@ export const faqGroups: readonly FaqGroup[] = [
         answer: [
           "Yes. The races are entered by teams rather than by individuals, and teams come from workplaces, community groups, colleges, city departments, agencies and media outlets.",
           "Two boats race head to head, Red Dragon against Black Dragon, roughly the length of the lake and back. There are eight people to a boat: a drummer at the front setting the pace, six paddlers, and a steersman at the back. Boats are co-ed, with a minimum of four women in each.",
-          "Bring rubber-soled shoes. Life jackets are supplied by Recreation and Parks. Team captains check in thirty minutes before their heat. Trophies go to Best Overall, Media, Corporate, City Family, Community, Elected Officials, Governmental Agencies, Snappiest Dressers, and the Turtle Team, for the slowest time of the day.",
+          "Bring rubber-soled shoes. Life jackets are supplied by Recreation and Parks. Team captains check in thirty minutes before their heat. Trophies go to Best Overall, Media, Corporate, City Family, Community, Elected Officials, Governmental Agencies, Snappiest Dressers, and the Turtle Team, for the slowest overall time.",
           "Recent entry fees were $200 for media, corporate, government and elected teams, and $75 for community, college and university teams. The 2027 fees are not set.",
         ],
         link: { href: "/dragon-boats", label: "Enter a dragon boat team" },

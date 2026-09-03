@@ -302,7 +302,7 @@ export function PerformerForm() {
           <Field
             label="What you need on stage"
             name="technicalNeeds"
-            hint="Microphones, instruments and equipment you are bringing, and how your music plays — live, or from a phone, a USB drive or a CD. Live music is preferred. Both stages are 40' × 30'."
+            hint="Microphones, instruments and equipment you are bringing, and how your music plays — live, or from a phone, a USB drive or a CD. Live music is preferred. The performing area is 40' × 30'."
             error={state.errors?.technicalNeeds}
           >
             {(props) => (

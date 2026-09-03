@@ -106,7 +106,7 @@ export function TakePart() {
               <div className="border-line-strong bg-bg-raised flex w-full flex-col rounded-2xl border border-dashed p-6 sm:p-7">
                 <h3 className="text-[1.35rem] leading-tight">Volunteer</h3>
                 <p className="text-fg mt-3 text-[15px] leading-relaxed">
-                  Anyone from 14 up, with four hours to give.
+                  Anyone from 14 up, with a shift to give.
                 </p>
                 <p className="text-fg-muted mt-3 flex-1 text-[14px] leading-relaxed">
                   Shifts run 7–11am, 11am–3pm, 3–7pm and 7–10pm on both days. Under-18s need a

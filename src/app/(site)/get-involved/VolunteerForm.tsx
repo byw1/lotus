@@ -25,7 +25,7 @@ const action = submitApplication.bind(null, "volunteer");
  * The values are `volunteerSchema`'s enum, exactly — anything else is dropped
  * on the floor by the server with no way for the person filling this in to
  * tell. The labels carry the clock times because this is the one place on the
- * site where somebody has to commit to a specific four hours, and nobody
+ * site where somebody has to commit to a specific shift, and nobody
  * should have to scroll back up to find out what "midday" means.
  */
 const shifts: Choice[] = [

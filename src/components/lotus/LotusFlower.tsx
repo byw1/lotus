@@ -120,10 +120,26 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
   const stamenGeometry = useMemo(() => buildStamenGeometry(0.26), []);
   const seedGeometry = useMemo(() => new THREE.SphereGeometry(0.028, 10, 8), []);
 
-  useLayoutEffect(() => {
-    const geometries = [...petalGeometries, receptacleGeometry, stamenGeometry, seedGeometry];
-    return () => geometries.forEach((g) => g.dispose());
-  }, [petalGeometries, receptacleGeometry, stamenGeometry, seedGeometry]);
+  /*
+   * Dispose each group on its own schedule.
+   *
+   * The petal geometries and the petal material are rebuilt when the quality
+   * tier changes; the pod, seeds and stamens are not. Cleaning them all up in
+   * one effect keyed on the petals meant a single quality downgrade disposed
+   * the pod and stamens too — still attached to live meshes, and never
+   * rebuilt, so the middle of the flower vanished on exactly the low-powered
+   * devices the downgrade exists to help.
+   */
+  useLayoutEffect(() => () => petalGeometries.forEach((g) => g.dispose()), [petalGeometries]);
+
+  useLayoutEffect(
+    () => () => {
+      receptacleGeometry.dispose();
+      stamenGeometry.dispose();
+      seedGeometry.dispose();
+    },
+    [receptacleGeometry, stamenGeometry, seedGeometry],
+  );
 
   const petalMaterial = useMemo(() => {
     const material = new THREE.MeshPhysicalMaterial({
@@ -211,10 +227,16 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
     [],
   );
 
-  useLayoutEffect(() => {
-    const materials = [petalMaterial, receptacleMaterial, seedMaterial, stamenMaterial];
-    return () => materials.forEach((m) => m.dispose());
-  }, [petalMaterial, receptacleMaterial, seedMaterial, stamenMaterial]);
+  useLayoutEffect(() => () => petalMaterial.dispose(), [petalMaterial]);
+
+  useLayoutEffect(
+    () => () => {
+      receptacleMaterial.dispose();
+      seedMaterial.dispose();
+      stamenMaterial.dispose();
+    },
+    [receptacleMaterial, seedMaterial, stamenMaterial],
+  );
 
   const flowerRef = useRef<THREE.Group>(null);
   const petalRefs = useRef<(THREE.Group | null)[]>([]);

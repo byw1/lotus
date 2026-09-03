@@ -168,3 +168,26 @@ export const cookieOptions = {
   path: "/",
   maxAge: MAX_AGE_SECONDS,
 } as const;
+
+/**
+ * Is this a path we are willing to send someone to after they sign in?
+ *
+ * `next` comes from the query string, so it is attacker-controlled. Three
+ * things get rejected, and the third is the one that is easy to miss:
+ *
+ *   "//evil.example"   protocol-relative — looks like a path, leaves the site
+ *   "https://evil…"    absolute
+ *   "/\\evil.example"   a BACKSLASH. WHATWG URL parsing treats \ as /, so
+ *                      browsers and Next's router both read this as
+ *                      "//evil.example" while a startsWith("//") check does not.
+ *
+ * Anything not starting with a single "/" is refused outright.
+ */
+export function safeNextPath(next: string | undefined | null, fallback = "/"): string {
+  if (!next) return fallback;
+  if (!next.startsWith("/")) return fallback;
+  if (next.startsWith("//")) return fallback;
+  if (next.includes("\\")) return fallback;
+  if (next.includes("://")) return fallback;
+  return next;
+}

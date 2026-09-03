@@ -108,6 +108,19 @@ describe("checkSubmission", () => {
     assert.deepEqual(await checkSubmission({}, now), { ok: true });
   });
 
+  it("does not read a missing timestamp as 1970", async () => {
+    /*
+     * Regression. `z.coerce.number()` turns the empty hidden input into 0,
+     * because Number("") is 0. That dated every no-JavaScript submission to
+     * 1970, which this check read as a replayed page — so it was discarded,
+     * and the visitor was told it had worked. Both the schema and this
+     * function now guard it.
+     */
+    assert.deepEqual(await checkSubmission({ startedAt: 0 }, now), { ok: true });
+    assert.deepEqual(await checkSubmission({ startedAt: undefined }, now), { ok: true });
+    assert.deepEqual(await checkSubmission({ startedAt: Number.NaN }, now), { ok: true });
+  });
+
   it("skips Turnstile entirely when it is not configured", async () => {
     delete process.env.TURNSTILE_SECRET_KEY;
     assert.deepEqual(await checkSubmission({ ...human, turnstileToken: undefined }, now), {
