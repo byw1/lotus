@@ -43,20 +43,20 @@ export default async function TeamPage({
   return (
     <main
       id="main"
-      className="relative isolate flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-12"
+      className="bg-bg relative isolate flex min-h-dvh flex-col items-center justify-center overflow-hidden px-6 py-12"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-20"
         style={{
           background:
-            "radial-gradient(78% 58% at 50% 42%, rgba(224,112,143,0.16) 0%, rgba(232,184,87,0.07) 38%, rgba(11,10,15,0) 72%)",
+            "radial-gradient(78% 58% at 50% 42%, rgba(207,228,246,0.83) 0%, rgba(252,225,235,0.36) 38%, rgba(255,255,255,0) 72%)",
         }}
       />
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 opacity-[0.13] blur-[1px]"
+        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[36rem] w-[36rem] -translate-x-1/2 -translate-y-1/2 opacity-30 blur-[2px]"
       >
         <LotusFallback className="animate-breathe" />
       </div>

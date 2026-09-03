@@ -1,4 +1,4 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 /**
  * Every application form, filled in and submitted for real.
@@ -22,6 +22,26 @@ const FORMS = [
   { path: "/dragon-boats", name: "dragon boat team" },
   { path: "/contact", name: "general enquiry" },
 ] as const;
+
+/**
+ * Wait until a control has stopped moving.
+ *
+ * Every form on this site sits inside a scroll-reveal, and `check({ force })`
+ * scrolls its target into view — which *starts* that reveal, and then clicks
+ * while the element is still travelling. The click lands where the checkbox
+ * was a frame ago, some other control gets it, and the assertion fails with
+ * "clicking the checkbox did not change its state". Playwright's own
+ * stability wait is exactly what `force` turns off, so it has to be done here.
+ */
+async function settle(control: Locator, page: Page) {
+  let previous: { y: number } | null = null;
+  for (let attempt = 0; attempt < 40; attempt++) {
+    const box = await control.boundingBox();
+    if (box && previous && Math.abs(box.y - previous.y) < 0.5) return;
+    previous = box;
+    await page.waitForTimeout(100);
+  }
+}
 
 /** Fill every visible control in the page's main form with something plausible. */
 async function fillMainForm(page: Page) {
@@ -61,7 +81,10 @@ async function fillMainForm(page: Page) {
   // Tick the first choice in each radio or checkbox group.
   for (const group of await page.locator("main fieldset").all()) {
     const choice = group.locator('input[type="checkbox"], input[type="radio"]').first();
-    if (await choice.count()) await choice.check({ force: true });
+    if (!(await choice.count())) continue;
+    await choice.scrollIntoViewIfNeeded();
+    await settle(choice, page);
+    await choice.check({ force: true });
   }
 }
 

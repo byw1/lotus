@@ -52,29 +52,35 @@ export function LotusFallback({ className }: { className?: string }) {
     >
       <defs>
         <radialGradient id="lf-outer" cx="50%" cy="100%" r="120%">
-          <stop offset="0%" stopColor="#d1698a" />
-          <stop offset="55%" stopColor="#f0a8ba" />
-          <stop offset="100%" stopColor="#fdeef2" />
+          <stop offset="0%" stopColor="#c94f77" />
+          <stop offset="55%" stopColor="#eb9cb6" />
+          <stop offset="100%" stopColor="#fbdde6" />
         </radialGradient>
         <radialGradient id="lf-mid" cx="50%" cy="100%" r="120%">
-          <stop offset="0%" stopColor="#e0708f" />
-          <stop offset="60%" stopColor="#f7c3d0" />
-          <stop offset="100%" stopColor="#fff7f9" />
+          <stop offset="0%" stopColor="#d95c81" />
+          <stop offset="60%" stopColor="#f4b8ca" />
+          <stop offset="100%" stopColor="#fdeef3" />
         </radialGradient>
         <radialGradient id="lf-inner" cx="50%" cy="100%" r="120%">
-          <stop offset="0%" stopColor="#e8859f" />
-          <stop offset="65%" stopColor="#fbdbe3" />
-          <stop offset="100%" stopColor="#fffdfd" />
+          <stop offset="0%" stopColor="#e2749a" />
+          <stop offset="65%" stopColor="#f8d3de" />
+          <stop offset="100%" stopColor="#fffafc" />
         </radialGradient>
         <radialGradient id="lf-core" cx="50%" cy="100%" r="120%">
           <stop offset="0%" stopColor="#f0c04a" />
           <stop offset="45%" stopColor="#f6dba8" />
           <stop offset="100%" stopColor="#fffaf0" />
         </radialGradient>
+        {/*
+          A halo of light around the flower rather than a glow out of it. On a
+          white page a dark stop at the outer edge would ring the flower with a
+          grey smudge, so the gradient fades to transparent instead and the
+          page's own colour carries through.
+        */}
         <radialGradient id="lf-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#e8b857" stopOpacity="0.55" />
-          <stop offset="55%" stopColor="#d1698a" stopOpacity="0.18" />
-          <stop offset="100%" stopColor="#0b0a0f" stopOpacity="0" />
+          <stop offset="0%" stopColor="#f6c9d8" stopOpacity="0.5" />
+          <stop offset="55%" stopColor="#d7e8f6" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#d7e8f6" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -90,7 +96,7 @@ export function LotusFallback({ className }: { className?: string }) {
                 d={petalPath(ring.width, ring.height)}
                 fill={ring.fill}
                 stroke="#ffffff"
-                strokeOpacity="0.16"
+                strokeOpacity="0.5"
                 strokeWidth="0.75"
                 transform={`rotate(${round(angle)})`}
               />

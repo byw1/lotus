@@ -180,13 +180,11 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
        */
       thickness: 0.5,
       /*
-       * Nothing in this scene casts a shadow, so a petal turned away from every
-       * light renders as a black hole punched in the flower. A very dim rose
-       * emissive puts a floor under those faces — they read as petal in
-       * shadow, which is also what a lotus lit from within should look like.
+       * No emissive any more. On the old black page a dim rose glow was what
+       * kept an unlit petal from reading as a hole punched in the flower; in
+       * daylight on white there is enough ambient and bounce that every face
+       * is lit, and an emissive floor only flattens the modelling.
        */
-      emissive: new THREE.Color("#3d1524"),
-      emissiveIntensity: 1,
       attenuationColor: new THREE.Color("#e0708f"),
       attenuationDistance: 1.2,
     });
@@ -354,16 +352,38 @@ export function LotusFlower({ bloom, still = false, quality = "high" }: LotusFlo
     });
 
     const flower = flowerRef.current;
-    if (flower && !still) {
-      flower.rotation.y = time * 0.055;
-      flower.position.y = Math.sin(time * 0.5) * 0.022;
-      flower.rotation.z = Math.sin(time * 0.33) * 0.018;
-    } else if (flower && still) {
+    if (!flower) return;
+
+    if (still) {
       // A fixed three-quarter view reads better than dead-on when frozen.
-      flower.rotation.y = 0.5;
+      flower.rotation.set(0, 0.5, 0);
       flower.position.y = 0;
-      flower.rotation.z = 0;
+      return;
     }
+
+    /*
+     * A turn slow enough to be calm and fast enough to be seen — about forty
+     * seconds for a full revolution. The previous speed took nearly two
+     * minutes, which on a page people look at for ten seconds meant the
+     * flower read as a still image.
+     */
+    flower.rotation.y = time * 0.155;
+    flower.position.y = Math.sin(time * 0.5) * 0.022;
+
+    /*
+     * And it leans toward the pointer. This is the thing that makes the scene
+     * unmistakably three-dimensional rather than a nicely lit picture: moving
+     * the mouse moves the parallax between the near and far petals. `pointer`
+     * is already normalised to -1..1 across the canvas, and it stays at 0,0 on
+     * a touch device, where the rotation above carries it instead.
+     *
+     * Lerped rather than assigned, so a fast flick across the page is a lean
+     * rather than a snap.
+     */
+    const targetTilt = -state.pointer.y * 0.16;
+    const targetRoll = state.pointer.x * 0.1;
+    flower.rotation.x += (targetTilt - flower.rotation.x) * 0.045;
+    flower.rotation.z += (targetRoll - flower.rotation.z) * 0.045;
   });
 
   let petalIndex = 0;

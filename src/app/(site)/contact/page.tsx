@@ -55,7 +55,7 @@ export default function ContactPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(84% 56% at 74% 2%, rgba(232,184,87,0.15) 0%, rgba(240,168,186,0.05) 48%, rgba(11,10,15,0) 78%)",
+              "radial-gradient(84% 56% at 74% 2%, rgba(207,228,246,0.78) 0%, rgba(252,225,235,0.26) 48%, rgba(255,255,255,0) 78%)",
           }}
         />
 
@@ -68,7 +68,7 @@ export default function ContactPage() {
                   Reach the
                 </span>,
                 <span key="2" className="block">
-                  <em className="text-gradient-gold not-italic">festival</em>
+                  <em className="text-gradient-lotus not-italic">festival</em>
                 </span>,
               ]}
             />
@@ -110,7 +110,7 @@ export default function ContactPage() {
                 <p className="mt-4">
                   <a
                     href={`mailto:${site.contact.email}`}
-                    className="hover:text-gold rounded text-[15px] break-words underline underline-offset-4 transition-colors duration-200"
+                    className="hover:text-lake rounded text-[15px] break-words underline underline-offset-4 transition-colors duration-200"
                   >
                     {site.contact.email}
                   </a>
@@ -138,7 +138,7 @@ export default function ContactPage() {
                     href={site.venue.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-gold rounded text-[15px] underline underline-offset-4 transition-colors duration-200"
+                    className="hover:text-lake rounded text-[15px] underline underline-offset-4 transition-colors duration-200"
                   >
                     Open in Google Maps
                   </a>
@@ -170,7 +170,7 @@ export default function ContactPage() {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-gold rounded text-[15px] underline underline-offset-4 transition-colors duration-200"
+                        className="hover:text-lake rounded text-[15px] underline underline-offset-4 transition-colors duration-200"
                       >
                         {label}
                       </a>

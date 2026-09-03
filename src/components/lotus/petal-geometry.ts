@@ -71,10 +71,18 @@ function smoothstep(edge0: number, edge1: number, x: number): number {
   return t * t * (3 - 2 * t);
 }
 
-/** Lotus petals are deepest rose where they meet the receptacle. */
-const COLOR_BASE = new THREE.Color("#e0708f");
-const COLOR_MID = new THREE.Color("#fbdfe6");
-const COLOR_TIP = new THREE.Color("#ef8fae");
+/**
+ * Lotus petals are deepest rose where they meet the receptacle, palest through
+ * the middle, and pick the colour back up at the tip.
+ *
+ * These run deeper than they did when the page was black. A petal that read as
+ * luminous against ink washes out to near-white against a white page, and a
+ * white flower on a white ground is a smudge — the colour is what holds the
+ * silhouette now that there is no darkness behind it.
+ */
+const COLOR_BASE = new THREE.Color("#d95c81");
+const COLOR_MID = new THREE.Color("#f7cbd8");
+const COLOR_TIP = new THREE.Color("#e87ba1");
 
 export function buildPetalGeometry(params: PetalParams): THREE.BufferGeometry {
   const {
@@ -427,3 +435,118 @@ export const WHORLS: Whorl[] = [
 ];
 
 export const PETAL_COUNT = WHORLS.reduce((n, w) => n + w.count, 0);
+
+/**
+ * A lotus pad: the flat leaf that floats on the water beside the flower.
+ *
+ * A disc with a wedge cut out of one side — the notch every lotus and water
+ * lily leaf has, where the stem meets the blade — domed very slightly so light
+ * catches across it, and with a gently rippling rim so it does not read as a
+ * plate. The radial veins that run from the notch to the edge are baked into
+ * the vertex colours rather than a texture, which keeps the whole flower free
+ * of image files.
+ */
+export function buildLilyPadGeometry(
+  radius = 1,
+  notch = 0.42,
+  radialSegments = 64,
+  rings = 10,
+): THREE.BufferGeometry {
+  const sweep = Math.PI * 2 - notch;
+  const start = notch / 2;
+
+  const vertexCount = (radialSegments + 1) * (rings + 1);
+  const positions = new Float32Array(vertexCount * 3);
+  const colors = new Float32Array(vertexCount * 3);
+  const uvs = new Float32Array(vertexCount * 2);
+  const indices = new Uint16Array(radialSegments * rings * 6);
+
+  const deep = new THREE.Color("#2f6b46");
+  const mid = new THREE.Color("#4f9a63");
+  const rim = new THREE.Color("#89bd72");
+  const vein = new THREE.Color("#8fc98a");
+  const color = new THREE.Color();
+
+  let v = 0;
+  for (let i = 0; i <= radialSegments; i++) {
+    const t = i / radialSegments;
+    const angle = start + t * sweep;
+
+    // Eleven veins radiate from the notch. `fract` peaks at each one.
+    const veinPhase = Math.abs(((t * 11) % 1) - 0.5) * 2;
+    const veinStrength = Math.pow(1 - veinPhase, 6);
+
+    // A shallow scallop around the rim, so the edge is a leaf and not a circle.
+    const rimWave = 1 + Math.sin(angle * 9) * 0.022 + Math.sin(angle * 4 + 1.1) * 0.03;
+
+    for (let j = 0; j <= rings; j++) {
+      const r = (j / rings) * radius * rimWave;
+      const normalized = j / rings;
+
+      positions[v * 3 + 0] = Math.cos(angle) * r;
+      // Domed in the middle and turned up at the very edge, which is how a pad
+      // sits on water: the centre rides low, the rim curls out of it.
+      positions[v * 3 + 1] =
+        radius * (0.055 * (1 - normalized * normalized) + 0.045 * Math.pow(normalized, 7));
+      positions[v * 3 + 2] = Math.sin(angle) * r;
+
+      color.copy(deep).lerp(mid, smoothstep(0.05, 0.62, normalized));
+      color.lerp(rim, smoothstep(0.72, 1, normalized));
+      color.lerp(vein, veinStrength * 0.35 * smoothstep(0.12, 0.95, normalized));
+
+      colors[v * 3 + 0] = color.r;
+      colors[v * 3 + 1] = color.g;
+      colors[v * 3 + 2] = color.b;
+
+      uvs[v * 2 + 0] = t;
+      uvs[v * 2 + 1] = normalized;
+      v++;
+    }
+  }
+
+  let n = 0;
+  for (let i = 0; i < radialSegments; i++) {
+    for (let j = 0; j < rings; j++) {
+      const a = i * (rings + 1) + j;
+      const b = a + rings + 1;
+      indices[n++] = a;
+      indices[n++] = a + 1;
+      indices[n++] = b;
+      indices[n++] = b;
+      indices[n++] = a + 1;
+      indices[n++] = b + 1;
+    }
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
+  geometry.setIndex(new THREE.BufferAttribute(indices, 1));
+  geometry.computeVertexNormals();
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
+/**
+ * Where the pads float, relative to the flower.
+ *
+ * Placed by hand rather than by a formula: a ring of evenly spaced pads reads
+ * as a decoration around the flower, and a scatter reads as a pond. `spin` is
+ * the pad's own rotation, so the notches do not all point the same way.
+ *
+ * Small, and mostly behind. A real lotus stands well clear of its pads, and a
+ * pad near the camera is enormous however small you scale it — the first
+ * version filled the corners of the page with giant leaves. Keeping them
+ * upstream of the flower lets perspective do the shrinking, and the two in
+ * front are small enough to read as foreground rather than as subject.
+ */
+export const LILY_PADS: { x: number; z: number; scale: number; spin: number; phase: number }[] = [
+  { x: -1.55, z: -1.4, scale: 0.3, spin: 0.4, phase: 0 },
+  { x: 1.75, z: -1.05, scale: 0.26, spin: 2.1, phase: 1.6 },
+  { x: -2.5, z: -2.4, scale: 0.22, spin: 3.4, phase: 3.1 },
+  { x: 2.7, z: -2.6, scale: 0.19, spin: 5.0, phase: 4.4 },
+  { x: 0.15, z: -2.9, scale: 0.17, spin: 1.2, phase: 2.2 },
+  { x: -0.95, z: 0.85, scale: 0.2, spin: 4.1, phase: 5.5 },
+  { x: 1.25, z: 0.95, scale: 0.17, spin: 2.7, phase: 0.8 },
+];

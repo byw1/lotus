@@ -9,57 +9,36 @@ import { site } from "@/config/site";
 /**
  * The hero of the real homepage.
  *
- * The coming-soon page sinks the flower at the bottom of a centred column, so
- * this one deliberately does the opposite: the type runs down the left, and
- * the lotus is pushed off the right edge at close to twice the size, so what
- * you see is a crop rather than a specimen. Someone who saw the holding page
- * in March should not think they have landed back on it in July.
+ * The coming-soon page centres the flower behind the type. This one puts the
+ * type down the left and the whole flower on the right, on the water, so
+ * someone who saw the holding page in March does not think they have landed
+ * back on it in July.
  *
- * The two scrims are the same contrast rule as the holding page, rotated. No
- * body text is ever asked to sit on a lit petal: below `lg` the flower is
- * pushed into the bottom-right corner and the scrim runs top to bottom; from
- * `lg` up the flower moves to the right of the text and the scrim runs left to
- * right. One gradient cannot do both jobs, and a single compromise gradient
- * either greys out the flower or leaves the lede at 3:1.
+ * On a light page the contrast problem that shaped the old dark version is
+ * gone — deep navy on a pale petal measures better than 6:1 — so there are no
+ * scrims here at all. The flower gets a column of its own on wide screens and
+ * sits under the type on narrow ones, where there is no room beside it.
  */
 export function HomeHero() {
   return (
     <section aria-labelledby="home-title" className="bg-bg relative isolate overflow-hidden">
-      {/* Warm light thrown from where the flower sits, behind the canvas. */}
+      {/* Morning on the lake: blue at the edges, warm where the flower sits. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-30"
         style={{
-          background:
-            "radial-gradient(62% 52% at 78% 58%, rgba(240,168,186,0.26) 0%, rgba(232,184,87,0.12) 42%, rgba(11,10,15,0) 74%)",
+          background: "radial-gradient(90% 78% at 76% 62%, #fbe6ee 0%, #eef4fb 46%, #ffffff 78%)",
         }}
       />
 
-      <Lotus className="pointer-events-none absolute right-[-46%] bottom-[-14%] -z-20 h-[62vh] w-[125vw] sm:right-[-32%] sm:h-[74vh] sm:w-[92vw] lg:top-1/2 lg:right-[-15%] lg:bottom-auto lg:h-[108vh] lg:w-[64vw] lg:-translate-y-1/2" />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 lg:hidden"
-        style={{
-          background:
-            "linear-gradient(to bottom, rgba(11,10,15,0.96) 0%, rgba(11,10,15,0.92) 40%, rgba(11,10,15,0.74) 62%, rgba(11,10,15,0.34) 84%, rgba(11,10,15,0.08) 100%)",
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 hidden lg:block"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(11,10,15,0.97) 0%, rgba(11,10,15,0.93) 32%, rgba(11,10,15,0.72) 50%, rgba(11,10,15,0.26) 68%, rgba(11,10,15,0) 86%)",
-        }}
-      />
+      <Lotus className="pointer-events-none absolute inset-x-0 bottom-[-14%] -z-20 h-[48vh] sm:bottom-[-8%] sm:h-[56vh] lg:top-1/2 lg:right-[-6%] lg:bottom-auto lg:left-auto lg:h-[92vh] lg:w-[58vw] lg:-translate-y-1/2" />
 
       <Container className="relative flex min-h-[calc(100svh-4rem)] flex-col justify-center pt-16 pb-36 sm:min-h-[calc(100svh-4.5rem)] sm:pt-20 sm:pb-40 lg:py-28">
         <div className="max-w-[34rem] lg:max-w-[40rem]">
           <Reveal delay={0.05}>
             {/* Vermilion is held back for one thing on this site: the culture
                 honored this edition. It appears here and nowhere else above. */}
-            <Badge tone="vermilion">
+            <Badge tone="rose">
               {site.editionOrdinal} annual · Honoring {site.honoredCountry.name}
             </Badge>
           </Reveal>
@@ -75,14 +54,14 @@ export function HomeHero() {
                   Los Angeles
                 </span>,
                 <span key="2" className="block">
-                  <em className="text-gradient-gold not-italic">Lotus</em> Festival
+                  <em className="text-gradient-lotus not-italic">Lotus</em> Festival
                 </span>,
               ]}
             />
           </h1>
 
           <Reveal delay={0.44} y={16}>
-            <p className="text-fg/85 mt-7 max-w-[46ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55]">
+            <p className="text-fg-muted mt-7 max-w-[46ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55]">
               Two days around the water at {site.venue.name}, honoring the people and culture of{" "}
               {site.honoredCountry.name}. Admission is free, as it has been since 1972.
             </p>
@@ -99,25 +78,22 @@ export function HomeHero() {
         </div>
 
         {/*
-          Below `lg` the flower sits in the bottom-right corner and the scrim
-          has decayed to about 0.4 by the time it reaches this list, so these
-          rows were being drawn straight onto lit petals — measured at 1.6:1
-          for the labels on a 390px viewport. No scrim opacity fixes that
-          without greying the flower out altogether, and a text-shadow does not
-          count toward contrast. So the list gets the page's own opaque ground
-          underneath it, the same answer the coming-soon page reached for its
-          footer. Above `lg` the left-to-right scrim already clears 4.7:1 and
-          the band is dropped.
+          On the old dark page this list needed an opaque band under it — the
+          labels measured 1.6:1 against a lit petal. Inverting the palette
+          removed the problem rather than mitigating it, so the band is gone.
+
+          It does not remove it for free, though. On a narrow screen the flower
+          is directly behind this list, and `--fg-muted` on a lit petal measures
+          3.9:1 — under AA. So the terms are set in full-strength ink here like
+          the definitions, and the label/value distinction is carried by case
+          and size instead of by colour. Anything set over the flower has to
+          survive the brightest pixel of it.
         */}
-        <Reveal
-          delay={0.7}
-          y={12}
-          className="bg-bg relative mt-14 rounded-2xl px-4 py-4 lg:mt-20 lg:bg-transparent lg:px-0 lg:py-0"
-        >
-          <dl className="text-fg-muted flex flex-col gap-3 text-[13.5px] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-3">
-            <div className="flex items-baseline gap-2">
-              <dt className="text-fg-subtle">When</dt>
-              <dd className="text-fg/90">
+        <Reveal delay={0.7} y={12} className="mt-14 lg:mt-20">
+          <dl className="text-fg flex flex-col gap-3 text-[13.5px] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7 sm:gap-y-3">
+            <div className="flex items-baseline gap-2.5">
+              <dt className="text-fg text-[11px] tracking-[0.12em] uppercase">When</dt>
+              <dd className="text-fg">
                 <time dateTime="2027-07">{site.dates.display}</time> · {site.dates.detail}
               </dd>
             </div>
@@ -127,33 +103,33 @@ export function HomeHero() {
               quietly relocates it.
             */}
             <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
-            <div className="flex items-baseline gap-2">
-              <dt className="text-fg-subtle">Where</dt>
-              <dd className="text-fg/90">
+            <div className="flex items-baseline gap-2.5">
+              <dt className="text-fg text-[11px] tracking-[0.12em] uppercase">Where</dt>
+              <dd className="text-fg">
                 <Link
                   href={site.venue.mapUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-gold rounded underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-current"
+                  className="hover:text-lake rounded underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-current"
                 >
                   {site.venue.name}, {site.venue.street}
                 </Link>
               </dd>
             </div>
             <div aria-hidden="true" className="bg-line-strong hidden h-3 w-px sm:block" />
-            <div className="flex items-baseline gap-2">
-              <dt className="text-fg-subtle">Admission</dt>
-              <dd className="text-fg/90">Free, no ticket</dd>
+            <div className="flex items-baseline gap-2.5">
+              <dt className="text-fg text-[11px] tracking-[0.12em] uppercase">Admission</dt>
+              <dd className="text-fg">Free, no ticket</dd>
             </div>
           </dl>
         </Reveal>
       </Container>
 
-      {/* Closes the ink band cleanly against the porcelain section below. */}
+      {/* Settles the wash into the white section below without a hard edge. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-28"
-        style={{ background: "linear-gradient(to top, #0b0a0f 0%, rgba(11,10,15,0) 100%)" }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24"
+        style={{ background: "linear-gradient(to top, var(--bg) 0%, transparent 100%)" }}
       />
     </section>
   );

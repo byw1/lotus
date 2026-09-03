@@ -96,7 +96,7 @@ export default function SponsorsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(96% 60% at 82% 2%, rgba(232,184,87,0.18) 0%, rgba(224,64,43,0.06) 44%, rgba(11,10,15,0) 74%)",
+              "radial-gradient(96% 60% at 82% 2%, rgba(207,228,246,0.94) 0%, rgba(252,225,235,0.31) 44%, rgba(255,255,255,0) 74%)",
           }}
         />
 
@@ -112,7 +112,7 @@ export default function SponsorsPage() {
               delay={0.12}
               lines={[
                 <span key="1" className="block">
-                  <em className="text-gradient-gold not-italic">Sponsor</em> a festival
+                  <em className="text-gradient-lotus not-italic">Sponsor</em> a festival
                 </span>,
                 <span key="2" className="block">
                   that stays free
@@ -278,7 +278,7 @@ export default function SponsorsPage() {
                   department cannot promise recognition the Commission has not
                   approved, so it is stated here, on every tier card's section,
                   and again in the form. */}
-              <Card className="border-vermilion/40 bg-vermilion/8 h-full">
+              <Card className="border-rose/40 bg-rose/8 h-full">
                 <h3 className="text-[1.35rem] leading-snug">Commission approval</h3>
                 <p className="mt-3 text-[15px] leading-relaxed">
                   <strong className="font-medium">{RECOGNITION_APPROVAL_NOTE}</strong>

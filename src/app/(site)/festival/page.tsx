@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ButtonLink } from "@/components/ui/Button";
+import { FestivalPlan } from "@/components/viz/FestivalPlan";
 import { Badge, Card, Container, Rule, Section, SectionHeading } from "@/components/ui/layout";
 import { LineReveal, Reveal } from "@/components/ui/Reveal";
 import { practicalities, programGroups, ticketedItems, type ProgramItem } from "@/config/program";
@@ -29,14 +30,30 @@ export default function FestivalPage() {
     <>
       <FestivalHero />
 
+      {/* ---------------------------------------------------------------- */}
+      <Section tone="sky" aria-label="How the festival is laid out">
+        <Container>
+          <Reveal>
+            <SectionHeading
+              eyebrow="The shape of it"
+              title="Three rings around one lake"
+              lede="Nobody hands you a map at the gate, and you do not need one. The festival arranges itself in rings around the water, and knowing that is most of what it takes to find anything."
+            />
+          </Reveal>
+          <Reveal delay={0.08} className="mt-12 sm:mt-14">
+            <FestivalPlan />
+          </Reveal>
+        </Container>
+      </Section>
+
       {programGroups.map((group, index) => (
         <Section
           key={group.id}
           id={group.id}
           aria-label={group.title}
-          // Alternating grounds, starting on paper: the hero is ink, and a
-          // long read wants the porcelain band first.
-          tone={index % 2 === 0 ? "paper" : "ink"}
+          // Alternating grounds. The plan above is the sky band, so the first
+          // of these has to be white or the two run together.
+          tone={index % 2 === 0 ? "white" : "sky"}
         >
           <Container>
             <Reveal>
@@ -80,7 +97,7 @@ function FestivalHero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(90% 62% at 18% 108%, rgba(232,184,87,0.16) 0%, rgba(224,112,143,0.09) 40%, rgba(11,10,15,0) 72%)",
+            "radial-gradient(90% 62% at 18% 108%, rgba(207,228,246,0.83) 0%, rgba(252,225,235,0.47) 40%, rgba(255,255,255,0) 72%)",
         }}
       />
 
@@ -97,7 +114,7 @@ function FestivalHero() {
             lines={[
               <span key="1">Two days at</span>,
               <span key="2">
-                <em className="text-gradient-gold not-italic">Echo Park Lake</em>
+                <em className="text-gradient-lotus not-italic">Echo Park Lake</em>
               </span>,
             ]}
           />
@@ -197,7 +214,7 @@ function ProgramCard({ item }: { item: ProgramItem }) {
         <p className="mt-auto pt-1">
           <Link
             href={item.link.href}
-            className="text-fg hover:text-gold inline-flex items-center gap-1.5 rounded text-sm font-medium transition-colors duration-200"
+            className="text-fg hover:text-lake inline-flex items-center gap-1.5 rounded text-sm font-medium transition-colors duration-200"
           >
             {item.link.label}
             <span aria-hidden="true">→</span>
@@ -233,7 +250,7 @@ function Practical() {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      className="text-fg hover:text-gold rounded text-[14.5px] transition-colors duration-200"
+                      className="text-fg hover:text-lake rounded text-[14.5px] transition-colors duration-200"
                     >
                       {item.name}
                     </a>
@@ -273,7 +290,7 @@ function Practical() {
               go to the same place —{" "}
               <a
                 href={`mailto:${site.contact.email}`}
-                className="text-fg hover:text-gold rounded transition-colors duration-200"
+                className="text-fg hover:text-lake rounded transition-colors duration-200"
               >
                 {site.contact.email}
               </a>

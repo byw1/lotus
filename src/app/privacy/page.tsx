@@ -23,7 +23,7 @@ export const metadata: Metadata = {
  */
 export default function PrivacyPage() {
   return (
-    <div className="theme-paper bg-bg text-fg flex min-h-dvh flex-col">
+    <div className="bg-bg text-fg flex min-h-dvh flex-col">
       <header className="border-line border-b">
         <div className="mx-auto flex h-16 w-full max-w-3xl items-center justify-between px-6 sm:px-8">
           <Link href="/" className="rounded-md text-[13px] leading-tight font-medium">
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
                 Write to{" "}
                 <a
                   href={`mailto:${site.contact.email}?subject=Privacy%20request`}
-                  className="text-blush rounded underline underline-offset-4"
+                  className="text-rose rounded underline underline-offset-4"
                 >
                   {site.contact.email}
                 </a>{" "}

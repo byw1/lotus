@@ -80,7 +80,7 @@ export function TakePart() {
                   <p className="mt-6">
                     <Link
                       href={route.href}
-                      className="text-vermilion hover:text-vermilion-deep inline-flex items-center gap-1.5 rounded text-[13.5px] font-medium transition-colors duration-200 after:absolute after:inset-0 after:content-['']"
+                      className="text-rose hover:text-rose-deep inline-flex items-center gap-1.5 rounded text-[13.5px] font-medium transition-colors duration-200 after:absolute after:inset-0 after:content-['']"
                     >
                       Apply
                       <span className="sr-only"> for {route.label.toLowerCase()}</span>

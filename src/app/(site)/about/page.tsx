@@ -59,7 +59,7 @@ function AboutHero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(80% 58% at 82% 104%, rgba(240,168,186,0.14) 0%, rgba(232,184,87,0.09) 42%, rgba(11,10,15,0) 74%)",
+            "radial-gradient(80% 58% at 82% 104%, rgba(207,228,246,0.73) 0%, rgba(252,225,235,0.47) 42%, rgba(255,255,255,0) 74%)",
         }}
       />
 
@@ -74,7 +74,7 @@ function AboutHero() {
             lines={[
               <span key="1">A festival</span>,
               <span key="2">
-                since <em className="text-gradient-gold not-italic">1972</em>
+                since <em className="text-gradient-lotus not-italic">1972</em>
               </span>,
             ]}
           />
@@ -159,7 +159,7 @@ function Timeline() {
                   aria-hidden="true"
                   className={
                     current
-                      ? "bg-vermilion border-bg absolute top-[0.45rem] -left-[7px] size-3.5 rounded-full border-2"
+                      ? "bg-rose border-bg absolute top-[0.45rem] -left-[7px] size-3.5 rounded-full border-2"
                       : "bg-gold border-bg absolute top-[0.5rem] -left-[6px] size-3 rounded-full border-2"
                   }
                 />
@@ -169,7 +169,7 @@ function Timeline() {
                     <p className="font-display text-gold text-[clamp(1.5rem,3vw,2rem)] leading-none">
                       {entry.year}
                     </p>
-                    {current ? <Badge tone="vermilion">This edition</Badge> : null}
+                    {current ? <Badge tone="rose">This edition</Badge> : null}
                   </div>
 
                   <h3 className="mt-3 text-[clamp(1.25rem,2.4vw,1.6rem)] leading-tight">
@@ -232,7 +232,7 @@ function TheLotus() {
           <Reveal delay={0.08}>
             <div className="text-fg-muted flex flex-col gap-5 leading-[1.75]">
               <div className="flex flex-wrap items-center gap-3">
-                <Badge tone="vermilion">2027 · {site.honoredCountry.name}</Badge>
+                <Badge tone="rose">2027 · {site.honoredCountry.name}</Badge>
               </div>
               <h3 className="text-fg text-[clamp(1.25rem,2.4vw,1.6rem)] leading-tight">
                 The gentleman among flowers
@@ -356,7 +356,7 @@ function HowItIsRun() {
                         href={partner.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-fg hover:text-gold inline-flex items-center gap-1.5 rounded text-sm font-medium transition-colors duration-200"
+                        className="text-fg hover:text-lake inline-flex items-center gap-1.5 rounded text-sm font-medium transition-colors duration-200"
                       >
                         {partner.linkLabel}
                         <span aria-hidden="true">↗</span>

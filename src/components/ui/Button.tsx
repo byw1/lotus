@@ -24,16 +24,24 @@ const base =
   "active:translate-y-px disabled:pointer-events-none disabled:saturate-50 disabled:opacity-70";
 
 const variants = {
-  /** The one action we most want taken on any given page. */
+  /**
+   * The one action we most want taken on any given page. Lotus pink, because
+   * the blue is doing the quieter job of carrying every link on the site.
+   */
   primary:
-    "bg-vermilion-solid text-white shadow-[0_1px_0_rgba(255,255,255,0.18)_inset,0_8px_24px_-10px_rgba(224,64,43,0.7)] " +
-    "hover:bg-vermilion-deep hover:shadow-[0_1px_0_rgba(255,255,255,0.22)_inset,0_12px_32px_-10px_rgba(224,64,43,0.85)]",
-  /** Warm, quieter, for a second action beside the primary one. */
-  gold: "bg-gold text-[#1a1418] hover:bg-gold-soft shadow-[0_8px_24px_-12px_rgba(232,184,87,0.8)]",
-  /** Sits on photography or the WebGL canvas without fighting it. */
-  glass:
-    "glass text-fg hover:bg-surface-strong hover:border-line-strong " +
-    "shadow-[0_8px_28px_-16px_rgba(0,0,0,0.9)]",
+    "bg-rose-solid text-white shadow-[0_1px_0_rgba(255,255,255,0.22)_inset,0_10px_24px_-12px_rgba(173,57,94,0.55)] " +
+    "hover:bg-rose-deep hover:shadow-[0_1px_0_rgba(255,255,255,0.26)_inset,0_14px_30px_-12px_rgba(173,57,94,0.65)]",
+  /** The lake. A second action beside the primary one, or a primary in a form. */
+  lake:
+    "bg-lake-solid text-white shadow-[0_1px_0_rgba(255,255,255,0.22)_inset,0_10px_24px_-12px_rgba(21,97,155,0.55)] " +
+    "hover:bg-lake-deep",
+  /**
+   * Soft blue on white. The friendliest button on the site, and the one that
+   * carries most of the secondary actions on a family-facing page.
+   */
+  soft: "bg-lake-soft text-lake-deep hover:brightness-[0.97]",
+  /** Sits over the flower or a gradient without fighting it. */
+  glass: "glass text-fg hover:bg-surface-strong hover:border-line-strong",
   outline: "border border-line-strong text-fg hover:bg-surface hover:border-fg-subtle",
   ghost: "text-fg-muted hover:text-fg hover:bg-surface",
 } as const;

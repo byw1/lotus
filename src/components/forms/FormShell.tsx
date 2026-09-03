@@ -139,7 +139,7 @@ export function FormShell({
           ref={resultRef}
           tabIndex={-1}
           role="alert"
-          className="border-vermilion/40 bg-vermilion/10 text-fg rounded-xl border px-5 py-4 text-sm leading-relaxed outline-none"
+          className="border-rose/40 bg-rose/10 text-fg rounded-xl border px-5 py-4 text-sm leading-relaxed outline-none"
         >
           {state.message}
         </div>

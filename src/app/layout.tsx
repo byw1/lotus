@@ -74,8 +74,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b0a0f",
-  colorScheme: "dark light",
+  themeColor: "#ffffff",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
   // Never cap zoom. Pinch-to-zoom is how a great many people read a website.
@@ -108,7 +108,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         */}
         <a
           href="#main"
-          className="sr-only-focusable bg-gold focus:ring-focus fixed top-4 left-4 z-[100] rounded-full px-5 py-2.5 text-sm font-medium text-[#0b0a0f]"
+          className="sr-only-focusable bg-lake-solid focus:ring-focus fixed top-4 left-4 z-[100] rounded-full px-5 py-2.5 text-sm font-medium text-white"
         >
           Skip to content
         </a>

@@ -110,7 +110,7 @@ function FaqHero() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(80% 58% at 82% 104%, rgba(232,184,87,0.15) 0%, rgba(224,112,143,0.08) 42%, rgba(11,10,15,0) 74%)",
+            "radial-gradient(80% 58% at 82% 104%, rgba(207,228,246,0.78) 0%, rgba(252,225,235,0.42) 42%, rgba(255,255,255,0) 74%)",
         }}
       />
 
@@ -127,7 +127,7 @@ function FaqHero() {
             lines={[
               <span key="1">What people</span>,
               <span key="2">
-                <em className="text-gradient-gold not-italic">ask us</em>
+                <em className="text-gradient-lotus not-italic">ask us</em>
               </span>,
             ]}
           />
@@ -229,7 +229,7 @@ function AnswerLink({ href, label }: { href: string; label: string }) {
     <Link
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="text-fg hover:text-gold mt-5 inline-flex items-center gap-2 rounded text-[14.5px] transition-colors duration-200"
+      className="text-fg hover:text-lake mt-5 inline-flex items-center gap-2 rounded text-[14.5px] transition-colors duration-200"
     >
       {label}
       <span aria-hidden="true">→</span>
@@ -256,7 +256,7 @@ function StillAsking() {
               Write to{" "}
               <a
                 href={`mailto:${site.contact.email}`}
-                className="text-fg hover:text-gold rounded transition-colors duration-200"
+                className="text-fg hover:text-lake rounded transition-colors duration-200"
               >
                 {site.contact.email}
               </a>

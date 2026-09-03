@@ -31,7 +31,7 @@ const RINGS = [
     height: 232,
     offset: 0,
     background: "linear-gradient(to top, #b8536f 0%, #e0708f 52%, #f7c3d0 100%)",
-    opacity: 0.55,
+    opacity: 0.78,
   },
   {
     count: 8,
@@ -39,7 +39,7 @@ const RINGS = [
     height: 178,
     offset: 22.5,
     background: "linear-gradient(to top, #d1698a 0%, #f0a8ba 58%, #fdeef2 100%)",
-    opacity: 0.8,
+    opacity: 0.9,
   },
   {
     count: 6,
@@ -47,7 +47,7 @@ const RINGS = [
     height: 118,
     offset: 12,
     background: "linear-gradient(to top, #e8b857 0%, #f3dba6 62%, #fffaf0 100%)",
-    opacity: 0.95,
+    opacity: 1,
   },
 ] as const;
 
@@ -66,18 +66,17 @@ export default function OpengraphImage() {
         flexDirection: "column",
         justifyContent: "flex-end",
         position: "relative",
-        background: "#0b0a0f",
+        background: "#ffffff",
         fontFamily: "sans-serif",
       }}
     >
-      {/* The warm wash the flower would throw, painted rather than computed. */}
+      {/* Morning on the lake: blue through the middle, warm where the flower is. */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           display: "flex",
-          background:
-            "radial-gradient(62% 96% at 85% 104%, rgba(224,112,143,0.4) 0%, rgba(232,184,87,0.16) 40%, rgba(11,10,15,0) 74%)",
+          background: "radial-gradient(78% 108% at 84% 104%, #fbe6ee 0%, #eef4fb 44%, #ffffff 76%)",
         }}
       />
 
@@ -105,14 +104,18 @@ export default function OpengraphImage() {
         }),
       )}
 
-      {/* Keeps the type off the petals without dimming the whole flower. */}
+      {/*
+        Keeps the type off the petals without dimming the whole flower. A white
+        veil rather than a dark one, and every stop is white at a different
+        alpha — fading toward a transparent tint would grey the midpoint.
+      */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           display: "flex",
           background:
-            "linear-gradient(to right, rgba(11,10,15,0.97) 0%, rgba(11,10,15,0.93) 42%, rgba(11,10,15,0.44) 62%, rgba(11,10,15,0) 80%)",
+            "linear-gradient(to right, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 42%, rgba(255,255,255,0.5) 62%, rgba(255,255,255,0) 82%)",
         }}
       />
 
@@ -130,7 +133,7 @@ export default function OpengraphImage() {
             fontSize: 22,
             letterSpacing: 5,
             textTransform: "uppercase",
-            color: "#e8b857",
+            color: "#7d5a13",
           }}
         >
           Free admission · Since 1972
@@ -143,20 +146,20 @@ export default function OpengraphImage() {
             fontSize: 82,
             lineHeight: 1.04,
             letterSpacing: -2.5,
-            color: "#f7f3ee",
+            color: "#13293d",
           }}
         >
           {site.editionOrdinal} Los Angeles Lotus Festival
         </div>
 
-        {/* The gold hairline that divides every section of the site. */}
+        {/* The hairline that divides every section of the site. */}
         <div
           style={{
             display: "flex",
             width: 148,
             height: 3,
             marginTop: 38,
-            background: "linear-gradient(to right, #e8b857 0%, rgba(232,184,87,0) 100%)",
+            background: "linear-gradient(to right, #b83f66 0%, rgba(184,63,102,0) 100%)",
           }}
         />
 
@@ -165,7 +168,7 @@ export default function OpengraphImage() {
             display: "flex",
             marginTop: 30,
             fontSize: 34,
-            color: "#a9a3b1",
+            color: "#3d5468",
           }}
         >
           {site.venue.name} · {site.dates.display}

@@ -109,7 +109,7 @@ export default function GetInvolvedPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(88% 58% at 18% 4%, rgba(232,184,87,0.17) 0%, rgba(240,168,186,0.06) 46%, rgba(11,10,15,0) 76%)",
+              "radial-gradient(88% 58% at 18% 4%, rgba(207,228,246,0.88) 0%, rgba(252,225,235,0.31) 46%, rgba(255,255,255,0) 76%)",
           }}
         />
 
@@ -128,7 +128,7 @@ export default function GetInvolvedPage() {
                   The festival runs
                 </span>,
                 <span key="2" className="block">
-                  on people who <em className="text-gradient-gold not-italic">turn&nbsp;up</em>
+                  on people who <em className="text-gradient-lotus not-italic">turn&nbsp;up</em>
                 </span>,
               ]}
             />
@@ -279,7 +279,7 @@ export default function GetInvolvedPage() {
                 <dd className="text-[15px] leading-relaxed">
                   <a
                     href={`mailto:${site.contact.email}`}
-                    className="hover:text-gold rounded underline underline-offset-4 transition-colors duration-200"
+                    className="hover:text-lake rounded underline underline-offset-4 transition-colors duration-200"
                   >
                     {site.contact.email}
                   </a>{" "}

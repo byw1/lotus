@@ -259,37 +259,54 @@ someone targets this site specifically.
 
 ---
 
-## 5. The design system: two themes, per section
+## 5. The design system: one light ground, four tones
 
-The palette is drawn from two places at once — the lotus bed at Echo Park Lake at
-dusk (ink water, blush petals, a gold heart), and the culture honored in 2027
-(vermilion, imperial gold, jade, porcelain).
+The palette is Echo Park Lake on a July morning, because that is what the
+festival actually is: families on the grass, kids in the children's area, boats
+on the water by lunchtime. It is white and open, with the lake's blue and the
+lotus's pink doing the work, and vermilion held back for the one thing that
+earns it — the culture honored this edition.
 
 Every colour is a CSS custom property on `:root` in `src/app/globals.css`, and
-Tailwind sees them through `@theme inline`. Two complete themes ship:
+Tailwind sees them through `@theme inline`. There is one palette and four
+grounds:
 
-| Theme | Tokens defined on | Used for |
+| Tone | Class | Used for |
 | --- | --- | --- |
-| **ink** (default) | `:root` | Hero and immersive sections. Near-black ground, gold and blush carrying the light. |
-| **porcelain** | `.theme-paper` | Reading and forms. Warm paper, ink type. |
+| **white** (default) | — | Most of the site. |
+| **sky** | `.tone-sky` | The alternating band. Pale lake blue. |
+| **blush** | `.tone-blush` | The other alternating band. Pale pink. |
+| **deep** | `.tone-deep` | One inverted navy band per page at most, for a section that wants the weight of evening on the water. |
 
-**They are swapped per section, not by a user toggle.** `<Section tone="paper">`
-adds `.theme-paper` to that band, which redefines the same token names for
-everything inside it. Nothing in a component says "if dark, then…". A `Card`, a
-`Button` and a `Field` are written once against `--fg`, `--bg` and `--line`, and
-they are correct in both grounds.
+**Grounds are chosen per section, not by a user toggle.** `<Section tone="sky">`
+adds `.tone-sky` to that band, which redefines `--bg` and nothing else — every
+text colour in `globals.css` is chosen to clear AA on white, sky *and* blush, so
+a tone change moves the ground and nothing has to follow it. Nothing in a
+component says "if dark, then…". A `Card`, a `Button` and a `Field` are written
+once against `--fg`, `--bg` and `--line`, and they are correct on all of them.
 
-The reason is editorial rather than technical. A light/dark toggle answers "what
-does the reader prefer?" This site answers a different question: *what is the
-right ground for this job?* Long-form history and a fifteen-field vendor
-application want paper. The lotus at dusk wants ink. Forms therefore always sit
-on `tone="paper"` — that is a house rule, not a preference.
+`paper` and `ink` are kept as aliases for `sky` and `blush` so the pages written
+against the earlier dark palette keep working. What those names encoded was
+*alternation*, so they map to the two tinted bands rather than to white; a page
+that alternates `<Section>` with `<Section tone="paper">` still gets two
+different grounds. New sections should name the tone they want.
 
-Both palettes are checked to WCAG 2.2 AA for body text. Two of the tokens exist
-purely to keep that true: `--fg-subtle` is pinned at just under 5:1 on each
-ground, and there are two vermilions because one cannot both be readable as text
-and carry white button labels at AA. Neither is `#DE2910` — that is the PRC flag
-red, and this is a cultural festival, not a state one.
+> **The light ground is not a coat of paint.** It dissolved the constraint that
+> shaped the original design. On black, text over a lit petal could not reach AA
+> at any scrim opacity that left the flower looking like a flower — hence the
+> three-band hero, the opaque strip under the fact list, and the scrims over
+> every canvas. On white, deep navy on a pale petal measures better than 6:1, so
+> the type can sit directly on the flower and the flower can be big, whole and
+> unscrimmed. Every scrim was deleted rather than re-tuned. If you take the site
+> back toward a dark ground, those scrims all have to come back.
+
+Text colours are checked to WCAG 2.2 AA against all three light grounds, and the
+numbers are written into the comments beside each token in `globals.css` — if
+you change a value, re-measure it. Two pairs of tokens exist only to keep that
+true: `--lake`/`--lake-solid` and `--rose`/`--rose-solid`, because one colour
+cannot both be readable as text on white and carry white button labels at AA.
+Neither rose is `#DE2910` — that is the PRC flag red, and this is a cultural
+festival, not a state one. `--blush` is a fill, never text.
 
 Motion is transform-and-opacity only, so the compositor can own it. Under
 `prefers-reduced-motion: reduce`, `Reveal` renders a plain `div` — no transform,
@@ -305,10 +322,10 @@ painted invisible.
 
 ---
 
-## 6. The procedural lotus
+## 6. The procedural scenes
 
-There is **no downloaded 3D model anywhere in this repository**. The flower is
-generated from equations at runtime. That keeps the repo small, keeps it fully
+There is **no downloaded 3D model anywhere in this repository**. Both scenes —
+the lotus and the dragon boats — are generated from equations at runtime. That keeps the repo small, keeps it fully
 open source with no third-party asset licensing, and — the real reason — lets the
 petals *morph* open instead of playing a baked animation.
 
@@ -373,9 +390,62 @@ jitter in pitch, roll and scale comes from a **seeded** pseudo-random function, 
 the flower is identical on the server, on the client and between reloads: no
 hydration surprises and no "it looked different in the screenshot" bugs.
 
+### The lily pads
+
+`buildLilyPadGeometry` makes the pond the flower is standing in: a disc with a
+wedge notch, a domed centre, a rim that curls up at the edge, a scalloped
+outline and eleven radial veins baked into the vertex colours. Seven pads share
+one geometry and one material, each drifting on its own phase so the water never
+moves on a single beat. The material carries a clearcoat, because a lotus pad is
+famously water-repellent — the "lotus effect" is named for it — and without the
+sheen the pads read as felt.
+
+### The dragon boats
+
+`src/components/dragon/boat-geometry.ts` builds a hull the same way the petal is
+built: a swept surface, `t` along the keel bow-to-stern and `v` around the
+cross-section from port gunwale through the keel to starboard. Half-beam,
+draught and sheer are three one-line functions of `t`, so re-proportioning the
+boat is changing a number rather than opening Blender.
+
+Three things in that file are load-bearing and easy to undo by accident, so
+`tests/boat-geometry.test.ts` pins all three:
+
+- **The hull sits *in* the water.** Amidships the keel is below y = 0 and the
+  gunwale above it. The ends sweep up by more than half a unit, which is why the
+  stem posts are stepped on `sheerLine(t)` and not at the waterline — rooted at
+  y = 0 a post hangs below the bow like a rudder.
+- **`CREW` is the crew the program page describes**: one drummer, six paddlers,
+  one steersman. If it ever disagrees with `config/program.ts`, the program file
+  is right and this is wrong — a team captain reads that one.
+- **Every paddler shares one stroke phase.** Both sides of a dragon boat catch
+  the water on the same beat; that is what the drum is for, and it is what the
+  copy beside the scene says. Staggering them would look busier and be wrong.
+
+There is deliberately **no dragon head**. A carved Chinese dragon rendered at
+this size and by this hand becomes a cartoon, and that is precisely the thing a
+festival site honoring China should not put on its own page. The boats carry the
+upswept stem post the head would be pegged onto instead — which is what you can
+actually make out from the bank anyway.
+
+The water is a disc whose rim fades to transparent, carried in a four-component
+colour attribute (three reads the alpha of a `vec4` colour attribute when
+`vertexColors` is on), so it needs no shader and no texture. A plane would be
+simpler, but this camera is low enough to see its far edge, and a hard edge
+reads as a wall rather than as water. Two details there cost an afternoon each
+and are worth keeping: the water's diffuse colour is picked several stops darker
+than the colour it should end up, because a horizontal surface takes every light
+in the scene at full strength and renders as sheet metal otherwise; and the disc
+is given `renderOrder={-1}` because transparent objects sort by their centres,
+so an enormous disc centred at the origin is otherwise drawn after — and over —
+the ripples scattered around it.
+
 ### The fallback ladder
 
-Everything WebGL is behind `src/components/lotus/Lotus.tsx`. The flat SVG lotus
+Everything WebGL is behind `src/components/three/CanvasHost.tsx`, which owns
+capability detection, deferred loading, the motion preference and the error
+boundary for **every** scene on the site; `Lotus.tsx` and `DragonBoat.tsx` only
+say which chunk to load and what to draw meanwhile. The flat SVG lotus
 (`LotusFallback`) is a server component with no JavaScript, so it renders in the
 first paint on any device, and the canvas cross-fades over it. There is never an
 empty box on screen.
@@ -398,7 +468,9 @@ The scene steps down, in this order:
    back. A render-phase error boundary cannot see this; without the listener the
    canvas silently goes black.
 6. **`prefers-reduced-motion: reduce`** → the scene still renders, but the bloom
-   animation, the idle sway and even the SVG's breathing are all switched off.
+   animation, the idle sway, the stroke, the surge and even the SVG's breathing
+   are all switched off. `still` is not "slower": the boat is drawn at the top
+   of the stroke and nothing moves at all.
 
 Within the scene, `PerformanceMonitor` drops the material to a cheaper tier when
 the device stops keeping up, and drei's `AdaptiveDpr` owns the pixel ratio.
@@ -409,7 +481,13 @@ whatever it chose on the next render. The `dpr` clamp on `<Canvas>` is static,
 quality tier.
 
 The canvas is `aria-hidden`. It is pure decoration — every fact it decorates is
-stated in text next to it.
+stated in text next to it. The same rule governs the flat drawings in
+`src/components/viz/`: the dot field, the glyphs, the boat schematic and the
+three-ring festival plan are all `aria-hidden`, and each sits beside the same
+information in words. The festival plan in particular is a **diagram and not a
+map**, and its caption says so — the festival's own site plan is published with
+the program, and drawing a plausible-looking one here would put a stage
+somewhere it may not be and send somebody there in July.
 
 ---
 

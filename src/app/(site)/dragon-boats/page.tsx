@@ -5,6 +5,9 @@ import { Badge, Card, Container, Rule, Section, SectionHeading } from "@/compone
 import { LineReveal, Reveal } from "@/components/ui/Reveal";
 import { site } from "@/config/site";
 
+import { BoatDiagram } from "@/components/dragon/BoatDiagram";
+import { DragonBoat } from "@/components/dragon/DragonBoat";
+
 import { DragonBoatForm } from "./DragonBoatForm";
 
 export const metadata: Metadata = {
@@ -56,75 +59,6 @@ const trophies = [
   "Turtle Team",
 ] as const;
 
-/**
- * A boat seen from above, bow to the left.
- *
- * Deliberately a schematic and not a picture of a dragon: a drawn dragon head
- * at this size becomes a cartoon, and a Chinese dragon drawn carelessly by a
- * Western hand is exactly the thing this site should not do. The hull, the
- * seats and the ring of sound around the drum say what a reader needs.
- *
- * Decorative — every position it shows is written out in the cards beside it.
- */
-function BoatDiagram({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 760 128"
-      className={className}
-      fill="none"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <defs>
-        <linearGradient id="db-hull" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.04" />
-          <stop offset="45%" stopColor="var(--gold)" stopOpacity="0.13" />
-          <stop offset="100%" stopColor="var(--vermilion)" stopOpacity="0.06" />
-        </linearGradient>
-      </defs>
-
-      {/* Hull. */}
-      <path
-        d="M14 64C170 12 590 12 746 64C590 116 170 116 14 64Z"
-        fill="url(#db-hull)"
-        stroke="var(--gold)"
-        strokeOpacity="0.4"
-        strokeWidth="1.25"
-      />
-      <path
-        d="M52 64H708"
-        stroke="var(--gold)"
-        strokeOpacity="0.18"
-        strokeWidth="1"
-        strokeDasharray="3 7"
-      />
-
-      {/* The drum, and the sound coming off it. */}
-      <circle cx="128" cy="64" r="30" stroke="var(--gold)" strokeOpacity="0.12" />
-      <circle cx="128" cy="64" r="20" stroke="var(--gold)" strokeOpacity="0.22" />
-      <circle cx="128" cy="64" r="9" fill="var(--gold)" />
-
-      {/* Six paddlers, three pairs. */}
-      {[268, 356, 444].map((x) => (
-        <g key={x}>
-          <circle cx={x} cy="44" r="7" fill="var(--gold)" fillOpacity="0.45" />
-          <circle cx={x} cy="84" r="7" fill="var(--gold)" fillOpacity="0.45" />
-        </g>
-      ))}
-
-      {/* The steersman, and the sweep oar trailing off the stern. */}
-      <circle cx="644" cy="64" r="8" fill="var(--vermilion)" fillOpacity="0.85" />
-      <path
-        d="M652 60L722 42"
-        stroke="var(--vermilion)"
-        strokeOpacity="0.5"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export default function DragonBoatsPage() {
   return (
     <>
@@ -136,7 +70,7 @@ export default function DragonBoatsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(100% 62% at 18% 4%, rgba(232,184,87,0.16) 0%, rgba(224,64,43,0.07) 42%, rgba(11,10,15,0) 74%)",
+              "radial-gradient(100% 62% at 18% 4%, rgba(207,228,246,0.83) 0%, rgba(252,225,235,0.36) 42%, rgba(255,255,255,0) 74%)",
           }}
         />
 
@@ -150,7 +84,7 @@ export default function DragonBoatsPage() {
               delay={0.12}
               lines={[
                 <span key="1" className="block">
-                  <em className="text-gradient-gold not-italic">Dragon boat</em>
+                  <em className="text-gradient-lotus not-italic">Dragon boat</em>
                 </span>,
                 <span key="2" className="block">
                   races on the lake
@@ -194,6 +128,28 @@ export default function DragonBoatsPage() {
               ))}
             </dl>
           </Reveal>
+        </Container>
+      </Section>
+
+      {/* ---------------------------------------------------------------- */}
+      {/*
+        The boat itself, at the size it deserves, before any of the words about
+        it. Nothing is set over the canvas — a band with no type on it has no
+        contrast to defend, so the scene can be as bright and as busy as it
+        likes, and the caption sits underneath on solid ground.
+      */}
+      <Section
+        tone="sky"
+        aria-label="A dragon boat crew, mid-stroke"
+        className="overflow-hidden py-0 sm:py-0"
+      >
+        <DragonBoat className="h-[62vw] max-h-[26rem] min-h-[13rem] w-full sm:h-[46vw]" />
+        <Container className="pb-14 sm:pb-16">
+          <p className="text-fg-muted mx-auto max-w-[58ch] text-center text-[15px] leading-relaxed">
+            Eight to a boat, and every paddle entering the water on the same beat. That is what the
+            drum at the bow is for, and it is most of what a first-time crew learns in its first
+            heat.
+          </p>
         </Container>
       </Section>
 
@@ -326,7 +282,7 @@ export default function DragonBoatsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(72% 50% at 50% 0%, rgba(224,64,43,0.13) 0%, rgba(11,10,15,0) 70%)",
+              "radial-gradient(72% 50% at 50% 0%, rgba(207,228,246,0.68) 0%, rgba(255,255,255,0) 70%)",
           }}
         />
 

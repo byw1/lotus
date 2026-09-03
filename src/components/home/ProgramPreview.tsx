@@ -87,7 +87,7 @@ export function ProgramPreview() {
                     */}
                     <Link
                       href={pick.href}
-                      className="text-gold hover:text-gold-soft inline-flex items-center gap-1.5 rounded text-[13.5px] font-medium transition-colors duration-200 after:absolute after:inset-0 after:content-['']"
+                      className="text-gold hover:text-lake-deep inline-flex items-center gap-1.5 rounded text-[13.5px] font-medium transition-colors duration-200 after:absolute after:inset-0 after:content-['']"
                     >
                       {pick.cta}
                       <ArrowRight

@@ -33,7 +33,15 @@ export function HistoryRail() {
 
           <div className="lg:col-span-7">
             <Reveal delay={0.08}>
-              <ol className="border-line border-t">
+              {/*
+                A rail with a spine, rather than a list of rows. The spine is
+                one absolutely positioned hairline on the <ol> instead of a
+                border on each <li>: drawn per item it breaks at every gap, and
+                a timeline with gaps in its line reads as missing years.
+              */}
+              <ol className="relative">
+                <span aria-hidden="true" className="bg-line absolute top-6 bottom-6 left-20 w-px" />
+
                 {history.map((entry) => {
                   // `current` is only present on the edition being built, so
                   // it has to be probed rather than read.
@@ -42,24 +50,37 @@ export function HistoryRail() {
                   return (
                     <li
                       key={entry.year}
-                      className="border-line grid grid-cols-[3.75rem_1fr] items-baseline gap-5 border-b py-4 sm:grid-cols-[5rem_1fr]"
+                      className="grid grid-cols-[3.5rem_1.5rem_1fr] items-baseline gap-x-3 py-4"
                     >
                       <span
                         className={
                           current
-                            ? "text-vermilion text-[15px] tabular-nums"
+                            ? "text-rose text-[15px] tabular-nums"
                             : "text-gold text-[15px] tabular-nums"
                         }
                       >
                         {entry.year}
                       </span>
+
+                      {/* The marker sits on the spine. Decorative: the year
+                          beside it is the thing that carries the meaning. */}
+                      <span aria-hidden="true" className="flex justify-center">
+                        <span
+                          className={
+                            current
+                              ? "bg-rose ring-bg size-2.5 rounded-full ring-4"
+                              : "border-line-strong bg-bg ring-bg size-2.5 rounded-full border-2 ring-4"
+                          }
+                        />
+                      </span>
+
                       <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
                         <span
                           className={current ? "text-fg text-[15px]" : "text-fg-muted text-[15px]"}
                         >
                           {entry.title}
                         </span>
-                        {current ? <Badge tone="vermilion">This edition</Badge> : null}
+                        {current ? <Badge tone="rose">This edition</Badge> : null}
                       </span>
                     </li>
                   );

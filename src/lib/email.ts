@@ -68,23 +68,23 @@ function submissionHtml(kind: FormKind, data: Record<string, unknown>): string {
         .replace(/^./, (c) => c.toUpperCase())
         .trim();
       return `<tr>
-        <th align="left" style="padding:8px 16px 8px 0;vertical-align:top;color:#574d55;font-weight:500;width:190px;border-bottom:1px solid #ece5dd;">${escapeHtml(label)}</th>
-        <td style="padding:8px 0;vertical-align:top;color:#1a1418;border-bottom:1px solid #ece5dd;white-space:pre-wrap;">${escapeHtml(formatValue(value))}</td>
+        <th align="left" style="padding:8px 16px 8px 0;vertical-align:top;color:#3d5468;font-weight:500;width:190px;border-bottom:1px solid #dbe6ef;">${escapeHtml(label)}</th>
+        <td style="padding:8px 0;vertical-align:top;color:#13293d;border-bottom:1px solid #dbe6ef;white-space:pre-wrap;">${escapeHtml(formatValue(value))}</td>
       </tr>`;
     })
     .join("");
 
   return `<!doctype html>
-<html lang="en"><body style="margin:0;padding:24px;background:#f7f3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1a1418;">
-  <div style="max-width:640px;margin:0 auto;background:#fffdfa;border:1px solid #ece5dd;border-radius:14px;padding:28px;">
-    <p style="margin:0 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#857a83;">
+<html lang="en"><body style="margin:0;padding:24px;background:#eaf3fb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#13293d;">
+  <div style="max-width:640px;margin:0 auto;background:#ffffff;border:1px solid #dbe6ef;border-radius:14px;padding:28px;">
+    <p style="margin:0 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#4d6a80;">
       ${escapeHtml(site.editionOrdinal)} Los Angeles Lotus Festival
     </p>
     <h1 style="margin:0 0 20px;font-size:21px;font-weight:600;">
       New ${escapeHtml(formLabels[kind].toLowerCase())} submission
     </h1>
     <table style="width:100%;border-collapse:collapse;font-size:14px;line-height:1.5;">${rows}</table>
-    <p style="margin:22px 0 0;font-size:12px;color:#857a83;">
+    <p style="margin:22px 0 0;font-size:12px;color:#4d6a80;">
       Sent by ${escapeHtml(site.url)}. Reply directly to this email to reach the applicant.
     </p>
   </div>
@@ -168,8 +168,8 @@ export async function sendApplicantReceipt(
     replyTo: internalInbox(),
     subject: `We have your ${label} submission — ${site.editionOrdinal} Lotus Festival`,
     html: `<!doctype html>
-<html lang="en"><body style="margin:0;padding:24px;background:#f7f3ee;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1a1418;">
-  <div style="max-width:560px;margin:0 auto;background:#fffdfa;border:1px solid #ece5dd;border-radius:14px;padding:28px;line-height:1.6;font-size:15px;">
+<html lang="en"><body style="margin:0;padding:24px;background:#eaf3fb;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#13293d;">
+  <div style="max-width:560px;margin:0 auto;background:#ffffff;border:1px solid #dbe6ef;border-radius:14px;padding:28px;line-height:1.6;font-size:15px;">
     ${text
       .split("\n\n")
       .map((paragraph) => `<p style="margin:0 0 16px;">${escapeHtml(paragraph)}</p>`)

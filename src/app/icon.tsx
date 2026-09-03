@@ -47,7 +47,7 @@ export default function Icon() {
         height: size.height,
         display: "flex",
         position: "relative",
-        background: "radial-gradient(circle at 50% 62%, #1a1522 0%, #0b0a0f 72%)",
+        background: "radial-gradient(circle at 50% 62%, #ffffff 0%, #eaf3fb 72%)",
       }}
     >
       {RINGS.flatMap((ring, r) =>

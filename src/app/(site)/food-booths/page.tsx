@@ -130,7 +130,7 @@ export default function FoodBoothsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(100% 62% at 82% 2%, rgba(232,184,87,0.17) 0%, rgba(224,64,43,0.08) 44%, rgba(11,10,15,0) 74%)",
+              "radial-gradient(100% 62% at 82% 2%, rgba(207,228,246,0.88) 0%, rgba(252,225,235,0.42) 44%, rgba(255,255,255,0) 74%)",
           }}
         />
 
@@ -147,7 +147,7 @@ export default function FoodBoothsPage() {
                   Cook at the
                 </span>,
                 <span key="2" className="block">
-                  <em className="text-gradient-gold not-italic">food court</em>
+                  <em className="text-gradient-lotus not-italic">food court</em>
                 </span>,
               ]}
             />
@@ -294,7 +294,7 @@ export default function FoodBoothsPage() {
                   <Card className="flex flex-col gap-5 sm:flex-row sm:gap-7">
                     <p
                       aria-hidden="true"
-                      className="text-gold/70 shrink-0 text-[2rem] leading-none tabular-nums"
+                      className="text-gold-deep/75 shrink-0 text-[2rem] leading-none tabular-nums"
                     >
                       {index + 1}
                     </p>
@@ -337,7 +337,7 @@ export default function FoodBoothsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(72% 52% at 50% 0%, rgba(78,157,139,0.14) 0%, rgba(11,10,15,0) 70%)",
+              "radial-gradient(72% 52% at 50% 0%, rgba(207,228,246,0.73) 0%, rgba(255,255,255,0) 70%)",
           }}
         />
 

@@ -94,7 +94,7 @@ export default function PerformersPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(96% 60% at 14% 2%, rgba(232,184,87,0.17) 0%, rgba(240,168,186,0.06) 44%, rgba(11,10,15,0) 74%)",
+              "radial-gradient(96% 60% at 14% 2%, rgba(207,228,246,0.88) 0%, rgba(252,225,235,0.31) 44%, rgba(255,255,255,0) 74%)",
           }}
         />
 
@@ -108,7 +108,7 @@ export default function PerformersPage() {
               delay={0.12}
               lines={[
                 <span key="1" className="block">
-                  <em className="text-gradient-gold not-italic">Perform</em> at the
+                  <em className="text-gradient-lotus not-italic">Perform</em> at the
                 </span>,
                 <span key="2" className="block">
                   Lotus Festival

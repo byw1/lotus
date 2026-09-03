@@ -40,7 +40,7 @@ export function NewsletterForm({ className }: { className?: string }) {
     return (
       <div
         className={cn(
-          "border-jade/40 bg-jade/10 flex items-start gap-3 rounded-2xl border px-6 py-5",
+          "border-jade/30 bg-jade-soft flex items-start gap-3 rounded-2xl border px-6 py-5",
           className,
         )}
       >
@@ -58,7 +58,7 @@ export function NewsletterForm({ className }: { className?: string }) {
   }
 
   return (
-    <form action={formAction} noValidate className={cn("w-full max-w-lg", className)}>
+    <form action={formAction} noValidate className={cn("w-full", className)}>
       {/* Off-screen, tab-skipped and hidden from assistive tech. See lib/spam.ts. */}
       <div
         aria-hidden="true"
@@ -78,16 +78,16 @@ export function NewsletterForm({ className }: { className?: string }) {
 
       <div
         className={cn(
-          // A dark ground rather than the usual translucent-white surface: this
-          // capsule sits directly over lit petals, and a 4%-white fill would leave
-          // the placeholder text well under 4.5:1.
-          "border-line-strong flex items-center gap-2 rounded-full border bg-[rgba(11,10,15,0.62)] p-1.5",
-          "backdrop-blur-xl transition-[border-color,box-shadow] duration-200",
-          // The capsule owns the focus indicator for the input inside it, so it has
-          // to be a real one: a solid 2px gold ring at 10.7:1 against the ink
-          // ground, not the 13%-opacity wash that was here before and measured
-          // 1.24:1. WCAG 2.2 asks for 3:1 on a focus indicator.
-          "focus-within:border-gold focus-within:shadow-[0_0_0_2px_var(--gold)]",
+          // White, not a tint: the capsule sits over a soft blue wash, and a
+          // translucent fill would drag the placeholder's contrast down with it.
+          // Inside the card the capsule needs no shadow of its own — the card
+          // already lifts it off the page, and stacking two makes it muddy.
+          "border-line-strong bg-bg flex items-center gap-2 rounded-full border p-1.5",
+          "transition-[border-color,box-shadow] duration-200",
+          // The capsule owns the focus indicator for the input inside it, so it
+          // has to be a real one: a solid 2px ring at 6.5:1 against white, not a
+          // low-opacity wash. WCAG 2.2 asks for 3:1 on a focus indicator.
+          "focus-within:border-lake focus-within:shadow-[0_0_0_2px_var(--lake)]",
         )}
       >
         <label htmlFor="newsletter-email" className="sr-only">
@@ -104,7 +104,7 @@ export function NewsletterForm({ className }: { className?: string }) {
           aria-describedby={state.errors?.email ? "newsletter-email-error" : undefined}
           aria-invalid={state.errors?.email ? true : undefined}
           className={cn(
-            "text-fg placeholder:text-fg-muted min-w-0 flex-1 bg-transparent px-5 text-[15px]",
+            "text-fg placeholder:text-fg-subtle min-w-0 flex-1 bg-transparent px-5 text-[15px]",
             // The capsule owns the focus treatment, so the input drops its own.
             "outline-none focus-visible:outline-none",
           )}
@@ -112,6 +112,7 @@ export function NewsletterForm({ className }: { className?: string }) {
         <SubmitButton
           label="Notify me"
           pendingLabel="Joining"
+          variant="lake"
           icon={<ArrowRight aria-hidden="true" className="size-4" />}
           className="h-12 shrink-0 px-6"
         />
@@ -123,14 +124,17 @@ export function NewsletterForm({ className }: { className?: string }) {
           tabIndex={-1}
           id="newsletter-email-error"
           role="alert"
-          className="text-blush mt-3 pl-5 text-[13px] font-medium outline-none"
+          className="text-rose mt-3 pl-5 text-[13px] font-semibold outline-none"
         >
           {state.errors?.email ?? state.message}
         </p>
       ) : (
-        <p className="text-fg/75 mt-3 pl-5 text-[13px] [text-shadow:0_1px_3px_rgba(11,10,15,0.95),0_1px_12px_rgba(11,10,15,0.85)]">
+        <p className="text-fg-muted mt-3 px-5 text-center text-[13px] sm:text-left">
           Festival news only — a handful of emails a year. Unsubscribe any time.{" "}
-          <Link href="/privacy" className="hover:text-fg rounded underline underline-offset-4">
+          <Link
+            href="/privacy"
+            className="text-lake hover:text-lake-deep rounded underline underline-offset-4"
+          >
             Privacy
           </Link>
           .

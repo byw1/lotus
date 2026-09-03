@@ -23,7 +23,7 @@ export function Footer() {
             </p>
             <a
               href={`mailto:${site.contact.email}`}
-              className="text-fg hover:text-gold mt-5 inline-block rounded text-sm transition-colors duration-200"
+              className="text-fg hover:text-lake mt-5 inline-block rounded text-sm transition-colors duration-200"
             >
               {site.contact.email}
             </a>

@@ -31,8 +31,8 @@ const controlBase =
   "ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-line-strong " +
   "disabled:cursor-not-allowed disabled:opacity-70";
 
-const controlValid = "border-line focus:border-gold/60";
-const controlInvalid = "border-vermilion/70 focus:border-vermilion";
+const controlValid = "border-line focus:border-lake";
+const controlInvalid = "border-rose/70 focus:border-rose";
 
 type FieldRenderProps = {
   id: string;
@@ -86,7 +86,7 @@ export function Field({ label, name, hint, error, required, className, children 
       })}
 
       {error ? (
-        <p id={errorId} role="alert" className="text-vermilion text-[13px] font-medium">
+        <p id={errorId} role="alert" className="text-rose text-[13px] font-medium">
           {error}
         </p>
       ) : null}
@@ -178,7 +178,7 @@ export function Checkbox({
       className={cn(
         "group border-line bg-surface flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3",
         "hover:border-line-strong hover:bg-surface-strong transition-colors duration-200",
-        "has-checked:border-gold/50 has-checked:bg-gold/8",
+        "has-checked:border-lake/50 has-checked:bg-lake/8",
         className,
       )}
     >
@@ -261,7 +261,7 @@ export function CheckboxGroup({
       </div>
 
       {error ? (
-        <p id={errorId} role="alert" className="text-vermilion mt-2 text-[13px] font-medium">
+        <p id={errorId} role="alert" className="text-rose mt-2 text-[13px] font-medium">
           {error}
         </p>
       ) : null}
@@ -315,7 +315,7 @@ export function RadioGroup({
             className={cn(
               "group border-line bg-surface flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3",
               "hover:border-line-strong hover:bg-surface-strong transition-colors duration-200",
-              "has-checked:border-gold/50 has-checked:bg-gold/8",
+              "has-checked:border-lake/50 has-checked:bg-lake/8",
             )}
           >
             <input
@@ -336,7 +336,7 @@ export function RadioGroup({
       </div>
 
       {error ? (
-        <p id={errorId} role="alert" className="text-vermilion mt-2 text-[13px] font-medium">
+        <p id={errorId} role="alert" className="text-rose mt-2 text-[13px] font-medium">
           {error}
         </p>
       ) : null}

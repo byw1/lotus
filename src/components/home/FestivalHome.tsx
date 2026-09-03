@@ -1,6 +1,7 @@
 import { Footer } from "@/components/site/Footer";
 import { Header } from "@/components/site/Header";
 
+import { ByTheNumbers } from "./ByTheNumbers";
 import { ClosingBand } from "./ClosingBand";
 import { HistoryRail } from "./HistoryRail";
 import { HomeHero } from "./HomeHero";
@@ -19,12 +20,11 @@ import { TakePart } from "./TakePart";
  * each; the alternative is a layout that has to branch on which of two pages
  * it is wrapping.
  *
- * The bands alternate ground on purpose. Ink for the two immersive ends and
- * for the parts that are scanned; porcelain for the two that are read — the
- * essay about China and the application fees a vendor has to squint at. The
- * order is also the order of the questions people actually arrive with: what
- * is this, whose year is it, what happens, can I be in it, how old is it, and
- * when exactly is it.
+ * The bands alternate ground on purpose — white, a pale sky blue, a pale
+ * blush — so a page this long has rhythm without ever getting heavy. The
+ * order is the order of the questions people actually arrive with: what is
+ * this, whose year is it, what happens, how big is it, can I be in it, how old
+ * is it, and when exactly is it.
  */
 export function FestivalHome() {
   return (
@@ -34,6 +34,7 @@ export function FestivalHome() {
         <HomeHero />
         <HonoredCountry />
         <ProgramPreview />
+        <ByTheNumbers />
         <TakePart />
         <HistoryRail />
         <ClosingBand />

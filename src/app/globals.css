@@ -3,103 +3,136 @@
 /* ==========================================================================
    Los Angeles Lotus Festival — design tokens
    --------------------------------------------------------------------------
-   The palette is drawn from two places at once: the lotus bed at Echo Park
-   Lake at dusk (ink water, blush petals, a gold heart), and the culture
-   honored in 2027 (vermilion, imperial gold, jade, porcelain).
+   The palette is Echo Park Lake on a July morning, because that is what this
+   festival actually is: families on the grass, kids in the children's area,
+   boats on the water by lunchtime. It is white and open, with the lake's blue
+   and the lotus's pink doing the work.
 
-   Deliberately restrained. Gold is the primary accent and carries light;
-   blush is the secondary; vermilion is reserved for the 2027 designation and
-   primary calls to action; jade appears rarely. The background does most of
-   the work.
+     white      the ground for everything
+     lake       blue — links, primary actions, the water
+     blush      light pink — soft bands and fills
+     rose       deep pink — the lotus itself, and the 2027 designation
+     leaf       green — lotus pads, "yes" states
+     gold       the flower's heart, used sparingly
 
-   Two surface themes ship, switched per-section rather than by a user toggle:
-     (default)      "night"     — ink background, used for hero and immersive sections
-     .theme-paper   "porcelain" — warm paper, used for reading and for forms
-   Both meet WCAG 2.2 AA for body text and AAA for large display text.
+   Sections alternate between white, a pale sky band and a pale blush band, so
+   the page has rhythm without ever getting heavy. One deep-navy tone exists
+   for the rare band that wants to feel like evening on the water.
+
+   Every text colour here is checked against every ground it can land on. The
+   numbers are in the comments; if you change a value, re-check it.
    ========================================================================== */
 
 :root {
-  color-scheme: dark;
-
-  /* Surfaces */
-  --bg: #0b0a0f;
-  --bg-raised: #14121b;
-  --bg-sunken: #070609;
-  --surface: rgb(255 255 255 / 4%);
-  --surface-strong: rgb(255 255 255 / 7%);
-
-  /* Text */
-  --fg: #f7f3ee;
-  --fg-muted: #a9a3b1;
-  /* 4.98:1 on --bg. Anything lighter fails AA at 13px, which is where it is used. */
-  --fg-subtle: #847d8d;
-
-  /* Lines */
-  --line: rgb(255 255 255 / 9%);
-  --line-strong: rgb(255 255 255 / 16%);
-
-  /* Accents */
-  --gold: #e8b857;
-  --gold-soft: #f3dba6;
-  --gold-deep: #a97f2c;
-  --blush: #f0a8ba;
-  --blush-deep: #d1698a;
-  /*
-   * Two vermilions, because one cannot do both jobs.
-   * `--vermilion` is for vermilion TEXT — 5.52:1 on the page ground, and still
- * 5.06:1 on the 10% tint the Badge component paints behind it, which is the
- * tightest place it lands.
-   * `--vermilion-solid` is the button surface, dark enough that white sits on
-   * it at 5.12:1 — the brighter one only reaches 4.25:1, which fails AA for
-   * the 14px label on a primary button.
-   * Neither is #DE2910: that is the PRC flag red, and this is a cultural
-   * festival, not a state one.
-   */
-  --vermilion: #ea5540;
-  --vermilion-solid: #cc3520;
-  --vermilion-deep: #b32b1a;
-  --jade: #4e9d8b;
-  --jade-deep: #2f6b5e;
-
-  /* Focus ring — deliberately loud. Never remove it. */
-  --focus: #f3dba6;
-}
-
-/* Porcelain sections: warm paper, ink type. Applied to a wrapper element. */
-.theme-paper {
   color-scheme: light;
 
-  --bg: #f7f3ee;
-  --bg-raised: #fffdfa;
-  --bg-sunken: #ede6dd;
-  --surface: rgb(26 20 24 / 3%);
-  --surface-strong: rgb(26 20 24 / 6%);
+  /* Grounds */
+  --bg: #ffffff;
+  --bg-raised: #ffffff;
+  --bg-sunken: #eaf3fb;
 
-  --fg: #1a1418;
-  --fg-muted: #574d55;
-  /* 4.80:1 on --bg. */
-  --fg-subtle: #736874;
+  /*
+   * Surfaces and lines are alpha tints of the ink colour rather than fixed
+   * greys, so a card sitting on the sky band tints toward the sky band and a
+   * card on white stays white. One value, three grounds.
+   */
+  --surface: rgb(19 41 61 / 3.5%);
+  --surface-strong: rgb(19 41 61 / 7%);
+  --line: rgb(19 41 61 / 12%);
+  --line-strong: rgb(19 41 61 / 22%);
 
-  --line: rgb(26 20 24 / 12%);
-  --line-strong: rgb(26 20 24 / 22%);
+  /* Text — contrast against white / sky / blush */
+  --fg: #13293d; /* 14.9 / 13.3 / 13.4 */
+  --fg-muted: #3d5468; /* 7.9 / 7.0 / 7.1 */
+  --fg-subtle: #4d6a80; /* 5.7 / 5.1 / 5.1 */
 
-  /* Dark enough to stay legible on the 10% tint the Badge paints behind it. */
-  --gold: #7d5a13;
-  --gold-soft: #a97f2c;
-  --gold-deep: #6b4d10;
-  --blush: #b04a6c;
-  --blush-deep: #8c3252;
-  --vermilion: #b32b1a;
-  --vermilion-solid: #a82818;
-  --vermilion-deep: #96220f;
-  --jade: #2f6b5e;
-  --jade-deep: #214d43;
+  /* Lake blue */
+  --lake: #1268a6; /* text: 5.9 on white, 5.1 on its own 10% tint */
+  --lake-solid: #15619b; /* button ground: white text at 6.5 */
+  --lake-deep: #17588c;
+  --lake-soft: #d7e8f6;
 
-  --focus: #8c3252;
+  /* Lotus pink */
+  --rose: #b83f66; /* text: 5.3 on white, 4.6 on its own 10% tint */
+  --rose-solid: #ad395e; /* button ground: white text at 6.0 */
+  --rose-deep: #96304f;
+  --blush: #f6c9d8; /* fills and petals, never text */
+  --blush-soft: #fdf0f4;
+
+  /* Lotus pad green */
+  --jade: #2a7052; /* 5.9 on white */
+  --jade-deep: #235d44;
+  --jade-soft: #ddefe5;
+
+  /* The flower's heart */
+  --gold: #7d5a13; /* 6.3 on white, 5.4 on its own 10% tint */
+  --gold-soft: #f0d9a4;
+  --gold-deep: #63480c;
+
+  /* Focus ring — deliberately loud. Never remove it. */
+  --focus: #15619b;
+}
+
+/*
+ * Section tones. These change the ground only; the text colours above are
+ * chosen to clear AA on all three, so nothing else has to move.
+ */
+.tone-sky {
+  --bg: #eaf3fb;
+  --bg-raised: #ffffff;
+  --bg-sunken: #dbeaf7;
+}
+
+.tone-blush {
+  --bg: #fdf0f4;
+  --bg-raised: #ffffff;
+  --bg-sunken: #fbe3ea;
+}
+
+/*
+ * Evening on the water. The one inverted tone, for a band that wants weight —
+ * the accents brighten so they still clear AA against a dark ground.
+ */
+.tone-deep {
+  color-scheme: dark;
+
+  --bg: #0f2a3f;
+  --bg-raised: #16394f;
+  --bg-sunken: #0a1f2f;
+
+  --surface: rgb(255 255 255 / 6%);
+  --surface-strong: rgb(255 255 255 / 10%);
+  --line: rgb(255 255 255 / 14%);
+  --line-strong: rgb(255 255 255 / 26%);
+
+  --fg: #f4f9fd;
+  --fg-muted: #b6cbdb;
+  --fg-subtle: #93aec3;
+
+  --lake: #7ec2ef;
+  --lake-solid: #1d6fa8;
+  --lake-deep: #4ea3dc;
+  --lake-soft: #17415c;
+
+  --rose: #f3a2be;
+  --rose-solid: #b8446c;
+  --rose-deep: #f7c2d4;
+  --blush: #f3a2be;
+  --blush-soft: #2a2030;
+
+  --jade: #7fd0a8;
+  --jade-deep: #4fae83;
+  --jade-soft: #16382a;
+
+  --gold: #f0c874;
+  --gold-soft: #f7e3b6;
+  --gold-deep: #c79a3c;
+
+  --focus: #f0c874;
 }
 
 @theme inline {
-  /* Surfaces */
+  /* Grounds */
   --color-bg: var(--bg);
   --color-bg-raised: var(--bg-raised);
   --color-bg-sunken: var(--bg-sunken);
@@ -116,16 +149,21 @@
   --color-line-strong: var(--line-strong);
 
   /* Accents */
+  --color-lake: var(--lake);
+  --color-lake-solid: var(--lake-solid);
+  --color-lake-deep: var(--lake-deep);
+  --color-lake-soft: var(--lake-soft);
+  --color-rose: var(--rose);
+  --color-rose-solid: var(--rose-solid);
+  --color-rose-deep: var(--rose-deep);
+  --color-blush: var(--blush);
+  --color-blush-soft: var(--blush-soft);
+  --color-jade: var(--jade);
+  --color-jade-deep: var(--jade-deep);
+  --color-jade-soft: var(--jade-soft);
   --color-gold: var(--gold);
   --color-gold-soft: var(--gold-soft);
   --color-gold-deep: var(--gold-deep);
-  --color-blush: var(--blush);
-  --color-blush-deep: var(--blush-deep);
-  --color-vermilion: var(--vermilion);
-  --color-vermilion-solid: var(--vermilion-solid);
-  --color-vermilion-deep: var(--vermilion-deep);
-  --color-jade: var(--jade);
-  --color-jade-deep: var(--jade-deep);
   --color-focus: var(--focus);
 
   /* Type */
@@ -152,13 +190,13 @@
   --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
   --ease-back: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* Radii */
-  --radius-xs: 0.375rem;
-  --radius-sm: 0.625rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 1.75rem;
-  --radius-2xl: 2.25rem;
+  /* Radii. Generous and soft — this is a family day out, not a bank. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.375rem;
+  --radius-xl: 1.875rem;
+  --radius-2xl: 2.5rem;
 
   /* Reading measure */
   --container-prose: 68ch;
@@ -203,8 +241,8 @@
   }
 
   ::selection {
-    background-color: var(--gold);
-    color: #0b0a0f;
+    background-color: var(--blush);
+    color: #13293d;
   }
 
   h1,
@@ -233,9 +271,9 @@
 
 @layer utilities {
   /*
-   * A very fine film grain over the whole page. This is what stops large
-   * dark gradients from banding on 8-bit displays, and it is most of the
-   * reason the page reads as printed rather than rendered.
+   * A very fine paper grain. Much lighter than it would be on a dark page —
+   * on white it is there to keep large soft gradients from banding, not to
+   * add texture you can see.
    */
   .grain::after {
     content: "";
@@ -243,20 +281,20 @@
     inset: 0;
     z-index: 60;
     pointer-events: none;
-    opacity: 0.035;
-    mix-blend-mode: overlay;
+    opacity: 0.02;
+    mix-blend-mode: multiply;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  /* Frosted panel used for cards, the nav bar and form surfaces. */
+  /* A soft panel: used for cards, the nav bar and form surfaces. */
   .glass {
-    background-color: var(--surface);
+    background-color: color-mix(in srgb, var(--bg) 78%, transparent);
     border: 1px solid var(--line);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
   }
 
-  /* Gold hairline that fades at both ends — used as a section divider. */
+  /* A hairline that fades at both ends — used as a section divider. */
   .rule-fade {
     height: 1px;
     background: linear-gradient(
@@ -268,8 +306,13 @@
     );
   }
 
-  .text-gradient-gold {
-    background: linear-gradient(105deg, var(--gold-soft) 0%, var(--gold) 45%, var(--blush) 100%);
+  /*
+   * The festival's own gradient: lake blue into lotus pink. Used on one or
+   * two words of a heading, never on body text — a gradient fill defeats
+   * forced-colours mode, so nothing that has to be read relies on it.
+   */
+  .text-gradient-lotus {
+    background: linear-gradient(100deg, var(--lake) 0%, var(--rose) 55%, var(--rose-deep) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -281,8 +324,8 @@
     line-height: 1;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    font-weight: 500;
-    color: var(--fg-muted);
+    font-weight: 600;
+    color: var(--lake);
   }
 
   /* Visible only to screen readers, until focused. */
@@ -332,12 +375,14 @@
   }
 }
 
-@keyframes lf-shimmer {
-  from {
-    background-position: 200% 0;
+/* A slow drift, for the lily pads and other things floating on the water. */
+@keyframes lf-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
   }
-  to {
-    background-position: -200% 0;
+  50% {
+    transform: translate3d(0, -0.4rem, 0) rotate(1.2deg);
   }
 }
 
@@ -348,6 +393,10 @@
 
   .animate-breathe {
     animation: lf-breathe 7s ease-in-out infinite;
+  }
+
+  .animate-drift {
+    animation: lf-drift 9s ease-in-out infinite;
   }
 }
 

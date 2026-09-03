@@ -21,11 +21,11 @@ import { site } from "@/config/site";
  */
 export default function NotFound() {
   return (
-    <div className="relative isolate flex min-h-dvh flex-col overflow-hidden">
+    <div className="bg-bg relative isolate flex min-h-dvh flex-col overflow-hidden">
       {/* The flower sunk below the fold, lighting the page from underneath. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 -bottom-[42vh] -z-20 h-[80vh] opacity-45"
+        className="pointer-events-none absolute inset-x-0 -bottom-[42vh] -z-20 h-[80vh] opacity-70"
       >
         <LotusFallback />
       </div>
@@ -33,8 +33,12 @@ export default function NotFound() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
+          // A white veil, not a dark scrim. It keeps the type off the petals
+          // and lets the flower surface only in the last fifth of the page.
+          // Every stop is white at a different alpha so the fade stays neutral;
+          // fading toward a transparent tint greys the midpoint in sRGB.
           background:
-            "linear-gradient(to bottom, rgba(11,10,15,0.96) 0%, rgba(11,10,15,0.9) 46%, rgba(11,10,15,0.62) 64%, rgba(11,10,15,0.2) 82%, rgba(11,10,15,0) 100%)",
+            "linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0.97) 46%, rgba(255,255,255,0.8) 64%, rgba(255,255,255,0.38) 82%, rgba(255,255,255,0) 100%)",
         }}
       />
 
@@ -58,7 +62,7 @@ export default function NotFound() {
           <p className="eyebrow">Error 404</p>
 
           <h1 className="mt-5 text-[clamp(2.25rem,6.4vw,4rem)] leading-[1.02] tracking-[-0.03em]">
-            This page is not <em className="text-gradient-gold not-italic">here</em>
+            This page is not <em className="text-gradient-lotus not-italic">here</em>
           </h1>
 
           <p className="text-fg-muted mt-7 max-w-[52ch] text-[clamp(1rem,1.4vw,1.1875rem)] leading-[1.65]">
@@ -82,7 +86,7 @@ export default function NotFound() {
                     </span>
                     <span
                       aria-hidden="true"
-                      className="text-fg-subtle group-hover:text-gold shrink-0 transition-colors duration-200"
+                      className="text-fg-subtle group-hover:text-lake shrink-0 transition-colors duration-200"
                     >
                       →
                     </span>

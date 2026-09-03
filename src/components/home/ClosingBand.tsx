@@ -38,7 +38,7 @@ const details = [
           href={site.venue.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gold rounded underline underline-offset-4 transition-colors duration-200"
+          className="hover:text-lake rounded underline underline-offset-4 transition-colors duration-200"
         >
           Open in maps
         </Link>
@@ -58,7 +58,7 @@ const details = [
         Write to{" "}
         <a
           href={`mailto:${site.contact.email}`}
-          className="hover:text-gold rounded underline underline-offset-4 transition-colors duration-200"
+          className="hover:text-lake rounded underline underline-offset-4 transition-colors duration-200"
         >
           {site.contact.email}
         </a>
@@ -67,7 +67,7 @@ const details = [
           href={site.social.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-gold rounded underline underline-offset-4 transition-colors duration-200"
+          className="hover:text-lake rounded underline underline-offset-4 transition-colors duration-200"
         >
           {site.social.handle}
         </a>
@@ -88,7 +88,7 @@ export function ClosingBand() {
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(70% 58% at 18% 0%, rgba(232,184,87,0.13) 0%, rgba(224,112,143,0.07) 42%, rgba(7,6,9,0) 76%)",
+            "radial-gradient(70% 58% at 18% 0%, rgba(207,228,246,0.68) 0%, rgba(252,225,235,0.36) 42%, rgba(255,255,255,0) 76%)",
         }}
       />
 

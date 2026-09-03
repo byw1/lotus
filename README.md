@@ -29,8 +29,11 @@ The site is behind a **pre-launch preview gate**:
 **On screenshots:** there are none in this repository, and no image files at all.
 That is deliberate. The festival's photography is not licensed for reuse, and the
 lotus you see on the homepage is not a photograph or a downloaded 3D model — it is
-generated from equations at runtime (`src/components/lotus/petal-geometry.ts`).
-If you want to see the site, run it; it takes about a minute.
+generated from equations at runtime (`src/components/lotus/petal-geometry.ts`),
+and so are the two dragon boats on `/dragon-boats`
+(`src/components/dragon/boat-geometry.ts`). Every diagram is drawn in SVG from
+the same config the pages read. If you want to see the site, run it; it takes
+about a minute.
 
 ---
 
@@ -74,10 +77,10 @@ and Cloudflare Turnstile stays switched off, for the same reason.
 | **Next.js 16** (App Router) | Server Components keep the festival's copy out of the JavaScript bundle, and Server Actions let the forms work before — and without — JS. Next 16 also runs `proxy.ts` (what used to be `middleware.ts`) on the Node runtime, which is what lets the preview gate use `node:crypto` instead of an Edge-compatible JWT library. |
 | **React 19** | `useActionState` and `useFormStatus` are what make a progressively-enhanced form show errors and a pending state without a client-side form library. |
 | **TypeScript**, strict | The festival's facts are typed data. A renamed field fails the build instead of silently rendering nothing. |
-| **Tailwind CSS v4** | The whole design system is CSS custom properties in `src/app/globals.css`, exposed to Tailwind via `@theme inline`. Two themes ship — ink and porcelain — swapped per section rather than by a user toggle. |
+| **Tailwind CSS v4** | The whole design system is CSS custom properties in `src/app/globals.css`, exposed to Tailwind via `@theme inline`. One light palette, four grounds — white, sky, blush and one inverted navy — chosen per section rather than by a user toggle. |
 | **Zod 4** | One schema per form, run on the server before anything is sent. A mismatch between a field name and its schema would silently lose a real vendor's application, so the schemas are also unit-tested. |
 | **Resend** | Transactional email for application notifications and receipts. Entirely optional in development. |
-| **three.js + React Three Fiber + drei + postprocessing** | The procedural lotus. Code-split, loaded only when the browser goes idle, and only when the device can run it. |
+| **three.js + React Three Fiber + drei + postprocessing** | The procedural lotus and the dragon boat race. Code-split, loaded only when the browser goes idle, and only when the device can run it. |
 | **Motion** | Scroll reveals, transform and opacity only, and disabled outright under `prefers-reduced-motion`. |
 | **`clsx` + `tailwind-merge`** | The one-line `cn()` helper in `src/lib/utils.ts`. |
 | **`node:test` + `tsx`** | Tests with no test framework to install or configure. |
@@ -105,7 +108,10 @@ src/
       dragon-boats/  get-involved/
     privacy/  robots.ts  sitemap.ts  opengraph-image.tsx  icon.tsx
   components/
+    three/CanvasHost    Capability detection and fallbacks for every WebGL scene
     lotus/              The procedural 3D lotus and its flat SVG fallback
+    dragon/             The procedural 3D dragon boats and the seating diagram
+    viz/                Infographics: the dot field, the glyphs, the site plan
     ui/                 layout, Button, Field, Reveal — the design system
     forms/FormShell.tsx The wrapper every application form uses
     site/               Header, Footer, the preview bar
@@ -190,7 +196,7 @@ session's crypto, the form schemas, and the spam heuristics.
 
 | Document | For |
 | --- | --- |
-| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How the thing is built and why — the gate, the form pipeline, the two themes, the lotus |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How the thing is built and why — the gate, the form pipeline, the design system, the procedural scenes |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Vercel and plain Node, every environment variable, and the launch checklist |
 | [`docs/CONTENT.md`](docs/CONTENT.md) | For the festival committee: how to change the country, the dates, the program, the FAQ, the tiers |
 | [`docs/RESEARCH.md`](docs/RESEARCH.md) | Where every fact came from, and where the sources contradict each other |

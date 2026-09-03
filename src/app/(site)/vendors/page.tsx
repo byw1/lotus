@@ -183,15 +183,7 @@ function BoothPlan({ className }: { className?: string }) {
       <circle cx="160" cy="86" r="6" fill="var(--gold)" />
 
       {/* The single 5-amp plug, back corner, where the cable comes in. */}
-      <rect
-        x="252"
-        y="196"
-        width="26"
-        height="18"
-        rx="4"
-        fill="var(--vermilion)"
-        fillOpacity="0.75"
-      />
+      <rect x="252" y="196" width="26" height="18" rx="4" fill="var(--rose)" fillOpacity="0.75" />
     </svg>
   );
 }
@@ -237,7 +229,7 @@ export default function VendorsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(100% 62% at 16% 2%, rgba(232,184,87,0.17) 0%, rgba(224,112,143,0.07) 44%, rgba(11,10,15,0) 74%)",
+              "radial-gradient(100% 62% at 16% 2%, rgba(207,228,246,0.88) 0%, rgba(252,225,235,0.36) 44%, rgba(255,255,255,0) 74%)",
           }}
         />
 
@@ -251,7 +243,7 @@ export default function VendorsPage() {
               delay={0.12}
               lines={[
                 <span key="1" className="block">
-                  Bring a <em className="text-gradient-gold not-italic">booth</em>
+                  Bring a <em className="text-gradient-lotus not-italic">booth</em>
                 </span>,
                 <span key="2" className="block">
                   to Echo Park
@@ -359,7 +351,7 @@ export default function VendorsPage() {
             <Reveal>
               <Card className="h-full">
                 <p className="eyebrow">If you are selling</p>
-                <p className="text-gradient-gold mt-4 text-[2.75rem] leading-none">$500</p>
+                <p className="text-gradient-lotus mt-4 text-[2.75rem] leading-none">$500</p>
                 <p className="text-fg-muted mt-4 text-[15px] leading-relaxed">
                   Businesses and vendors making sales or taking subscriptions, boutiques, artisans,
                   and for-profit community service booths. One 10&#39; × 10&#39; space.
@@ -370,7 +362,7 @@ export default function VendorsPage() {
             <Reveal delay={0.06}>
               <Card className="h-full">
                 <p className="eyebrow">If you are not</p>
-                <p className="text-gradient-gold mt-4 text-[2.75rem] leading-none">$100</p>
+                <p className="text-gradient-lotus mt-4 text-[2.75rem] leading-none">$100</p>
                 <p className="text-fg-muted mt-4 text-[15px] leading-relaxed">
                   Non-profit community service booths, eco-friendly organizations, and city or
                   government agencies — in each case without sales. The same 10&#39; × 10&#39; space
@@ -463,7 +455,7 @@ export default function VendorsPage() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(72% 52% at 50% 0%, rgba(224,64,43,0.13) 0%, rgba(11,10,15,0) 70%)",
+              "radial-gradient(72% 52% at 50% 0%, rgba(207,228,246,0.68) 0%, rgba(255,255,255,0) 70%)",
           }}
         />
 

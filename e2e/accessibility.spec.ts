@@ -8,9 +8,17 @@ import { GATED_PAGES, PUBLIC_PAGES } from "./helpers";
  * by everyone. axe-core catches the mechanical failures; the structural checks
  * below cover a few things it does not.
  *
- * Two real bugs this found: `--fg-subtle` failed contrast in both themes at
- * the sizes it was actually used at, and white on the primary button was
- * 4.25:1, which fails for a 14px label.
+ * Three real bugs this found: `--fg-subtle` failed contrast at the sizes it was
+ * actually used at, white on the primary button was 4.25:1, which fails for a
+ * 14px label, and the badge tones were set in `--gold` and `--rose` rather than
+ * their deep variants, which put 11px type just under AA on its own tint.
+ *
+ * axe cannot see the one that matters most on this site, though: text set over
+ * the WebGL flower. It measures against the computed CSS background, which is
+ * transparent there, so a label at 1.6:1 over a lit petal passes. That is
+ * checked by screenshotting the page with the text hidden and sampling the
+ * composited pixel underneath each text node — see `.scratch/contrast2.mjs` in
+ * the working notes, and the comment on the fact list in `HomeHero`.
  */
 const ALL_PAGES = [...PUBLIC_PAGES, ...GATED_PAGES];
 
