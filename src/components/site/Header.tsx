@@ -64,7 +64,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             href="/get-involved"
-            className="bg-vermilion hover:bg-vermilion-deep hidden h-10 items-center rounded-full px-5 text-sm font-medium text-white transition-colors duration-200 sm:inline-flex"
+            className="bg-vermilion-solid hover:bg-vermilion-deep hidden h-10 items-center rounded-full px-5 text-sm font-medium text-white transition-colors duration-200 sm:inline-flex"
           >
             Get involved
           </Link>

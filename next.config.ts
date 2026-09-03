@@ -9,7 +9,7 @@ import type { NextConfig } from "next";
  * dynamically and costs us static generation on a site that is almost entirely
  * static marketing content. This site renders no user-supplied HTML, so the
  * residual XSS surface is small. If that ever changes, switch to nonces +
- * `'strict-dynamic'` — see docs/SECURITY-NOTES.md.
+ * `'strict-dynamic'` — see SECURITY.md.
  *
  * `worker-src blob:`, `child-src blob:`, `img-src blob:` and `wasm-unsafe-eval`
  * are all required by three.js / WebGL.

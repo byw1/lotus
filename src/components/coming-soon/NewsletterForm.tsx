@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Check } from "lucide-react";
+import Link from "next/link";
 import { useActionState, useEffect, useRef } from "react";
 import { useFormStatus } from "react-dom";
 
@@ -30,7 +31,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       className={cn(
-        "bg-vermilion hover:bg-vermilion-deep inline-flex h-12 shrink-0 items-center gap-2 rounded-full px-6",
+        "bg-vermilion-solid hover:bg-vermilion-deep inline-flex h-12 shrink-0 items-center gap-2 rounded-full px-6",
         "text-sm font-medium text-white transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
         "active:translate-y-px disabled:pointer-events-none disabled:opacity-80",
         "shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]",
@@ -151,7 +152,11 @@ export function NewsletterForm({ className }: { className?: string }) {
         </p>
       ) : (
         <p className="text-fg/75 mt-3 pl-5 text-[13px] [text-shadow:0_1px_3px_rgba(11,10,15,0.95),0_1px_12px_rgba(11,10,15,0.85)]">
-          Festival news only — a handful of emails a year. Unsubscribe any time.
+          Festival news only — a handful of emails a year. Unsubscribe any time.{" "}
+          <Link href="/privacy" className="hover:text-fg rounded underline underline-offset-4">
+            Privacy
+          </Link>
+          .
         </p>
       )}
     </form>

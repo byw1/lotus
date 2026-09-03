@@ -80,6 +80,9 @@ export function LineReveal({
         {lines.map((line, index) => (
           <span key={index} className={cn("block", lineClassName)}>
             {line}
+            {/* Joins the lines for assistive tech; adjacent block spans would
+                otherwise concatenate into one run-together word. */}
+            {index < lines.length - 1 ? " " : null}
           </span>
         ))}
       </span>
@@ -101,6 +104,9 @@ export function LineReveal({
             }}
           >
             {line}
+            {/* Joins the lines for assistive tech; adjacent block spans would
+                otherwise concatenate into one run-together word. */}
+            {index < lines.length - 1 ? " " : null}
           </motion.span>
         </span>
       ))}

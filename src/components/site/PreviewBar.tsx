@@ -9,7 +9,7 @@ import { leavePreview } from "@/app/team/actions";
  */
 export function PreviewBar() {
   return (
-    <div className="bg-vermilion text-white">
+    <div className="bg-vermilion-solid text-white">
       <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-2.5 sm:px-8">
         <p className="text-[12.5px] leading-snug">
           <strong className="font-semibold">Preview.</strong> Nothing here is final, and dates and

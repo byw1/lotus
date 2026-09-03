@@ -31,7 +31,8 @@
   /* Text */
   --fg: #f7f3ee;
   --fg-muted: #a9a3b1;
-  --fg-subtle: #6f6979;
+  /* 4.98:1 on --bg. Anything lighter fails AA at 13px, which is where it is used. */
+  --fg-subtle: #847d8d;
 
   /* Lines */
   --line: rgb(255 255 255 / 9%);
@@ -43,7 +44,17 @@
   --gold-deep: #a97f2c;
   --blush: #f0a8ba;
   --blush-deep: #d1698a;
+  /*
+   * Two vermilions, because one cannot do both jobs.
+   * `--vermilion` is for vermilion TEXT on the page ground (4.64:1 here).
+   * `--vermilion-solid` is the button surface, dark enough that white sits on
+   * it at 5.12:1 — the brighter one only reaches 4.25:1, which fails AA for
+   * the 14px label on a primary button.
+   * Neither is #DE2910: that is the PRC flag red, and this is a cultural
+   * festival, not a state one.
+   */
   --vermilion: #e0402b;
+  --vermilion-solid: #cc3520;
   --vermilion-deep: #b32b1a;
   --jade: #4e9d8b;
   --jade-deep: #2f6b5e;
@@ -64,7 +75,8 @@
 
   --fg: #1a1418;
   --fg-muted: #574d55;
-  --fg-subtle: #857a83;
+  /* 4.80:1 on --bg. */
+  --fg-subtle: #736874;
 
   --line: rgb(26 20 24 / 12%);
   --line-strong: rgb(26 20 24 / 22%);
@@ -75,6 +87,7 @@
   --blush: #b04a6c;
   --blush-deep: #8c3252;
   --vermilion: #c2321f;
+  --vermilion-solid: #b32b1a;
   --vermilion-deep: #96220f;
   --jade: #2f6b5e;
   --jade-deep: #214d43;
@@ -106,6 +119,7 @@
   --color-blush: var(--blush);
   --color-blush-deep: var(--blush-deep);
   --color-vermilion: var(--vermilion);
+  --color-vermilion-solid: var(--vermilion-solid);
   --color-vermilion-deep: var(--vermilion-deep);
   --color-jade: var(--jade);
   --color-jade-deep: var(--jade-deep);

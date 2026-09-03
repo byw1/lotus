@@ -26,7 +26,7 @@ const base =
 const variants = {
   /** The one action we most want taken on any given page. */
   primary:
-    "bg-vermilion text-white shadow-[0_1px_0_rgba(255,255,255,0.18)_inset,0_8px_24px_-10px_rgba(224,64,43,0.7)] " +
+    "bg-vermilion-solid text-white shadow-[0_1px_0_rgba(255,255,255,0.18)_inset,0_8px_24px_-10px_rgba(224,64,43,0.7)] " +
     "hover:bg-vermilion-deep hover:shadow-[0_1px_0_rgba(255,255,255,0.22)_inset,0_12px_32px_-10px_rgba(224,64,43,0.85)]",
   /** Warm, quieter, for a second action beside the primary one. */
   gold: "bg-gold text-[#1a1418] hover:bg-gold-soft shadow-[0_8px_24px_-12px_rgba(232,184,87,0.8)]",

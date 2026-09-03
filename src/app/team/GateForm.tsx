@@ -17,7 +17,7 @@ function SubmitButton() {
       type="submit"
       disabled={pending}
       className={cn(
-        "bg-vermilion hover:bg-vermilion-deep inline-flex h-12 shrink-0 items-center gap-2 rounded-full px-6",
+        "bg-vermilion-solid hover:bg-vermilion-deep inline-flex h-12 shrink-0 items-center gap-2 rounded-full px-6",
         "text-sm font-medium text-white transition-all duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]",
         "active:translate-y-px disabled:pointer-events-none disabled:opacity-80",
         "shadow-[0_1px_0_rgba(255,255,255,0.2)_inset]",
