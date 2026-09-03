@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { describe, it } from "node:test";
+import { afterEach, beforeEach, describe, it } from "node:test";
 
 import { clientKey, limits, rateLimit } from "../src/lib/rate-limit";
 import { checkSubmission, HONEYPOT_FIELD, TIMESTAMP_FIELD } from "../src/lib/spam";
@@ -62,6 +62,46 @@ describe("clientKey", () => {
   it("falls back to x-real-ip, then to a constant", () => {
     assert.equal(clientKey(new Headers({ "x-real-ip": "203.0.113.9" })), "203.0.113.9");
     assert.equal(clientKey(new Headers()), "unknown");
+  });
+
+  describe("with CLIENT_IP_HEADER set", () => {
+    const before = process.env.CLIENT_IP_HEADER;
+    beforeEach(() => {
+      process.env.CLIENT_IP_HEADER = "x-real-ip";
+    });
+    afterEach(() => {
+      if (before === undefined) delete process.env.CLIENT_IP_HEADER;
+      else process.env.CLIENT_IP_HEADER = before;
+    });
+
+    it("reads only the header the deployment declared", () => {
+      const headers = new Headers({ "x-real-ip": "203.0.113.9" });
+      assert.equal(clientKey(headers), "203.0.113.9");
+    });
+
+    /*
+     * The whole point of the variable. On a platform that does not set
+     * `x-forwarded-for` itself — Railway documents `X-Real-IP` and nothing
+     * else — a caller can send one, and preferring it would hand out a fresh
+     * rate-limit budget per fabricated address.
+     */
+    it("ignores a forwarded header the caller supplied", () => {
+      const headers = new Headers({
+        "x-forwarded-for": "198.51.100.1",
+        "x-real-ip": "203.0.113.9",
+      });
+      assert.equal(clientKey(headers), "203.0.113.9");
+    });
+
+    it("does not fall back when the declared header is missing", () => {
+      const headers = new Headers({ "x-forwarded-for": "198.51.100.1" });
+      assert.equal(clientKey(headers), "unknown");
+    });
+
+    it("takes the leftmost entry of the declared header", () => {
+      const headers = new Headers({ "x-real-ip": "203.0.113.9, 198.51.100.1" });
+      assert.equal(clientKey(headers), "203.0.113.9");
+    });
   });
 });
 

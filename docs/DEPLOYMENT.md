@@ -65,6 +65,7 @@ anyway, so that turning the gate back on is a one-variable operation.
 | --- | --- | --- |
 | `UPSTASH_REDIS_REST_URL` | Optional | Falls back to the in-process limiter. |
 | `UPSTASH_REDIS_REST_TOKEN` | Optional | Same. Both must be present, or neither is used. |
+| `CLIENT_IP_HEADER` | **Platform-dependent** | Names the one header the rate limiter will trust for the client's address. Unset, it guesses: leftmost `x-forwarded-for`, then `x-real-ip`. That guess is right on Vercel and wrong anywhere the edge does not overwrite `x-forwarded-for` — including Railway, whose documented header is `X-Real-IP`. Where the guess is wrong, a caller can send their own `x-forwarded-for` and collect a fresh rate-limit budget for every address they invent. Set it to what your platform documents. |
 
 On a single long-lived Node server the in-process limiter is genuinely correct.
 **On serverless it is a speed bump, not a wall** — every instance keeps its own
@@ -98,10 +99,77 @@ Notes specific to Vercel:
   duplicate the CSP — two `Content-Security-Policy` headers intersect, and the
   result is stricter than either and very hard to debug.
 
+## Deploying to Railway
+
+Railway runs a real Node process rather than serverless functions, which suits
+this app: `src/proxy.ts` is on the Node runtime, the homepage reads a cookie,
+and the in-process rate limiter is genuinely correct on one long-lived server.
+
+The deployment is described in [`.railway/railway.ts`](../.railway/railway.ts) —
+one service, no database, no volume — so it is reviewable in a pull request
+rather than remembered by whoever clicked through the dashboard.
+
+1. **Create the project and connect the repo.** In Railway: *New Project →
+   Deploy from GitHub repo → `byw1/lotus`*. Railpack detects Next.js on its own.
+2. **Set the four secrets on Railway**, before the first apply. The config file
+   lists them as `preserve()`, which keeps whatever Railway holds and never
+   writes a real value into the repository:
+
+   ```bash
+   railway variables \
+     --set "PREVIEW_PASSWORD=..." \
+     --set "PREVIEW_SESSION_SECRET=$(openssl rand -base64 48)" \
+     --set "RESEND_API_KEY=re_..." \
+     --set "EMAIL_FROM=Los Angeles Lotus Festival <no-reply@your-domain>" \
+     --set "EMAIL_TO=..."
+   ```
+3. **Apply the rest.** `plan` is read-only and prints exactly what would change;
+   `apply` plans again and asks before doing anything.
+
+   ```bash
+   npm install          # the `railway` package is a devDependency
+   railway login && railway link
+   railway config plan
+   railway config apply
+   ```
+4. **Add the custom domain** in Railway, then point `NEXT_PUBLIC_SITE_URL` at it
+   in `.railway/railway.ts` and apply again. Until then it resolves to the
+   generated `*.up.railway.app` domain on its own.
+5. Run the smoke test below.
+
+Four things are Railway-specific and worth understanding rather than copying:
+
+- **`CLIENT_IP_HEADER=x-real-ip`, set in the config file.** Railway's edge
+  [documents `X-Real-IP`](https://docs.railway.com/networking/public-networking/specs-and-limits)
+  as the client's remote IP and says nothing about `x-forwarded-for`. So an
+  `x-forwarded-for` arriving at the app came from the caller, and the default
+  guess would key the rate limiter on a header anyone can set.
+- **Never set `NODE_ENV`.** Railway applies service variables to the build as
+  well as the run, and `npm ci` with `NODE_ENV=production` omits
+  devDependencies — which is where TypeScript, Tailwind and the PostCSS plugin
+  live, so `next build` fails. It is not needed: `next start` sets
+  `NODE_ENV=production` itself when it is unset, which is what makes the session
+  cookie `Secure` and the preview gate fail closed.
+- **Never set `PORT`.** Railway injects it and `next start` reads it. Setting it
+  is how the healthcheck starts timing out.
+- **`NEXT_PUBLIC_SITE_URL` is baked in at build time**, like every
+  `NEXT_PUBLIC_` value. Changing it needs a redeploy, not a restart. It is set
+  to `https://${{RAILWAY_PUBLIC_DOMAIN}}` so a fresh deploy is self-consistent
+  before anyone has chosen a domain.
+
+TLS, the `Secure` cookie and the security headers all work as they should:
+Railway terminates TLS at its edge and forwards over the private network, and
+the headers in `next.config.ts` are set by the app itself, so there is nothing
+to configure at the platform.
+
+If you would rather not use Infrastructure as Code, delete `.railway/` and the
+`railway` devDependency and set the same variables in the dashboard. Nothing in
+`src/` imports any of it.
+
 ## Deploying to a plain Node host
 
 Any host that can run Node 22 and keep a process alive: a VPS behind nginx or
-Caddy, a container on Fly/Render/Railway, an App Service.
+Caddy, a container on Fly or Render, an App Service.
 
 ```bash
 npm ci
@@ -176,6 +244,10 @@ Then:
 - [ ] `PREVIEW_SESSION_SECRET` generated with `openssl rand -base64 48` and set
       only in the deployment environment. Never in the repo.
 - [ ] `RESEND_API_KEY`, `EMAIL_FROM`, `EMAIL_TO` set.
+- [ ] `CLIENT_IP_HEADER` set to whatever your platform documents, or left unset
+      on Vercel. Getting this wrong is silent in both directions: too loose and
+      the rate limiter can be bypassed by sending your own header, too strict
+      and every visitor shares one bucket.
 - [ ] Custom domain live, HTTPS enforced, `www` and apex resolving to the same
       place.
 

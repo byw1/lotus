@@ -154,11 +154,29 @@ export async function rateLimit(key: string, options: RateLimitOptions): Promise
  * fresh rate-limit budget for each one. docs/DEPLOYMENT.md says to use
  * `$remote_addr` for exactly this reason.
  *
+ * Some platforms do not set `x-forwarded-for` at all and put the client
+ * address somewhere else. Railway is one: its edge documents `X-Real-IP` as
+ * the client's remote IP and says nothing about `x-forwarded-for`, so any
+ * `x-forwarded-for` arriving here came from the caller. Preferring it there
+ * would hand every visitor an unlimited supply of rate-limit budgets.
+ *
+ * `CLIENT_IP_HEADER` is how a deployment states which header its own proxy
+ * guarantees. When it is set, that header is the only one consulted — falling
+ * back to the guesses below on a missing value would reopen the same hole. A
+ * request without it then keys on "unknown", which over-limits rather than
+ * under-limits, and is the same failure this has always had when a deployment
+ * strips proxy headers entirely.
+ *
  * Never use this for anything that matters: no allowlisting, no audit trail,
  * no geolocation, no blocking. It decides how fast someone may submit a form,
  * and the cost of getting it wrong is bounded by that.
  */
 export function clientKey(headers: Headers): string {
+  const declared = process.env.CLIENT_IP_HEADER?.trim().toLowerCase();
+  if (declared) {
+    return headers.get(declared)?.split(",")[0]?.trim() || "unknown";
+  }
+
   const forwarded = headers.get("x-forwarded-for");
   if (forwarded) {
     const first = forwarded.split(",")[0]?.trim();

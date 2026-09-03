@@ -99,7 +99,7 @@ src/
     page.tsx            The homepage, which is two pages: "coming soon"
                         for the public, the real one behind the gate
     layout.tsx          Fonts, metadata, the skip link, the no-JS fallback
-    globals.css         Design tokens: both themes, type, motion, radii
+    globals.css         Design tokens: the four grounds, type, motion, radii
     actions.ts          Every write the public can perform, as Server Actions
     team/               The preview gate: page, form, login/logout actions
     (site)/             The full festival site — gated until launch
@@ -130,7 +130,10 @@ src/
     spam.ts             Honeypot, submit timing, optional Turnstile
   proxy.ts              Route gating for the preview (Next 16's middleware)
 tests/                  Geometry, session crypto, validation, spam
+e2e/                    The gate, the forms, hydration, axe on every page
 docs/                   You are here
+.railway/railway.ts     How it is deployed: one service, no database.
+                        Delete it if you deploy somewhere else.
 ```
 
 ---
@@ -197,7 +200,7 @@ session's crypto, the form schemas, and the spam heuristics.
 | Document | For |
 | --- | --- |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How the thing is built and why — the gate, the form pipeline, the design system, the procedural scenes |
-| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Vercel and plain Node, every environment variable, and the launch checklist |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Vercel, Railway and plain Node, every environment variable, and the launch checklist |
 | [`docs/CONTENT.md`](docs/CONTENT.md) | For the festival committee: how to change the country, the dates, the program, the FAQ, the tiers |
 | [`docs/RESEARCH.md`](docs/RESEARCH.md) | Where every fact came from, and where the sources contradict each other |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Getting set up, the house rules, what to run before a PR |
