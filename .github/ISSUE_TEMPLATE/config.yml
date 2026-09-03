@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Vendor, sponsor, performer or volunteer questions
+    url: mailto:lotus.festival@lacity.org
+    about: Please email the festival directly — GitHub issues are for the website only.
+  - name: Report a security vulnerability
+    url: https://github.com/byw1/lotus/security/advisories/new
+    about: Please report privately, not as a public issue.
