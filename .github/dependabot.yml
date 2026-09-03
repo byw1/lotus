@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      react-three:
+        patterns: ["three", "@react-three/*", "@types/three"]
+      next:
+        patterns: ["next", "eslint-config-next", "react", "react-dom"]
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: monthly

@@ -1,0 +1,430 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Los Angeles Lotus Festival — design tokens
+   --------------------------------------------------------------------------
+   The palette is Echo Park Lake on a July morning, because that is what this
+   festival actually is: families on the grass, kids in the children's area,
+   boats on the water by lunchtime. It is white and open, with the lake's blue
+   and the lotus's pink doing the work.
+
+     white      the ground for everything
+     lake       blue — links, primary actions, the water
+     blush      light pink — soft bands and fills
+     rose       deep pink — the lotus itself, and the 2027 designation
+     leaf       green — lotus pads, "yes" states
+     gold       the flower's heart, used sparingly
+
+   Sections alternate between white, a pale sky band and a pale blush band, so
+   the page has rhythm without ever getting heavy. One deep-navy tone exists
+   for the rare band that wants to feel like evening on the water.
+
+   Every text colour here is checked against every ground it can land on. The
+   numbers are in the comments; if you change a value, re-check it.
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* Grounds */
+  --bg: #ffffff;
+  --bg-raised: #ffffff;
+  --bg-sunken: #eaf3fb;
+
+  /*
+   * Surfaces and lines are alpha tints of the ink colour rather than fixed
+   * greys, so a card sitting on the sky band tints toward the sky band and a
+   * card on white stays white. One value, three grounds.
+   */
+  --surface: rgb(19 41 61 / 3.5%);
+  --surface-strong: rgb(19 41 61 / 7%);
+  --line: rgb(19 41 61 / 12%);
+  --line-strong: rgb(19 41 61 / 22%);
+
+  /* Text — contrast against white / sky / blush */
+  --fg: #13293d; /* 14.9 / 13.3 / 13.4 */
+  --fg-muted: #3d5468; /* 7.9 / 7.0 / 7.1 */
+  --fg-subtle: #4d6a80; /* 5.7 / 5.1 / 5.1 */
+
+  /* Lake blue */
+  --lake: #1268a6; /* text: 5.9 on white, 5.1 on its own 10% tint */
+  --lake-solid: #15619b; /* button ground: white text at 6.5 */
+  --lake-deep: #17588c;
+  --lake-soft: #d7e8f6;
+
+  /* Lotus pink */
+  --rose: #b83f66; /* text: 5.3 on white, 4.6 on its own 10% tint */
+  --rose-solid: #ad395e; /* button ground: white text at 6.0 */
+  --rose-deep: #96304f;
+  --blush: #f6c9d8; /* fills and petals, never text */
+  --blush-soft: #fdf0f4;
+
+  /* Lotus pad green */
+  --jade: #2a7052; /* 5.9 on white */
+  --jade-deep: #235d44;
+  --jade-soft: #ddefe5;
+
+  /* The flower's heart */
+  --gold: #7d5a13; /* 6.3 on white, 5.4 on its own 10% tint */
+  --gold-soft: #f0d9a4;
+  --gold-deep: #63480c;
+
+  /* Focus ring — deliberately loud. Never remove it. */
+  --focus: #15619b;
+}
+
+/*
+ * Section tones. These change the ground only; the text colours above are
+ * chosen to clear AA on all three, so nothing else has to move.
+ */
+.tone-sky {
+  --bg: #eaf3fb;
+  --bg-raised: #ffffff;
+  --bg-sunken: #dbeaf7;
+}
+
+.tone-blush {
+  --bg: #fdf0f4;
+  --bg-raised: #ffffff;
+  --bg-sunken: #fbe3ea;
+}
+
+/*
+ * Evening on the water. The one inverted tone, for a band that wants weight —
+ * the accents brighten so they still clear AA against a dark ground.
+ */
+.tone-deep {
+  color-scheme: dark;
+
+  --bg: #0f2a3f;
+  --bg-raised: #16394f;
+  --bg-sunken: #0a1f2f;
+
+  --surface: rgb(255 255 255 / 6%);
+  --surface-strong: rgb(255 255 255 / 10%);
+  --line: rgb(255 255 255 / 14%);
+  --line-strong: rgb(255 255 255 / 26%);
+
+  --fg: #f4f9fd;
+  --fg-muted: #b6cbdb;
+  --fg-subtle: #93aec3;
+
+  --lake: #7ec2ef;
+  --lake-solid: #1d6fa8;
+  --lake-deep: #4ea3dc;
+  --lake-soft: #17415c;
+
+  --rose: #f3a2be;
+  --rose-solid: #b8446c;
+  --rose-deep: #f7c2d4;
+  --blush: #f3a2be;
+  --blush-soft: #2a2030;
+
+  --jade: #7fd0a8;
+  --jade-deep: #4fae83;
+  --jade-soft: #16382a;
+
+  --gold: #f0c874;
+  --gold-soft: #f7e3b6;
+  --gold-deep: #c79a3c;
+
+  --focus: #f0c874;
+}
+
+@theme inline {
+  /* Grounds */
+  --color-bg: var(--bg);
+  --color-bg-raised: var(--bg-raised);
+  --color-bg-sunken: var(--bg-sunken);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+
+  /* Text */
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  /* Lines */
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* Accents */
+  --color-lake: var(--lake);
+  --color-lake-solid: var(--lake-solid);
+  --color-lake-deep: var(--lake-deep);
+  --color-lake-soft: var(--lake-soft);
+  --color-rose: var(--rose);
+  --color-rose-solid: var(--rose-solid);
+  --color-rose-deep: var(--rose-deep);
+  --color-blush: var(--blush);
+  --color-blush-soft: var(--blush-soft);
+  --color-jade: var(--jade);
+  --color-jade-deep: var(--jade-deep);
+  --color-jade-soft: var(--jade-soft);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-focus: var(--focus);
+
+  /* Type */
+  --font-display:
+    var(--font-instrument-serif), "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    "Times New Roman", serif;
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  /*
+   * Chinese glyphs use the reader's own system CJK face rather than a web
+   * font. A Simplified Chinese web font is 1-5 MB even subset, and this page
+   * is opened on cell networks in a park. If a designed CJK face is ever
+   * needed, subset it to the exact glyphs used and self-host it.
+   */
+  --font-cjk:
+    "PingFang SC", "Hiragino Sans GB", "Source Han Serif SC", "Noto Serif CJK SC",
+    "Noto Sans CJK SC", "Microsoft YaHei", var(--font-display);
+
+  /* Motion. Expo-out is the house curve: fast departure, long soft landing. */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-back: cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  /* Radii. Generous and soft — this is a family day out, not a bank. */
+  --radius-xs: 0.5rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.375rem;
+  --radius-xl: 1.875rem;
+  --radius-2xl: 2.5rem;
+
+  /* Reading measure */
+  --container-prose: 68ch;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--line);
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+    /* Keep anchored headings clear of the sticky header. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* One focus treatment, everywhere, and it is always visible. */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Chinese and other CJK text opts in explicitly. */
+  :lang(zh),
+  .cjk {
+    font-family: var(--font-cjk);
+  }
+
+  ::selection {
+    background-color: var(--blush);
+    color: #13293d;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Firefox honours this; other engines fall back to the default bar. */
+  * {
+    scrollbar-color: var(--line-strong) transparent;
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  /*
+   * A very fine paper grain. Much lighter than it would be on a dark page —
+   * on white it is there to keep large soft gradients from banding, not to
+   * add texture you can see.
+   */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.02;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* A soft panel: used for cards, the nav bar and form surfaces. */
+  .glass {
+    background-color: color-mix(in srgb, var(--bg) 78%, transparent);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  /* A hairline that fades at both ends — used as a section divider. */
+  .rule-fade {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--line-strong) 15%,
+      var(--line-strong) 85%,
+      transparent
+    );
+  }
+
+  /*
+   * The festival's own gradient: lake blue into lotus pink. Used on one or
+   * two words of a heading, never on body text — a gradient fill defeats
+   * forced-colours mode, so nothing that has to be read relies on it.
+   */
+  .text-gradient-lotus {
+    background: linear-gradient(100deg, var(--lake) 0%, var(--rose) 55%, var(--rose-deep) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Small caps label used above headings. */
+  .eyebrow {
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--lake);
+  }
+
+  /* Visible only to screen readers, until focused. */
+  .sr-only-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
+
+/* ==========================================================================
+   Motion
+   --------------------------------------------------------------------------
+   Every animation on this site is decoration. Under `prefers-reduced-motion`
+   the page must still present exactly the same information, immediately.
+   Framer Motion components read the same preference via `useReducedMotion`;
+   this block is the backstop for CSS-driven motion and for the WebGL canvas
+   wrapper.
+   ========================================================================== */
+
+@keyframes lf-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 1.25rem, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes lf-breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.06);
+  }
+}
+
+/* A slow drift, for the lily pads and other things floating on the water. */
+@keyframes lf-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(0, -0.4rem, 0) rotate(1.2deg);
+  }
+}
+
+@layer utilities {
+  .animate-rise {
+    animation: lf-rise 0.9s var(--ease-expo) both;
+  }
+
+  .animate-breathe {
+    animation: lf-breathe 7s ease-in-out infinite;
+  }
+
+  .animate-drift {
+    animation: lf-drift 9s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Printed pages: ink on paper, no decoration. */
+@media print {
+  :root {
+    --bg: #fff;
+    --fg: #000;
+    --fg-muted: #333;
+  }
+
+  .grain::after,
+  [data-print-hide] {
+    display: none !important;
+  }
+}
