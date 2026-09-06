@@ -284,6 +284,36 @@ Two rules:
 
 ---
 
+## How to add a photograph
+
+`src/config/gallery.ts` is the `/gallery` page, and
+[`public/photos/README.md`](../public/photos/README.md) is the practical half —
+where files go, how to resize them, and the one command that strips the GPS
+coordinates your phone wrote into them.
+
+Two steps: put the file in `public/photos/<year>/`, then add an entry to the
+right year in the config. An empty list is a valid state; the page renders a
+real "not yet" instead of an empty grid, and the link only joins the header nav
+once there is something behind it.
+
+Four rules, all of them about people rather than files, and all of them written
+out at the top of the config:
+
+1. **Only publish what the festival has the right to publish.** A photograph
+   being findable on Instagram does not license it to this site. `credit` is
+   required, and if you cannot fill it in, you do not have the rights.
+2. **This is a family festival with a children's area.** No close, identifiable
+   photograph of a child without a parent's permission, and it comes down the
+   same day if a parent asks. Anyone can ask for any photograph to be removed
+   without giving a reason.
+3. **Every photograph needs real `alt` text.** Not "photo from the festival" —
+   what is actually happening. That text *is* the photograph for someone using
+   a screen reader.
+4. **Strip the location data and resize before committing.** Git is not an
+   image host, and phones write GPS coordinates into every file.
+
+---
+
 ## The house voice
 
 Plain, warm, specific, never breathless. This is a free neighbourhood festival

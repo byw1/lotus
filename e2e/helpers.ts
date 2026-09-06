@@ -10,6 +10,7 @@ export const GATED_PAGES = [
   "/about",
   "/festival",
   "/dragon-boats",
+  "/gallery",
   "/vendors",
   "/food-booths",
   "/performers",
