@@ -1,3 +1,5 @@
+import { photoCount } from "./gallery";
+
 /**
  * Every festival fact lives here, so that someone who is not a developer can
  * update the site by editing one file, and so that no page has to invent
@@ -194,9 +196,22 @@ export type NavItem = {
   description?: string;
 };
 
+/**
+ * The header nav.
+ *
+ * `/gallery` is here only once there is a photograph on it. The page is real
+ * either way — it is linked from the footer, it is in the sitemap, and it says
+ * something useful when it is empty — but putting "Photographs" in the header
+ * of a site with no photographs sends people to an empty room from the one
+ * place they trust not to. It appears on its own the day the first photograph
+ * is added to `config/gallery.ts`.
+ */
 export const primaryNav: NavItem[] = [
   { label: "The Festival", href: "/festival", description: "What happens across the two days" },
   { label: "Dragon Boats", href: "/dragon-boats", description: "Race on Echo Park Lake" },
+  ...(photoCount > 0
+    ? [{ label: "Photos", href: "/gallery", description: "Photographs from the festival" }]
+    : []),
   { label: "Get Involved", href: "/get-involved", description: "Apply, volunteer, or partner" },
   { label: "About", href: "/about", description: "The festival since 1972" },
   { label: "Contact", href: "/contact", description: "Reach the festival team" },
@@ -218,6 +233,7 @@ export const footerNav: { title: string; items: NavItem[] }[] = [
     title: "The festival",
     items: [
       { label: "What to expect", href: "/festival" },
+      { label: "Photographs", href: "/gallery" },
       { label: "Our history", href: "/about" },
       { label: "Frequently asked", href: "/faq" },
       { label: "Contact us", href: "/contact" },

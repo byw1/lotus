@@ -103,7 +103,7 @@ src/
     actions.ts          Every write the public can perform, as Server Actions
     team/               The preview gate: page, form, login/logout actions
     (site)/             The full festival site — gated until launch
-      festival/  about/  faq/  contact/
+      festival/  about/  faq/  contact/  gallery/
       vendors/  food-booths/  performers/  sponsors/
       dragon-boats/  get-involved/
     privacy/  robots.ts  sitemap.ts  opengraph-image.tsx  icon.tsx
@@ -112,6 +112,7 @@ src/
     lotus/              The procedural 3D lotus and its flat SVG fallback
     dragon/             The procedural 3D dragon boats and the seating diagram
     viz/                Infographics: the dot field, the glyphs, the site plan
+    gallery/            The photo mosaic and its lightbox
     ui/                 layout, Button, Field, Reveal — the design system
     forms/FormShell.tsx The wrapper every application form uses
     site/               Header, Footer, the preview bar
@@ -121,6 +122,7 @@ src/
     site.ts             Every festival fact, in one file
     program.ts          What happens across the two days
     faq.ts              The questions people actually ask
+    gallery.ts          The photographs, and the rules for adding one
     sponsorship.ts      The sponsorship tiers
   lib/
     preview/session.ts  The gate's crypto: signed cookie, constant-time compare
@@ -129,6 +131,7 @@ src/
     rate-limit.ts       In-memory by default, Upstash Redis if configured
     spam.ts             Honeypot, submit timing, optional Turnstile
   proxy.ts              Route gating for the preview (Next 16's middleware)
+public/photos/          Festival photographs, one folder per year
 tests/                  Geometry, session crypto, validation, spam
 e2e/                    The gate, the forms, hydration, axe on every page
 docs/                   You are here
