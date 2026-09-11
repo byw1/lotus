@@ -10,7 +10,12 @@ and it honors a different Asian, Native Hawaiian or Pacific Islander culture eac
 year — announced at the previous festival's closing ceremony.
 
 This repository is public so that other festivals, parks departments and small
-nonprofits can take the parts that are useful to them. Read
+nonprofits can take the parts that are useful to them.
+
+**Here for ideas rather than for this festival?**
+[`docs/REUSE.md`](docs/REUSE.md) is the short version: the eight decisions that
+turned out to matter, the three that cost more than they should have, and the
+list of things you should not copy. Read
 [`docs/RESEARCH.md`](docs/RESEARCH.md) before you take the words.
 
 ---
@@ -26,8 +31,8 @@ The site is behind a **pre-launch preview gate**:
 - Launch is one environment variable: `PREVIEW_MODE=false`. Nothing moves, no
   URLs change, no links break. See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
-**On screenshots:** there are none in this repository, and no image files at all.
-That is deliberate. The festival's photography is not licensed for reuse, and the
+**On screenshots:** there are none in this repository — and no image files at
+all, which `git ls-files` will confirm. That is deliberate. The festival's photography is not licensed for reuse, and the
 lotus you see on the homepage is not a photograph or a downloaded 3D model — it is
 generated from equations at runtime (`src/components/lotus/petal-geometry.ts`),
 and so are the two dragon boats on `/dragon-boats`
@@ -200,14 +205,18 @@ session's crypto, the form schemas, and the spam heuristics.
 
 ## The other documents
 
+[`docs/`](docs/) has an index that routes you by what you came for. In short:
+
 | Document | For |
 | --- | --- |
+| [`docs/REUSE.md`](docs/REUSE.md) | **Building something else.** What is worth taking, what it cost, and what not to copy |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | How the thing is built and why — the gate, the form pipeline, the design system, the procedural scenes |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Vercel, Railway and plain Node, every environment variable, and the launch checklist |
-| [`docs/CONTENT.md`](docs/CONTENT.md) | For the festival committee: how to change the country, the dates, the program, the FAQ, the tiers |
+| [`docs/CONTENT.md`](docs/CONTENT.md) | For the festival committee: how to change the country, the dates, the program, the FAQ, the photographs |
 | [`docs/RESEARCH.md`](docs/RESEARCH.md) | Where every fact came from, and where the sources contradict each other |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Getting set up, the house rules, what to run before a PR |
 | [`SECURITY.md`](SECURITY.md) | Reporting a vulnerability, and what the preview gate is and is not |
+| [`NOTICE.md`](NOTICE.md) | What the MIT licence does not cover, and the third-party font licences |
 | [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | How we behave here |
 
 ---
@@ -218,11 +227,8 @@ The **source code** is MIT licensed — see [`LICENSE`](LICENSE).
 
 The **festival's name, its logos, its photography and its program content are
 not licensed for reuse.** "Los Angeles Lotus Festival" is the festival's
-identity, not a template. The MIT grant covers the code and stops there.
-
-The typefaces (Instrument Serif and Inter, served locally by `next/font`) are
-under the SIL Open Font License. Chinese text is set in the reader's own system
-CJK face; no CJK web font is bundled.
+identity, not a template. The MIT grant covers the code and stops there — the
+details, and the third-party font licences, are in [`NOTICE.md`](NOTICE.md).
 
 ## If you fork this, do these three things
 
@@ -233,7 +239,7 @@ CJK face; no CJK web font is bundled.
 2. **Remove the festival's identity.** Rewrite `src/config/site.ts`,
    `program.ts`, `faq.ts` and `sponsorship.ts` for your own event, change
    `EMAIL_TO` so applications stop being addressed to `lotus.festival@lacity.org`,
-   and update the trademark note in `LICENSE`. Do not ship a site that still says
+   and update [`NOTICE.md`](NOTICE.md). Do not ship a site that still says
    Echo Park.
 3. **Do your own research, to the same standard.** The facts in this repo are
    sourced, and the contested ones are flagged rather than smoothed over. If you
